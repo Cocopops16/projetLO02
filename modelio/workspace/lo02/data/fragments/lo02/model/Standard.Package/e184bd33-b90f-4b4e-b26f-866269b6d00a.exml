@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="DgCasUtilisation" version="4">
+  <OBJECT>
+    <ID name="DgCasUtilisation" mc="Standard.Package" uid="e184bd33-b90f-4b4e-b26f-866269b6d00a"/>
+    <PID name="lo02" mc="Standard.Project" uid="f6ec1fe5-3247-4819-b770-b3adbc7a1cd2"/>
+    <ATTRIBUTES>
+      <ATT name="IsInstantiable">false</ATT>
+      <ATT name="IsAbstract">false</ATT>
+      <ATT name="IsLeaf">false</ATT>
+      <ATT name="IsRoot">false</ATT>
+      <ATT name="Visibility">Public</ATT>
+      <ATT name="Name"><![CDATA[DgCasUtilisation]]></ATT>
+      <ATT name="status">1970354901745664</ATT>
+    </ATTRIBUTES>
+    <DEPENDENCIES>
+      <COMP relation="OwnedElement">
+        <COMPID name="Joueur" mc="Standard.Actor" uid="ce1b8932-9447-4efc-810b-8e1de786e2c7"/>
+        <COMPID name="IA" mc="Standard.Actor" uid="8af022bc-36c9-4c82-bef0-75f00a6abdc4"/>
+        <COMPID name="Choix du mode de jeux" mc="Standard.UseCase" uid="408880d6-2687-4f14-a4d2-ce2fdde1cbcb"/>
+        <COMPID name="Choix nbr Joueurs réels" mc="Standard.UseCase" uid="9f26c22d-aa87-4ac3-b9d8-5777b8d1e04a"/>
+        <COMPID name="Choix IA" mc="Standard.UseCase" uid="d0a96a41-49be-4cf6-9e57-5a2b8b0391a6"/>
+        <COMPID name="Piocher" mc="Standard.UseCase" uid="4d0b014b-5985-421f-be6e-5d8138c7cd13"/>
+        <COMPID name="Placer" mc="Standard.UseCase" uid="241c4072-bd08-4cb8-b99f-0f07d811179c"/>
+        <COMPID name="Pioche Victory Card" mc="Standard.UseCase" uid="4e6ab889-6322-4cfd-b902-a3c097141182"/>
+        <COMPID name="Déplacer" mc="Standard.UseCase" uid="f9c65f2f-5ec6-4c43-b2c2-6532f2879b08"/>
+      </COMP>
+      <COMP relation="Product">
+        <COMPID name="DgCasUtilisation Use Case diagram" mc="Standard.UseCaseDiagram" uid="8968b09b-8ae4-4f63-b5f2-03d868fe9844"/>
+      </COMP>
+    </DEPENDENCIES>
+  </OBJECT>
+</EXT>
