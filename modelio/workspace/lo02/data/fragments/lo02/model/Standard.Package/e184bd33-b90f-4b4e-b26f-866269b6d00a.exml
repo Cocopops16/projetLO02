@@ -21,8 +21,8 @@
         <COMPID name="Choix IA" mc="Standard.UseCase" uid="d0a96a41-49be-4cf6-9e57-5a2b8b0391a6"/>
         <COMPID name="Piocher" mc="Standard.UseCase" uid="4d0b014b-5985-421f-be6e-5d8138c7cd13"/>
         <COMPID name="Placer" mc="Standard.UseCase" uid="241c4072-bd08-4cb8-b99f-0f07d811179c"/>
-        <COMPID name="Pioche Victory Card" mc="Standard.UseCase" uid="4e6ab889-6322-4cfd-b902-a3c097141182"/>
         <COMPID name="Déplacer" mc="Standard.UseCase" uid="f9c65f2f-5ec6-4c43-b2c2-6532f2879b08"/>
+        <COMPID name="Affichage du plateau" mc="Standard.UseCase" uid="0f39c405-4165-46e8-bfec-441e1fed883f"/>
       </COMP>
       <COMP relation="Product">
         <COMPID name="DgCasUtilisation Use Case diagram" mc="Standard.UseCaseDiagram" uid="8968b09b-8ae4-4f63-b5f2-03d868fe9844"/>

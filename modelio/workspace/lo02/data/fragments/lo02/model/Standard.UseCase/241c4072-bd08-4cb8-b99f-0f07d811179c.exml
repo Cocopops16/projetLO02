@@ -22,7 +22,7 @@
           </ATTRIBUTES>
           <DEPENDENCIES>
             <LINK relation="Target">
-              <ID name="Pioche Victory Card" mc="Standard.UseCase" uid="4e6ab889-6322-4cfd-b902-a3c097141182"/>
+              <ID name="Affichage du plateau" mc="Standard.UseCase" uid="0f39c405-4165-46e8-bfec-441e1fed883f"/>
             </LINK>
             <LINK relation="Extension">
               <FOREIGNID name="include" mc="Infrastructure.Stereotype" uid="00000000-0000-9c49-0000-000000000000"/>
