@@ -154,9 +154,10 @@
             </COMP>
           </DEPENDENCIES>
         </OBJECT>
-        <COMPID name="Interface" mc="Standard.Interface" uid="98012d99-ac5e-4bb8-9f85-93692c8aeef3"/>
+        <COMPID name="Visitor" mc="Standard.Interface" uid="98012d99-ac5e-4bb8-9f85-93692c8aeef3"/>
         <COMPID name="Deck" mc="Standard.Class" uid="15ffd24e-08ef-40f5-856b-781b5b9f9067"/>
         <COMPID name="Card" mc="Standard.Class" uid="a29af67f-f7bb-4cf4-a1d1-0b411b381e9a"/>
+        <COMPID name="VisitorCalculPoints" mc="Standard.Class" uid="91c2cbcd-dec9-4a87-9ea6-fcec543246d8"/>
       </COMP>
       <COMP relation="Product">
         <COMPID name="fr.utt.lo02 Class diagram" mc="Standard.ClassDiagram" uid="01a9a685-6237-4ff6-abb7-56e751924fd5"/>
