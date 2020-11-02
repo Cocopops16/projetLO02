@@ -1,21 +1,38 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Affichage du plateau" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="Placer carte piochée" version="4">
   <OBJECT>
-    <ID name="Affichage du plateau" mc="Standard.UseCase" uid="0f39c405-4165-46e8-bfec-441e1fed883f"/>
-    <PID name="DgCasUtilisation" mc="Standard.Package" uid="e184bd33-b90f-4b4e-b26f-866269b6d00a"/>
+    <ID name="Placer carte piochée" mc="Standard.UseCase" uid="9acabda7-1944-42a3-844c-d5b7c2b50705"/>
+    <PID name="Cas d'utilisation projet L002" mc="Standard.Package" uid="4afaf3a1-5198-4493-bf8d-e089d427026b"/>
     <ATTRIBUTES>
       <ATT name="IsElementary">false</ATT>
       <ATT name="IsAbstract">false</ATT>
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[Affichage du plateau]]></ATT>
+      <ATT name="Name"><![CDATA[Placer carte piochée]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
+      <COMP relation="Used">
+        <OBJECT>
+          <ID name="UseCaseDependency" mc="Standard.UseCaseDependency" uid="1c86456a-93cb-49f1-8bd3-77db4b8ee9a2"/>
+          <ATTRIBUTES>
+            <ATT name="Name"><![CDATA[UseCaseDependency]]></ATT>
+            <ATT name="status">1970354901745664</ATT>
+          </ATTRIBUTES>
+          <DEPENDENCIES>
+            <LINK relation="Target">
+              <ID name="Afficher plateau" mc="Standard.UseCase" uid="05afdb73-8ca9-4123-90a6-729731477852"/>
+            </LINK>
+            <LINK relation="Extension">
+              <FOREIGNID name="include" mc="Infrastructure.Stereotype" uid="00000000-0000-9c49-0000-000000000000"/>
+            </LINK>
+          </DEPENDENCIES>
+        </OBJECT>
+      </COMP>
       <COMP relation="Descriptor">
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="3a6cb1c9-9761-469c-a490-5e71dd96f773"/>
+          <ID name="" mc="Infrastructure.Note" uid="43ab60e9-00e4-4998-8807-456e3279fc00"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
@@ -29,7 +46,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="f766b66a-75db-421c-ba28-2b1c9861a99d"/>
+          <ID name="" mc="Infrastructure.Note" uid="7bdc2a33-0c94-4748-8d39-046b8945b156"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
@@ -43,7 +60,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="42cd4012-2fc6-4ed3-a93a-8e7a106a5792"/>
+          <ID name="" mc="Infrastructure.Note" uid="ed04a68a-03fc-4d78-ade9-fa55614f559a"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
@@ -57,7 +74,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="0b185436-2218-4b0e-9b43-a005d839aac0"/>
+          <ID name="" mc="Infrastructure.Note" uid="9f391c7f-3513-42e0-aa7d-0509d5957e3b"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
@@ -71,7 +88,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="5de3e898-f080-4c6d-83fe-bc064982b02c"/>
+          <ID name="" mc="Infrastructure.Note" uid="51a92bb6-ae69-47a9-83bd-6d58e0cda51f"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>
@@ -85,7 +102,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="" mc="Infrastructure.Note" uid="5567839b-9d37-4e93-8d7e-f059703e8bbc"/>
+          <ID name="" mc="Infrastructure.Note" uid="b0e0c50f-e548-4c8a-b949-6dbb193de0cf"/>
           <ATTRIBUTES>
             <ATT name="Content"><![CDATA[...]]></ATT>
             <ATT name="MimeType"><![CDATA[text/plain]]></ATT>

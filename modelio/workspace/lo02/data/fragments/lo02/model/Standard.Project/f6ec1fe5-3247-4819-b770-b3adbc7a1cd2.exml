@@ -11,8 +11,8 @@
     <DEPENDENCIES>
       <COMP relation="Model">
         <COMPID name="lo02" mc="Standard.Package" uid="0ff628b9-fd66-4266-9da0-8413557fa65d"/>
-        <COMPID name="DgCasUtilisation" mc="Standard.Package" uid="e184bd33-b90f-4b4e-b26f-866269b6d00a"/>
         <COMPID name="fr.utt.lo02" mc="Standard.Package" uid="4e59ba26-c59e-43b2-9871-7cb0de013025"/>
+        <COMPID name="Cas d'utilisation projet L002" mc="Standard.Package" uid="4afaf3a1-5198-4493-bf8d-e089d427026b"/>
       </COMP>
       <COMP relation="DiagramRoot">
         <COMPID name="lo02" mc="Infrastructure.DiagramSet" uid="27bea9c4-1acf-4787-ae6b-b9fffb4afc46"/>
