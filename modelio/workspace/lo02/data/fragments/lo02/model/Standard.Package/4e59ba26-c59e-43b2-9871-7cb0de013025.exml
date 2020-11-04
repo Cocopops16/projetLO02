@@ -157,7 +157,15 @@
         <COMPID name="Visitor" mc="Standard.Interface" uid="98012d99-ac5e-4bb8-9f85-93692c8aeef3"/>
         <COMPID name="Deck" mc="Standard.Class" uid="15ffd24e-08ef-40f5-856b-781b5b9f9067"/>
         <COMPID name="Card" mc="Standard.Class" uid="a29af67f-f7bb-4cf4-a1d1-0b411b381e9a"/>
-        <COMPID name="VisitorCalculPoints" mc="Standard.Class" uid="91c2cbcd-dec9-4a87-9ea6-fcec543246d8"/>
+        <COMPID name="ScoreShapeVisitor" mc="Standard.Class" uid="91c2cbcd-dec9-4a87-9ea6-fcec543246d8"/>
+        <COMPID name="Main" mc="Standard.Class" uid="5954869e-6a03-4efc-b94e-8033ed96cff9"/>
+        <COMPID name="IA" mc="Standard.Class" uid="539a0024-b6be-4e9b-9656-0051e22f9be8"/>
+        <COMPID name="Strategy" mc="Standard.Interface" uid="98073ad2-8aef-48a2-8fa7-b6e67612458a"/>
+        <COMPID name="ShapeStrategy" mc="Standard.Class" uid="64868150-beab-41e4-aeda-9c9963fa7558"/>
+        <COMPID name="BodyStrategy" mc="Standard.Class" uid="0cf58de8-5406-4191-9687-f72b071050e4"/>
+        <COMPID name="ColorStrategy" mc="Standard.Class" uid="26aec101-40c2-4227-971c-31d146bf9e92"/>
+        <COMPID name="ScoreBodyVisitor" mc="Standard.Class" uid="8a607abb-5ad6-4388-9dca-dd3a59524a1c"/>
+        <COMPID name="ScoreColorVisitor" mc="Standard.Class" uid="3b699b38-f45e-49f2-b42d-8af87fab5b37"/>
       </COMP>
       <COMP relation="Product">
         <COMPID name="fr.utt.lo02 Class diagram" mc="Standard.ClassDiagram" uid="01a9a685-6237-4ff6-abb7-56e751924fd5"/>

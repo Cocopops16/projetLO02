@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
-<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="ScoreShapeVisitor" version="4">
+<!--GENERATED FILE, PLEASE DO NOT EDIT!!!--><EXT object="ScoreColorVisitor" version="4">
   <OBJECT>
-    <ID name="ScoreShapeVisitor" mc="Standard.Class" uid="91c2cbcd-dec9-4a87-9ea6-fcec543246d8"/>
+    <ID name="ScoreColorVisitor" mc="Standard.Class" uid="3b699b38-f45e-49f2-b42d-8af87fab5b37"/>
     <PID name="fr.utt.lo02" mc="Standard.Package" uid="4e59ba26-c59e-43b2-9871-7cb0de013025"/>
     <ATTRIBUTES>
       <ATT name="IsActive">false</ATT>
@@ -11,13 +11,13 @@
       <ATT name="IsLeaf">false</ATT>
       <ATT name="IsRoot">false</ATT>
       <ATT name="Visibility">Public</ATT>
-      <ATT name="Name"><![CDATA[ScoreShapeVisitor]]></ATT>
+      <ATT name="Name"><![CDATA[ScoreColorVisitor]]></ATT>
       <ATT name="status">1970354901745664</ATT>
     </ATTRIBUTES>
     <DEPENDENCIES>
       <COMP relation="OwnedOperation">
         <OBJECT>
-          <ID name="visit" mc="Standard.Operation" uid="1fa24bfb-ff9e-406e-89b2-325e1f3884a6"/>
+          <ID name="visit" mc="Standard.Operation" uid="223193ae-b7cd-4c1f-a4e4-81ab89ac0536"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -31,7 +31,7 @@
           <DEPENDENCIES>
             <COMP relation="IO">
               <OBJECT>
-                <ID name="joueur" mc="Standard.Parameter" uid="ab4730ab-6097-457b-bc4a-2bc752921007"/>
+                <ID name="joueur" mc="Standard.Parameter" uid="a0f436b3-992f-40ae-a8eb-232aa78b3928"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -55,7 +55,7 @@
             </COMP>
             <COMP relation="Return">
               <OBJECT>
-                <ID name="p2" mc="Standard.Parameter" uid="4bbd3246-9b36-45a9-9d69-e3a59927b5bd"/>
+                <ID name="p2" mc="Standard.Parameter" uid="48c13d72-bd04-4cd0-8df6-67777488cc4e"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -80,7 +80,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="visit" mc="Standard.Operation" uid="bcaffee5-86ef-4880-a969-59825d59bb92"/>
+          <ID name="visit" mc="Standard.Operation" uid="741873f2-7405-4897-9dd8-6c2ad92c49bb"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -94,7 +94,7 @@
           <DEPENDENCIES>
             <COMP relation="IO">
               <OBJECT>
-                <ID name="plateau" mc="Standard.Parameter" uid="d8c17a46-f3d5-42b9-a017-bedbb6797fdc"/>
+                <ID name="plateau" mc="Standard.Parameter" uid="6eefdaaf-04ad-46af-b0f6-93c95b1898b1"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -118,7 +118,7 @@
             </COMP>
             <COMP relation="Return">
               <OBJECT>
-                <ID name="p2" mc="Standard.Parameter" uid="2c4240f1-1795-4115-98a1-d23bdc870b0a"/>
+                <ID name="p2" mc="Standard.Parameter" uid="24a3e593-3878-467a-be6b-c088471ed07d"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
@@ -143,7 +143,7 @@
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
-          <ID name="scoreShape" mc="Standard.Operation" uid="f94a2c0d-de4c-41dc-ab50-53f2c7e28aa3"/>
+          <ID name="scoreColor" mc="Standard.Operation" uid="b02073c7-270d-420f-b1b1-f50749f15802"/>
           <ATTRIBUTES>
             <ATT name="Concurrency">false</ATT>
             <ATT name="Final">false</ATT>
@@ -151,13 +151,13 @@
             <ATT name="Visibility">Public</ATT>
             <ATT name="IsClass">false</ATT>
             <ATT name="IsAbstract">false</ATT>
-            <ATT name="Name"><![CDATA[scoreShape]]></ATT>
+            <ATT name="Name"><![CDATA[scoreColor]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
           <DEPENDENCIES>
             <COMP relation="IO">
               <OBJECT>
-                <ID name="victoryCard" mc="Standard.Parameter" uid="14a82ef5-e314-47f8-aa33-ed66bf918ab8"/>
+                <ID name="victoryCard" mc="Standard.Parameter" uid="3356b702-9ba4-4bed-a7bf-7f761d0806e7"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
@@ -179,7 +179,7 @@
                 </DEPENDENCIES>
               </OBJECT>
               <OBJECT>
-                <ID name="cartesPlateau" mc="Standard.Parameter" uid="29537125-97b9-45c4-8c8d-92637a1eed2a"/>
+                <ID name="cartesPlateau" mc="Standard.Parameter" uid="7499c46c-9d59-436f-ba54-e8021c67a26a"/>
                 <ATTRIBUTES>
                   <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
@@ -206,7 +206,7 @@
       </COMP>
       <COMP relation="Realized">
         <OBJECT>
-          <ID name="InterfaceRealization" mc="Standard.InterfaceRealization" uid="674f0b26-c896-44f0-bec7-c9a26428befd"/>
+          <ID name="InterfaceRealization" mc="Standard.InterfaceRealization" uid="7e1248cd-1f77-4ec4-b16d-97709b7b03bc"/>
           <ATTRIBUTES>
             <ATT name="Name"><![CDATA[InterfaceRealization]]></ATT>
             <ATT name="status">1970354901745664</ATT>
