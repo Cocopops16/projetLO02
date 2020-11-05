@@ -10,7 +10,6 @@
     </ATTRIBUTES>
     <DEPENDENCIES>
       <COMP relation="Model">
-        <COMPID name="lo02" mc="Standard.Package" uid="0ff628b9-fd66-4266-9da0-8413557fa65d"/>
         <COMPID name="fr.utt.lo02" mc="Standard.Package" uid="4e59ba26-c59e-43b2-9871-7cb0de013025"/>
         <COMPID name="DgCasUtilisation" mc="Standard.Package" uid="4afaf3a1-5198-4493-bf8d-e089d427026b"/>
         <COMPID name="DgSequence" mc="Standard.Package" uid="e5017286-73cd-4713-95ec-aeddf67983ff"/>
