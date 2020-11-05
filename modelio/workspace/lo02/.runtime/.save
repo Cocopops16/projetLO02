@@ -1,13 +1,14 @@
-#Wed Nov 04 15:43:19 CET 2020
+#Thu Nov 05 12:01:48 CET 2020
+org.modelio.app.diagram.editor.OpenedDiagrams2='Diagramme de s\u00E9quence PROJET lo02' {9dc3a1d7-1bfe-4560-99f9-311863ee0e7a} Standard.SequenceDiagram
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @null\ runtime\ module_.org.modelio.app.ui.model.perspective.parentId=org.modelio.app.bottom.parts
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @null\ runtime\ module_.org.modelio.development.perspective.parentId=app.ui.ext_com.partstack.bottom
-org.modelio.app.diagram.editor.OpenedDiagrams1='Diagramme de s\u00E9quence PROJET lo02' {9dc3a1d7-1bfe-4560-99f9-311863ee0e7a} Standard.SequenceDiagram
-org.modelio.app.diagram.editor.OpenedDiagrams0='fr.utt.lo02 Class diagram' {01a9a685-6237-4ff6-abb7-56e751924fd5} Standard.ClassDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams1='fr.utt.lo02 Class diagram' {01a9a685-6237-4ff6-abb7-56e751924fd5} Standard.ClassDiagram
+org.modelio.app.diagram.editor.OpenedDiagrams0='Diagramme de cas d'utilisation Mod\u00E8le' {02a29ba2-35a8-4d5a-9f6f-bc8713534f64} Standard.UseCaseDiagram
 org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @null\ runtime\ module_.org.modelio.full.perspective.parentId=app.ui.ext_com.partstack.bottom
 org.modelio.module.propertytab.JavaDesigner\ v3.9.00\ GModule\ @file\:///home/corentin/.modelio/4.0/modules/JavaDesigner_3.9.00/JavaDesigner_3.9.00.jmdac\ runtime\ module_.org.modelio.development.perspective.parentId=app.ui.ext_com.partstack.bottom
 org.modelio.module.propertytab.JavaDesigner\ v3.9.00\ GModule\ @file\:///home/corentin/.modelio/4.0/modules/JavaDesigner_3.9.00/JavaDesigner_3.9.00.jmdac\ runtime\ module_.org.modelio.full.perspective.parentId=app.ui.ext_com.partstack.bottom
-org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @null\ runtime\ module_.org.modelio.diagram.perspective.parentId=app.ui.ext_com.partstack.right
-org.modelio.module.propertytab.JavaDesigner\ v3.9.00\ GModule\ @file\:///home/corentin/.modelio/4.0/modules/JavaDesigner_3.9.00/JavaDesigner_3.9.00.jmdac\ runtime\ module_.org.modelio.diagram.perspective.parentId=app.ui.ext_com.partstack.right
 org.modelio.diagram.editor.OpenedDiagrams1='fr.utt.lo02 Class diagram' {01a9a685-6237-4ff6-abb7-56e751924fd5} Standard.ClassDiagram
-org.modelio.diagram.editor.OpenedDiagrams0='DgCasUtilisation Use Case diagram' {8968b09b-8ae4-4f63-b5f2-03d868fe9844} Standard.UseCaseDiagram
+org.modelio.module.propertytab.JavaDesigner\ v3.9.00\ GModule\ @file\:///home/corentin/.modelio/4.0/modules/JavaDesigner_3.9.00/JavaDesigner_3.9.00.jmdac\ runtime\ module_.org.modelio.diagram.perspective.parentId=app.ui.ext_com.partstack.right
+org.modelio.app.module.propertytab.JavaDesigner\ v3.10.00\ GModule\ @null\ runtime\ module_.org.modelio.diagram.perspective.parentId=app.ui.ext_com.partstack.right
 org.modelio.module.propertytab.JavaDesigner\ v3.9.00\ GModule\ @file\:///home/corentin/.modelio/4.0/modules/JavaDesigner_3.9.00/JavaDesigner_3.9.00.jmdac\ runtime\ module_.org.modelio.app.ui.model.perspective.parentId=org.modelio.app.bottom.parts
+org.modelio.diagram.editor.OpenedDiagrams0='DgCasUtilisation Use Case diagram' {8968b09b-8ae4-4f63-b5f2-03d868fe9844} Standard.UseCaseDiagram
