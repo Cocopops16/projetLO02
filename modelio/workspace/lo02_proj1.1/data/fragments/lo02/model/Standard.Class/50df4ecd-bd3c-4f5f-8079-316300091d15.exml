@@ -31,9 +31,9 @@
           <DEPENDENCIES>
             <COMP relation="IO">
               <OBJECT>
-                <ID name="card" mc="Standard.Parameter" uid="152b45e1-dd4d-421e-a673-15a626d01249"/>
+                <ID name="card" mc="Standard.Parameter" uid="d5b0215b-846a-4fa8-8751-ab041730a9ad"/>
                 <ATTRIBUTES>
-                  <ATT name="ParameterPassing">Out</ATT>
+                  <ATT name="ParameterPassing">In</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
                   <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
                   <ATT name="TypeConstraint"></ATT>
