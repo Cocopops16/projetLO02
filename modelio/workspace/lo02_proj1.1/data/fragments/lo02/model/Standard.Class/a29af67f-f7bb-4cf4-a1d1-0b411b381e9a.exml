@@ -40,6 +40,9 @@
                 <ID name="CardType1" mc="Standard.Enumeration" uid="b77b7ab0-07e3-4f28-a9aa-3b717aa5651b"/>
               </REFOBJ>
             </LINK>
+            <LINK relation="Extension">
+              <FOREIGNID name="JavaAttributeProperty" mc="Infrastructure.Stereotype" uid="a9808723-17fe-11e0-a45a-002564c97630"/>
+            </LINK>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -65,6 +68,9 @@
               <REFOBJ>
                 <ID name="CardType2" mc="Standard.Enumeration" uid="49394fc0-5e35-49f4-a12d-e19d98fd401c"/>
               </REFOBJ>
+            </LINK>
+            <LINK relation="Extension">
+              <FOREIGNID name="JavaAttributeProperty" mc="Infrastructure.Stereotype" uid="a9808723-17fe-11e0-a45a-002564c97630"/>
             </LINK>
           </DEPENDENCIES>
         </OBJECT>
@@ -92,9 +98,15 @@
                 <ID name="CardType3" mc="Standard.Enumeration" uid="13c0057f-e6c4-43a0-9123-61cd8803234e"/>
               </REFOBJ>
             </LINK>
+            <LINK relation="Extension">
+              <FOREIGNID name="JavaAttributeProperty" mc="Infrastructure.Stereotype" uid="a9808723-17fe-11e0-a45a-002564c97630"/>
+            </LINK>
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
+      </LINK>
     </DEPENDENCIES>
   </OBJECT>
 </EXT>

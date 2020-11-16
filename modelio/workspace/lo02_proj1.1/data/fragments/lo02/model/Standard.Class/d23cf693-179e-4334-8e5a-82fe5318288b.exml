@@ -265,6 +265,9 @@
             <LINK relation="Type">
               <FOREIGNID name="boolean" mc="Standard.DataType" uid="00000004-0000-0005-0000-000000000000"/>
             </LINK>
+            <LINK relation="Extension">
+              <FOREIGNID name="JavaAttributeProperty" mc="Infrastructure.Stereotype" uid="a9808723-17fe-11e0-a45a-002564c97630"/>
+            </LINK>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -289,6 +292,9 @@
             <LINK relation="Type">
               <FOREIGNID name="string" mc="Standard.DataType" uid="00000004-0000-000d-0000-000000000000"/>
             </LINK>
+            <LINK relation="Extension">
+              <FOREIGNID name="JavaAttributeProperty" mc="Infrastructure.Stereotype" uid="a9808723-17fe-11e0-a45a-002564c97630"/>
+            </LINK>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -312,6 +318,9 @@
           <DEPENDENCIES>
             <LINK relation="Type">
               <ID name="Card" mc="Standard.Class" uid="a29af67f-f7bb-4cf4-a1d1-0b411b381e9a"/>
+            </LINK>
+            <LINK relation="Extension">
+              <FOREIGNID name="JavaAttributeProperty" mc="Infrastructure.Stereotype" uid="a9808723-17fe-11e0-a45a-002564c97630"/>
             </LINK>
             <COMP relation="Descriptor">
               <OBJECT>
@@ -456,6 +465,9 @@
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
+      </LINK>
     </DEPENDENCIES>
   </OBJECT>
 </EXT>

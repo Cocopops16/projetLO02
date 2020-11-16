@@ -57,7 +57,7 @@
               <OBJECT>
                 <ID name="p2" mc="Standard.Parameter" uid="4bbd3246-9b36-45a9-9d69-e3a59927b5bd"/>
                 <ATTRIBUTES>
-                  <ATT name="ParameterPassing">In</ATT>
+                  <ATT name="ParameterPassing">Out</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[1]]></ATT>
                   <ATT name="MultiplicityMax"><![CDATA[1]]></ATT>
                   <ATT name="TypeConstraint"></ATT>
@@ -77,6 +77,11 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
+            <LINK relation="Redefines">
+              <REFOBJ>
+                <ID name="visit" mc="Standard.Operation" uid="12e28ee5-2bdc-46e5-969e-e0a54a668834"/>
+              </REFOBJ>
+            </LINK>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -120,7 +125,7 @@
               <OBJECT>
                 <ID name="p2" mc="Standard.Parameter" uid="2c4240f1-1795-4115-98a1-d23bdc870b0a"/>
                 <ATTRIBUTES>
-                  <ATT name="ParameterPassing">In</ATT>
+                  <ATT name="ParameterPassing">Out</ATT>
                   <ATT name="MultiplicityMin"><![CDATA[0]]></ATT>
                   <ATT name="MultiplicityMax"><![CDATA[*]]></ATT>
                   <ATT name="TypeConstraint"></ATT>
@@ -140,6 +145,11 @@
                 </DEPENDENCIES>
               </OBJECT>
             </COMP>
+            <LINK relation="Redefines">
+              <REFOBJ>
+                <ID name="visit" mc="Standard.Operation" uid="45c22376-8da0-425c-b3c1-105615c9b733"/>
+              </REFOBJ>
+            </LINK>
           </DEPENDENCIES>
         </OBJECT>
         <OBJECT>
@@ -218,6 +228,9 @@
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
+      </LINK>
     </DEPENDENCIES>
   </OBJECT>
 </EXT>

@@ -28,7 +28,13 @@
             <ATT name="Name"><![CDATA[jouer]]></ATT>
             <ATT name="status">1970354901745664</ATT>
           </ATTRIBUTES>
-          <DEPENDENCIES></DEPENDENCIES>
+          <DEPENDENCIES>
+            <LINK relation="Redefines">
+              <REFOBJ>
+                <ID name="jouer" mc="Standard.Operation" uid="8bdf549e-7705-4080-bad2-b9a7ef7e15d1"/>
+              </REFOBJ>
+            </LINK>
+          </DEPENDENCIES>
         </OBJECT>
       </COMP>
       <COMP relation="Realized">
@@ -45,6 +51,9 @@
           </DEPENDENCIES>
         </OBJECT>
       </COMP>
+      <LINK relation="Extension">
+        <FOREIGNID name="JavaClass" mc="Infrastructure.Stereotype" uid="01ec23a8-0000-0258-0000-000000000000"/>
+      </LINK>
     </DEPENDENCIES>
   </OBJECT>
 </EXT>
