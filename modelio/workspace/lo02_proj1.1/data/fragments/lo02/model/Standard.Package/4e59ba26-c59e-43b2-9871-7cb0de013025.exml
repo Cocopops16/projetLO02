@@ -166,6 +166,7 @@
         <COMPID name="ColorStrategy" mc="Standard.Class" uid="26aec101-40c2-4227-971c-31d146bf9e92"/>
         <COMPID name="ScoreBodyVisitor" mc="Standard.Class" uid="8a607abb-5ad6-4388-9dca-dd3a59524a1c"/>
         <COMPID name="ScoreColorVisitor" mc="Standard.Class" uid="3b699b38-f45e-49f2-b42d-8af87fab5b37"/>
+        <COMPID name="Hand" mc="Standard.Class" uid="dd4ed1e3-8435-463e-b344-9439e3b17c56"/>
       </COMP>
       <COMP relation="Product">
         <COMPID name="fr.utt.lo02 Class diagram" mc="Standard.ClassDiagram" uid="01a9a685-6237-4ff6-abb7-56e751924fd5"/>
