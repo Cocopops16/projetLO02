@@ -5,10 +5,8 @@ import java.util.TreeMap;
 
 public class Plateau {
 	private Map<String, Object> positions;
-	private int xMax;
-	private int yMax;
-	private boolean isFull;
-	private boolean firstCard;
+	private int xMax, yMax;
+	private boolean isFull, firstCard;
 	
 	public Plateau(int xMax, int yMax) {
 		this.xMax = xMax;
@@ -117,7 +115,8 @@ public class Plateau {
 	}
 	
 	public Card getCard(char colonne, int ligne) {
-		
+		String key = colonne+Integer.toString(ligne);
+		return (Card)positions.get(key);
 	}
 	
 	public boolean isPosAlreadyTaken(char colonne, int ligne) {
