@@ -111,6 +111,9 @@ public class Plateau {
 		}
 		String key = colonne+Integer.toString(ligne);
 		
+		if(isPosAlreadyTaken(colonne, ligne)) {
+			positions.remove(key);
+		}
 		positions.put(key, card);
 	}
 	
@@ -122,5 +125,10 @@ public class Plateau {
 	public boolean isPosAlreadyTaken(char colonne, int ligne) {
 		String key = colonne+Integer.toString(ligne);
 		return positions.containsKey(key);
+	}
+	
+	public void removeCard(char colonne, int ligne) {
+		String key = colonne+Integer.toString(ligne);
+		positions.remove(key);
 	}
 }

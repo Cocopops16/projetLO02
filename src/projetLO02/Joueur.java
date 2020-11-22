@@ -19,14 +19,29 @@ public class Joueur {
 		myHand.addCardToHand(card);
 	}
 	
-	public void placer(Card card) {
+	public void setVictory(Card card) {
+		victoryCard = card;
+	}
+	
+	public Card getVictory() {
+		return victoryCard;
+	}
+	
+	public boolean choixSiDeplacer() {
 		Scanner monClavier = new Scanner(System.in);
-		System.out.println("Entrez la colonne où placer la carte");
-		char colonne = monClavier.next().charAt(0);
-		System.out.println("Entrez la ligne où placer la carte");
-		int ligne = monClavier.nextInt();
+		System.out.println("Voulez-vous deplacer une carte ? : y/n");
+		char bool = monClavier.next().charAt(0);
 		monClavier.close();
-		
+		if((bool=='y') || (bool=='Y')) {
+			return true;
+		}
+		else if((bool=='n') || (bool=='N')) {
+			return false;
+		}
+		else return choixSiDeplacer();
+	}
+	
+	public void placer(Card card, char colonne, int ligne) {
 		if(jeu.getPlateau().getFirstCard()) {
 			if(jeu.getPlateau().isPosAlreadyTaken(colonne, ligne)) {
 				if( (!jeu.getPlateau().checkMaxXReached(ligne)) && (!jeu.getPlateau().checkMaxYReached(colonne)) ) {
@@ -56,20 +71,45 @@ public class Joueur {
 		}
 	}
 	
+	public void placer(Card card) {
+		Scanner monClavier = new Scanner(System.in);
+		System.out.println("Entrez la colonne où placer la carte");
+		char colonne = monClavier.next().charAt(0);
+		System.out.println("Entrez la ligne où placer la carte");
+		int ligne = monClavier.nextInt();
+		monClavier.close();
+		
+		placer(card, colonne, ligne);
+	}
+	
 	public void deplacer(Card card) {
 		Scanner monClavier = new Scanner(System.in);
 		System.out.println("Entrez la colonne de la carte à déplacer");
-		String colonne1 = monClavier.next();
+		char colonne1 = monClavier.next().charAt(0);
 		System.out.println("Entrez la ligne de la carte à déplacer");
-		String ligne1 = monClavier.next();
-		System.out.println("Entrez la colonne où placer la carte");
-		String colonne2 = monClavier.next();
-		System.out.println("Entrez la ligne où placer la carte");
-		String ligne2 = monClavier.next();
-		monClavier.close();
+		int ligne1 = monClavier.nextInt();
 		
-		
-		
-
+		if(jeu.getPlateau().isPosAlreadyTaken(colonne1, ligne1)) {
+			System.out.println("Entrez la colonne où placer la carte");
+			char colonne2 = monClavier.next().charAt(0);
+			System.out.println("Entrez la ligne où placer la carte");
+			int ligne2 = monClavier.nextInt();
+			monClavier.close();
+			
+			if(jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
+				Card card1 = jeu.getPlateau().getCard(colonne1, ligne1);
+				Card card2 = jeu.getPlateau().getCard(colonne2, ligne2);
+				jeu.getPlateau().setCard(card2, colonne1, ligne1);
+				jeu.getPlateau().setCard(card1, colonne2, ligne2);
+			}
+			else {
+				placer(jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
+				jeu.getPlateau().removeCard(colonne1, ligne1);
+			}
+		}
+		else {
+			System.out.println("Position non occupée");
+			deplacer(card);
+		}
 	}
 }
