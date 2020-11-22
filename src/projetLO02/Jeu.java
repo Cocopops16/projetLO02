@@ -37,8 +37,32 @@ public class Jeu {
 			hiddenCard = Deck.giveCard();
 		}
 	}
-	
+	// PARTIE FABIEN 
 	public void setMode() {
-				
+		System.out.println("Choix du mode de jeu : " + this.mode);
+	}
+	
+	public void setNbrJoueurs() {
+		if (this.nbrJoueurs >= 1 && this.nbrJoueurs <= 2) {
+			System.out.println("Choix du nombre de joueurs reels participant : " + this.nbrJoueurs);
+		} else {System.out.println("Veuillez entrer un ou deux joueurs reel");}
+	}
+	
+	public void setNbrIA() {
+		if (this.nbrIA >= 1 && this.nbrIA <= 2) {
+			System.out.println("Choix du nombre de joueurs virtuels participant : " + this.nbrIA);
+		} else {System.out.println("Veuillez choisir un ou deux joueurs virtuel");}
+	}
+	
+	public int getMode() {
+		return this.mode;
+	}
+	
+	public int getNbrJoueurs() {		
+		return this.nbrJoueurs;
+	}
+	
+	public int getNbrIa() {
+		return this.nbrIa;
 	}
 }
