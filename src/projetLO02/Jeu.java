@@ -33,7 +33,7 @@ public class Jeu {
 			
 		}
 	}
-	
+
  	public void setMode() {
  		Scanner monClavier = new Scanner(System.in);
 		System.out.println("Entrez le mode de jeu : \n- 1= Classique\n- 2= Avancé (main de 3 cartes)\n -3 personnalisé (choix de la VictoryCard)");
