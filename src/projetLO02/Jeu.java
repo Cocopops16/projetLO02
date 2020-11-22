@@ -22,23 +22,52 @@ public class Jeu {
 	}
 	
 	public void start() {
-		Scanner monClavier = new Scanner(System.in);
-		System.out.println("Entrez le mode de jeu : \n- 1= Classique\n- 2= Avancé (main de 3 cartes)\n -3 personnalisé (choix de la VictoryCard)");
-		this.mode = monClavier.nextInt();
-		System.out.println("Entrez le nombre de joueurs réels :");
-		this.nbrJoueurs = monClavier.nextInt();
-		System.out.println("Entrez le nombre d'IA :");
-		this.nbrIA = monClavier.nextInt();
-		monClavier.close();
+		setMode();
+		setNbrJoueurs();
+		setNbrIA();
 		if((this.nbrIA+this.nbrJoueurs) >= 3)
 			start();
 		else {
-			Deck.shuffleCards();
-			hiddenCard = Deck.giveCard();
+			deck.shuffleCards();
+			hiddenCard = deck.giveCard();
+			
 		}
 	}
 	
-	public void setMode() {
-				
+ 	public void setMode() {
+ 		Scanner monClavier = new Scanner(System.in);
+		System.out.println("Entrez le mode de jeu : \n- 1= Classique\n- 2= Avancé (main de 3 cartes)\n -3 personnalisé (choix de la VictoryCard)");
+		this.mode = monClavier.nextInt();
+		monClavier.close();
+	}
+	
+	public void setNbrJoueurs() {
+		Scanner monClavier = new Scanner(System.in);
+		System.out.println("Choix du nombre de joueurs reels participant : ");
+		this.nbrJoueurs = monClavier.nextInt();
+		monClavier.close();
+	}
+	
+	public void setNbrIA() {
+		Scanner monClavier = new Scanner(System.in);
+		System.out.println("Choix du nombre de joueurs virtuels participant : ");
+		this.nbrIA = monClavier.nextInt();
+		monClavier.close();
+	}
+	
+	public int getMode() {
+		return this.mode;
+	}
+	
+	public int getNbrJoueurs() {		
+		return this.nbrJoueurs;
+	}
+	
+	public int getNbrIa() {
+		return this.nbrIA;
+ 	}
+	
+	public Plateau getPlateau() {
+		return plateau;
 	}
 }

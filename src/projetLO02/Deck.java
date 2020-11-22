@@ -6,12 +6,10 @@ import java.util.Queue;
 import java.util.Random;
 
 public class Deck {
-	private int nbrCards;
-	private Queue<Object> shuffledCards;
+	private Queue<Object> shuffledCards = new LinkedList<Object>();
 	private List<Object> tabCards;
 	
 	public Deck() {
-		this.nbrCards = 18;
 		List<Object> tabCards = new LinkedList<Object>();
 		tabCards.add(new Card(CardType1.CIRCLE, CardType2.SOLID, CardType3.RED));
 		tabCards.add(new Card(CardType1.TRIANGLE, CardType2.SOLID, CardType3.RED));
@@ -40,8 +38,6 @@ public class Deck {
 	}
 	
 	public void shuffleCards() {
-		shuffledCards = new LinkedList<Object>();
-		
 		for(int i=0; i<18; i++) {
 			int index = randomizer();
 			shuffledCards.add(tabCards.get(index));
@@ -49,7 +45,10 @@ public class Deck {
 	}
 	
 	public Card giveCard() {
-		this.nbrCards = this.nbrCards -1;
 		return (Card)shuffledCards.poll();
+	}
+	
+	public boolean isDeckEmpty() {
+		return shuffledCards.isEmpty();
 	}
 }
