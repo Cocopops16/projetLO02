@@ -15,6 +15,14 @@ public class Joueur {
 		jeu = jeuEnCours;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
+	public boolean getIA() {
+		return isIA;
+	}
+	
 	public void piocher(Card card) {
 		myHand.addCardToHand(card);
 	}
@@ -39,6 +47,15 @@ public class Joueur {
 			return false;
 		}
 		else return choixSiDeplacer();
+	}
+	
+	public Card chooseCardToPlay() {
+		Scanner monClavier = new Scanner(System.in);
+		System.out.println("Veuillez choisir le numéro d'une carte :");
+		System.out.println(myHand.toString());
+		int numCard = monClavier.nextInt();
+		monClavier.close();
+		return myHand.getCard(numCard);
 	}
 	
 	public void placer(Card card, char colonne, int ligne) {

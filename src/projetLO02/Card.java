@@ -22,4 +22,10 @@ public class Card {
 	public CardType3 getType3() {
 		return this.type3;
 	}
+	
+	public String toString() {
+		String affichageCarte = new String();
+		affichageCarte = "["+this.type1+","+this.type2+","+this.type3+"]";
+		return affichageCarte;
+	}
 }
