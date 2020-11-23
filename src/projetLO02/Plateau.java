@@ -131,4 +131,8 @@ public class Plateau {
 		String key = colonne+Integer.toString(ligne);
 		positions.remove(key);
 	}
+	
+	public void accept(Visitor visitor) {
+        visitor.visit(this);
+    }
 }
