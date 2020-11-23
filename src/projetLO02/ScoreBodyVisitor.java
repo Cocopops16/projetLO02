@@ -7,7 +7,7 @@ public class ScoreBodyVisitor implements Visitor {
 	public Card visit(Joueur joueur) {
 		return joueur.getVictory();
 	}
-	
+
 	public Map<String, Object> visit(Plateau plateau) {
 		return plateau.getPositions();    
 	}
