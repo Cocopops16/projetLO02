@@ -33,7 +33,7 @@ public class ScoreBodyVisitor implements Visitor {
 		for(int i=0; i<5; i++) {
 			String key = ((char)(65+i))+Integer.toString(ligne);
 			if((Card)positions.get(key) == (Card)victoryCard) {
-				    int sameBody = samebody + 1;
+				    int sameBody = sameBody + 1;
 				} else {sameBody == 0}
 				 
 		        switch(sameBody) {  
