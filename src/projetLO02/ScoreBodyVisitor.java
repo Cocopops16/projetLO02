@@ -1,4 +1,5 @@
 package projetLO02;
+import java.util.Map;
 
 public class ScoreBodyVisitor implements Visitor {
 	
@@ -7,11 +8,11 @@ public class ScoreBodyVisitor implements Visitor {
 	}
 	
 	public Card visit(Plateau plateau) {
-		for(int i=0; i<5; i++) { // on parcourt les lignes
-			int sameBody = 0; // on initialise notre variable qui va compter le nombre de cartes alignés ayant le même body
-			  for(int j=0; j<3; j++) { // on parcourt les colonnes
-				if(Card Victory == CardType1 type1) { //on regarde si le body de la carte victory est le même que le body de la carte posée à la ligne i et la colonne j
-					samebody++; //si ils ont le même body alors on ajoute un 
+		
+		for(int i=1; i<=3; i++) {
+			String key = colonne+Integer.toString(i);
+			if((Card)positions.get(key) == (Card)victoryCard) { //on regarde si le body de la carte victory est le même que le body de la carte posée à la clé 
+					int sameBody = sameBody + 1;//si ils ont le même body alors on ajoute un 
 				} else {sameBody == 0}// sinon, on reprend à 0 notre compteur.
 				 
 		        switch(sameBody) {  // à la fin de la ligne, en fonction du nombre de cartes qui se suivent et qui ont le même body, on attribut les points
@@ -26,12 +27,13 @@ public class ScoreBodyVisitor implements Visitor {
 	    	             System.out.println("Vous n'avez marqué aucun point sur cette ligne.");
 	    	    }
 			 }
-	     }
-		for(int i=0; i<3; i++) { // on parcourt les colonnes
-			int sameBody = 0; 
-			  for(int j=0; j<5; j++) { // on parcourt les lignes
-				if(Card Victory == CardType1 type1) { 
-					samebody++; 
+		
+	     sameBody = 0; // on réinitialise note compteur à 0
+	     
+		for(int i=0; i<5; i++) {
+			String key = ((char)(65+i))+Integer.toString(ligne);
+			if((Card)positions.get(key) == (Card)victoryCard) {
+				    int sameBody = samebody + 1;
 				} else {sameBody == 0}
 				 
 		        switch(sameBody) {  
@@ -49,10 +51,10 @@ public class ScoreBodyVisitor implements Visitor {
 	                	 System.out.println("Vous avez marqué 4 points sur la colonne " +i);
 	                 default : 
 	    	             pointSameBodyColonne = pointSameBodyColonne + 0;
-	    	             System.out.println("Vous n'avez marqué aucun point sur cette ligne.");
+	    	             System.out.println("Vous n'avez marqué aucun point sur cette colonne.");
 	    	    }
 			 }
-	     }
+	   
 	    
 	}
 }
