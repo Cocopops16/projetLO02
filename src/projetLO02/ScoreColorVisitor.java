@@ -1,14 +1,19 @@
 package projetLO02;
 
+import java.util.Map;
+
 public class ScoreColorVisitor implements Visitor {
 	
 	public Card visit(Joueur joueur) {
-		getVictory();
+		return joueur.getVictory();
 	}
 	
-    public Card visit(Plateau plateau) {
-		
+	public Map<String, Object> visit(Plateau plateau) {
+		return plateau.getPositions();    
 	}
 	
-	
+	public int ScoreColor(Map<String, Object> positions, Card victoryCard)	{
+		int score = 0;
+		return score;
+	}
 }

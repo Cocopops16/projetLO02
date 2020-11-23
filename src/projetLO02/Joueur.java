@@ -99,7 +99,7 @@ public class Joueur {
 		placer(card, colonne, ligne);
 	}
 	
-	public void deplacer(Card card) {
+	public void deplacer() {
 		Scanner monClavier = new Scanner(System.in);
 		System.out.println("Entrez la colonne de la carte à déplacer");
 		char colonne1 = monClavier.next().charAt(0);
@@ -126,7 +126,7 @@ public class Joueur {
 		}
 		else {
 			System.out.println("Position non occupée");
-			deplacer(card);
+			deplacer();
 		}
 	}
 	

@@ -9,7 +9,7 @@ public class IA extends Joueur{
 	}
 	
 	public Strategy chooseStrategy(){
-		
+		return null;
 	}
 	
 }

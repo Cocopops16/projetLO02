@@ -132,6 +132,10 @@ public class Plateau {
 		positions.remove(key);
 	}
 	
+	public Map<String, Object> getPositions() {
+		return positions;
+	}
+	
 	public void accept(Visitor visitor) {
         visitor.visit(this);
     }

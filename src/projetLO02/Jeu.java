@@ -65,20 +65,25 @@ public class Jeu {
 					( (Joueur)playersQueue.poll() ).setVictory(deck.giveCard());
 				}
 			}
-						
-			tourDeJeu();
 		}
 	}
 	
-	private void tourDeJeu() {
-		Joueur joueurEnCours = (Joueur)playersQueue.peek()
+	public void tourDeJeu() {
+		Joueur joueurEnCours = (Joueur)playersQueue.peek();
 		playersQueue.add(playersQueue.poll());
 		joueurEnCours.piocher(deck.giveCard());
 		
-		if(joueurEnCours.getIA()==false) {
+		if(!joueurEnCours.getIA()) {
 			joueurEnCours.placer(joueurEnCours.chooseCardToPlay());
+			if(joueurEnCours.choixSiDeplacer()) {
+				joueurEnCours.deplacer();
+			}
 		}
-		
+		else if(joueurEnCours.getIA()) {
+			IA IAEnCours = (IA)joueurEnCours;
+			IAEnCours.chooseStrategy();
+		}
+		else System.out.println("problème sur le joueur : "+joueurEnCours.getName()+", est-il une IA ?");
 	}
 
  	public void setModeSpecial() {
@@ -124,5 +129,9 @@ public class Jeu {
 	
 	public Plateau getPlateau() {
 		return plateau;
+	}
+	
+	public Deck getDeck() {
+		return deck;
 	}
 }
