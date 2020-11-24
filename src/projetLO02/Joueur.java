@@ -1,5 +1,6 @@
 package projetLO02;
 
+import java.util.Map;
 import java.util.Scanner;
 
 public class Joueur {
@@ -130,7 +131,7 @@ public class Joueur {
 		}
 	}
 	
-	public void accept(Visitor visitor) {
-        visitor.visit(this);
+	public int accept(Visitor visitor, Map<String, Object> positions) {
+        return visitor.visit(positions, this.victoryCard);
     }
 }

@@ -136,7 +136,7 @@ public class Plateau {
 		return positions;
 	}
 	
-	public void accept(Visitor visitor) {
-        visitor.visit(this);
+	public Map<String, Object> accept(Visitor visitor) {
+        return visitor.visit(this.positions);
     }
 }

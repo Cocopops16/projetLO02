@@ -10,12 +10,10 @@ public class Main {
 			jeu.tourDeJeu();
 		}
 		if(jeu.getDeck().isDeckEmpty()) {
-			Visitor visitor1 = new ScoreBodyVisitor();
-			Visitor visitor2 = new ScoreColorVisitor();
-			Visitor visitor3 = new ScoreShapeVisitor();
-			
-			
+			jeu.comptagePoints();
+			System.out.println("End of the game");
 		}
+		else System.out.println("Problème critique dans le déroulement de la partie");
 	}
 
 }
