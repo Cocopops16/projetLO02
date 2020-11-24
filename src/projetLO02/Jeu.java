@@ -19,9 +19,9 @@ public class Jeu {
 		int xMax = monClavier.nextInt();
 		System.out.println("Entrez la hauteur du plateau :");
 		int yMax = monClavier.nextInt();
-		plateau = new Plateau(xMax, yMax);
+		this.plateau = new Plateau(xMax, yMax);
 		
-		deck = new Deck();
+		this.deck = new Deck();
 	}
 	
 	public void start() {		
@@ -31,44 +31,44 @@ public class Jeu {
 		if((this.nbrIA+this.nbrJoueurs) >= 3)
 			start();
 		else {
-			deck.shuffleCards();
-			hiddenCard = deck.giveCard();
+			this.deck.shuffleCards();
+			this.hiddenCard = this.deck.giveCard();
 			for(int i=0; i<this.nbrJoueurs; i++) {
 				System.out.println("Entrez le nom du Joueur n°"+i+" :");
-				String name = monClavier.nextLine();
-				playersQueue.add(new Joueur(name, this));
-				System.out.println("Bienvenue "+ ((Joueur)playersQueue.peek()).getName() );
+				String name = monClavier.next();
+				this.playersQueue.add(new Joueur(name, this));
+				System.out.println("Bienvenue "+ ((Joueur)this.playersQueue.peek()).getName() );
 			}
 			
 			for(int i=0; i<this.nbrIA; i++) {
 				switch(i) {
 					case 0:
-						playersQueue.add(new IA("Billy", this));
-						System.out.println( ((Joueur)playersQueue.peek()).getName() +" est dans la place !");
+						this.playersQueue.add(new IA("Billy", this));
+						System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" est dans la place !");
 					case 1:
-						playersQueue.add(new IA("Cratos", this));
-						System.out.println("Attention, "+ ((Joueur)playersQueue.peek()).getName() +" est arrivé avec un air effrayant !");
+						this.playersQueue.add(new IA("Cratos", this));
+						System.out.println("Attention, "+ ((Joueur)this.playersQueue.peek()).getName() +" est arrivé avec un air effrayant !");
 					case 2:
-						playersQueue.add(new IA("Price", this));
-						System.out.println(((Joueur)playersQueue.peek()).getName() +" est dans les parrages, vous avez vraiment décidé de ne pas vous salir les mains aujourd'hui !");
+						this.playersQueue.add(new IA("Price", this));
+						System.out.println(((Joueur)this.playersQueue.peek()).getName() +" est dans les parrages, vous avez vraiment décidé de ne pas vous salir les mains aujourd'hui !");
 				}
 			}
 			
 			for(int i=0; i<(this.nbrIA+this.nbrJoueurs); i++) {
-				playersQueue.add(playersQueue.peek());
-				( (Joueur)playersQueue.poll() ).setVictory(deck.giveCard());
-				if(modeSpecial) {
-					( (Joueur)playersQueue.poll() ).setVictory(deck.giveCard());
-					( (Joueur)playersQueue.poll() ).setVictory(deck.giveCard());
+				this.playersQueue.add(this.playersQueue.peek());
+				( (Joueur)this.playersQueue.poll() ).setVictory(this.deck.giveCard());
+				if(this.modeSpecial) {
+					( (Joueur)this.playersQueue.poll() ).setVictory(this.deck.giveCard());
+					( (Joueur)this.playersQueue.poll() ).setVictory(this.deck.giveCard());
 				}
 			}
 		}
 	}
 	
 	public void tourDeJeu() {
-		Joueur joueurEnCours = (Joueur)playersQueue.peek();
-		playersQueue.add(playersQueue.poll());
-		joueurEnCours.piocher(deck.giveCard());
+		Joueur joueurEnCours = (Joueur)this.playersQueue.peek();
+		this.playersQueue.add(this.playersQueue.poll());
+		joueurEnCours.piocher(this.deck.giveCard());
 		
 		if(!joueurEnCours.getIA()) {
 			joueurEnCours.placer(joueurEnCours.chooseCardToPlay());
@@ -91,14 +91,14 @@ public class Jeu {
 		int scorePremier = -1;
 		String premier = new String();
 		for(int i=0; i<(this.nbrIA+this.nbrJoueurs); i++) {
-			scoreFinal = ( ( (Joueur)playersQueue.peek() ).accept(visitor1, plateau.accept(visitor1)) + ( (Joueur)playersQueue.peek() ).accept(visitor2, plateau.accept(visitor1)) + ( (Joueur)playersQueue.peek() ).accept(visitor3, plateau.accept(visitor1)));
-			System.out.println("Le joueur : "+( (Joueur)playersQueue.peek() ).getName()+" a accumulé : "+scoreFinal+" points");
+			scoreFinal = ( ( (Joueur)this.playersQueue.peek() ).accept(visitor1, this.plateau.accept(visitor1)) + ( (Joueur)this.playersQueue.peek() ).accept(visitor2, this.plateau.accept(visitor1)) + ( (Joueur)this.playersQueue.peek() ).accept(visitor3, this.plateau.accept(visitor1)));
+			System.out.println("Le joueur : "+( (Joueur)this.playersQueue.peek() ).getName()+" a accumulé : "+scoreFinal+" points");
 			if(scoreFinal>scorePremier) {
 				scorePremier = scoreFinal;
-				premier = ( (Joueur)playersQueue.poll() ).getName();
+				premier = ( (Joueur)this.playersQueue.poll() ).getName();
 			}
 			else {
-				playersQueue.poll();
+				this.playersQueue.poll();
 			}
 		}
 		System.out.println("Félicitations "+premier+" ton plan s'est déroulé sans accros ;)");
@@ -141,14 +141,14 @@ public class Jeu {
  	}
 	
 	public Plateau getPlateau() {
-		return plateau;
+		return this.plateau;
 	}
 	
 	public Deck getDeck() {
-		return deck;
+		return this.deck;
 	}
 	
 	public Card getHinddenCard() {
-		return hiddenCard;
+		return this.hiddenCard;
 	}
 }

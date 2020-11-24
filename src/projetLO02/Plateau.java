@@ -13,7 +13,7 @@ public class Plateau {
 		this.yMax = yMax;
 		this.isFull = false;
 		this.firstCard = false;
-		positions = new TreeMap<String, Object>();
+		this.positions = new TreeMap<String, Object>();
 	}
 	
 	public void setFirstCard() {
@@ -43,7 +43,7 @@ public class Plateau {
 	public boolean checkMaxXReached(int ligne) {
 		for(int i=0; i<5; i++) {
 			String key = ((char)(65+i))+Integer.toString(ligne);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 		}
 		return true;
 	}
@@ -51,7 +51,7 @@ public class Plateau {
 	public boolean checkMaxYReached(char colonne) {
 		for(int i=1; i<=3; i++) {
 			String key = colonne+Integer.toString(i);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 		}
 		return true;
 	}
@@ -61,46 +61,46 @@ public class Plateau {
 		
 		if(colonne=='A') {
 			key = ((char)(65+this.xMax))+Integer.toString(ligne);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 			
 			key = ((char)((int)(colonne)+1))+Integer.toString(ligne);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 		}
 		else if(colonne==((char)(65+this.xMax)) ) {
 			key = ((char)((int)(colonne)-1))+Integer.toString(ligne);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 			
 			key = "A"+Integer.toString(ligne);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 		}
 		else {
 			key = ((char)((int)(colonne)-1))+Integer.toString(ligne);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 			
 			key = ((char)((int)(colonne)+1))+Integer.toString(ligne);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 		}
 		
 		if(ligne==1) {
 			key = colonne+Integer.toString(this.yMax);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 			
 			key = colonne+Integer.toString(ligne+1);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 		}
 		else if(ligne==this.yMax) {
 			key = colonne+Integer.toString(ligne-1);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 			
 			key = colonne+Integer.toString(1);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 		}
 		else {
 			key = colonne+Integer.toString(ligne-1);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 			
 			key = colonne+Integer.toString(ligne+1);
-			if(!positions.containsKey(key)) return false;
+			if(!this.positions.containsKey(key)) return false;
 		}
 		return true;
 	}
@@ -112,28 +112,28 @@ public class Plateau {
 		String key = colonne+Integer.toString(ligne);
 		
 		if(isPosAlreadyTaken(colonne, ligne)) {
-			positions.remove(key);
+			this.positions.remove(key);
 		}
-		positions.put(key, card);
+		this.positions.put(key, card);
 	}
 	
 	public Card getCard(char colonne, int ligne) {
 		String key = colonne+Integer.toString(ligne);
-		return (Card)positions.get(key);
+		return (Card)this.positions.get(key);
 	}
 	
 	public boolean isPosAlreadyTaken(char colonne, int ligne) {
 		String key = colonne+Integer.toString(ligne);
-		return positions.containsKey(key);
+		return this.positions.containsKey(key);
 	}
 	
 	public void removeCard(char colonne, int ligne) {
 		String key = colonne+Integer.toString(ligne);
-		positions.remove(key);
+		this.positions.remove(key);
 	}
 	
 	public Map<String, Object> getPositions() {
-		return positions;
+		return this.positions;
 	}
 	
 	public Map<String, Object> accept(Visitor visitor) {
