@@ -70,3 +70,4 @@ public class ScoreBodyVisitor implements Visitor {
 		return score;
 	}
 }
+

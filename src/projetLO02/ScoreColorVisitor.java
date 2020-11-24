@@ -70,3 +70,4 @@ public class ScoreColorVisitor implements Visitor {
 		return score;
 	}
 }
+

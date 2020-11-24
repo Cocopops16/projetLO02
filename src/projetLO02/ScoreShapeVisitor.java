@@ -11,7 +11,7 @@ public class ScoreShapeVisitor implements Visitor {
 	public Map<String, Object> visit(Map<String, Object> positions) {
 		return positions;    
 	}
-		
+
 	private int ScoreShape(Map<String, Object> positions, Card victoryCard) {
 		int score = 0;
 		int scorePartiel = 0;
