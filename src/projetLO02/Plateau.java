@@ -3,7 +3,7 @@ package projetLO02;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Plateau {
+public class Plateau implements Visitable{
 	private Map<String, Object> positions;
 	private int xMax, yMax;
 	private boolean isFull, firstCard;

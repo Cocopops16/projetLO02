@@ -2,7 +2,7 @@ package projetLO02;
 
 import java.util.Scanner;
 
-public class Joueur {
+public class Joueur implements Visitable {
 	private boolean isIA;
 	private String name;
 	private Card victoryCard;
