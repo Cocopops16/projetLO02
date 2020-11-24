@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Deck {
 	private Queue<Object> shuffledCards = new LinkedList<Object>();
 	private List<Object> tabCards;
+	private static final Scanner monClavier = new Scanner(System.in);
 	
 	public Deck() {
 		this.tabCards = new LinkedList<Object>();
@@ -40,10 +42,26 @@ public class Deck {
 	public void shuffleCards() {
 		for(int i=0; i<18; i++) {
 			int index = randomizer();
-			System.out.println(this.tabCards.get(index).toString());
 			this.shuffledCards.add(this.tabCards.get(index));
 			this.tabCards.remove(index);
 		}
+	}
+	
+	public Card modePerso() {
+		System.out.println("Choix de la victoryCard");
+		for(int i=0; i<18; i++) {
+			System.out.println( ( (Card)this.tabCards.get(i) ).toString() );
+			System.out.println("Prendre cette carte ? y/n");
+			char choix = monClavier.next().charAt(0);
+			if((choix=='y')||(choix=='Y')) {
+				return (Card)this.tabCards.get(i);
+			}
+		}
+		System.out.println("Nous avons choisi une Victory Card pour vous");
+		int index = randomizer();
+		Card card = (Card)this.tabCards.get(index);
+		this.tabCards.remove(index);
+		return card;
 	}
 	
 	public Card giveCard() {

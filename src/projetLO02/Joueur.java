@@ -15,6 +15,7 @@ public class Joueur {
 		this.name = name;
 		this.isIA = false;
 		this.jeu = jeuEnCours;
+		this.myHand = new Hand();
 	}
 	
 	public String getName() {
@@ -26,10 +27,12 @@ public class Joueur {
 	}
 	
 	public void piocher(Card card) {
+		System.out.println("Vous piochez : " + card.toString());
 		this.myHand.addCardToHand(card);
 	}
 	
 	public void setVictory(Card card) {
+		System.out.println("Victory Card de "+this.name+ " : " + card.toString());
 		this.victoryCard = card;
 	}
 	
@@ -53,12 +56,13 @@ public class Joueur {
 		System.out.println("Veuillez choisir le numéro d'une carte :");
 		System.out.println(myHand.toString());
 		int numCard = monClavier.nextInt();
+		numCard = numCard-1;
 		return this.myHand.getCard(numCard);
 	}
 	
 	public void placer(Card card, char colonne, int ligne) {
 		if(this.jeu.getPlateau().getFirstCard()) {
-			if(this.jeu.getPlateau().isPosAlreadyTaken(colonne, ligne)) {
+			if(!this.jeu.getPlateau().isPosAlreadyTaken(colonne, ligne)) {
 				if( (!this.jeu.getPlateau().checkMaxXReached(ligne)) && (!this.jeu.getPlateau().checkMaxYReached(colonne)) ) {
 					if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
 						this.jeu.getPlateau().setCard(card, colonne, ligne);
@@ -86,6 +90,7 @@ public class Joueur {
 			System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
 			this.myHand.removeCardFromHand(card);
 		}
+		System.out.println(this.jeu.getPlateau().toString());
 	}
 	
 	public void placer(Card card) {
@@ -125,6 +130,7 @@ public class Joueur {
 			System.out.println("Position non occupée");
 			deplacer();
 		}
+		System.out.println(this.jeu.getPlateau().toString());
 	}
 	
 	public int accept(Visitor visitor, Map<String, Object> positions) {

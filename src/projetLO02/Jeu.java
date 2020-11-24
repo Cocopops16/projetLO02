@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Jeu {
 	private int nbrJoueurs, nbrIA;
-	private boolean modeSpecial;
+	private Mode mode;
 	private Card hiddenCard;
 	private Plateau plateau;
 	private Deck deck;
@@ -25,48 +25,61 @@ public class Jeu {
 	}
 	
 	public void start() {		
-		setModeSpecial();
+		setMode();
 		setNbrJoueurs();
 		setNbrIA();
-		if((this.nbrIA+this.nbrJoueurs) >= 3)
+		if((this.nbrIA+this.nbrJoueurs) > 3)
 			start();
 		else {
-			this.deck.shuffleCards();
-			this.hiddenCard = this.deck.giveCard();
 			for(int i=0; i<this.nbrJoueurs; i++) {
 				System.out.println("Entrez le nom du Joueur n°"+i+" :");
 				String name = monClavier.next();
 				this.playersQueue.add(new Joueur(name, this));
-				System.out.println("Bienvenue "+ ((Joueur)this.playersQueue.peek()).getName() );
+				System.out.println("Bienvenue "+ name);
 			}
 			
 			for(int i=0; i<this.nbrIA; i++) {
 				switch(i) {
 					case 0:
 						this.playersQueue.add(new IA("Billy", this));
-						System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" est dans la place !");
+						System.out.println( "Billy est dans la place !");
 					case 1:
 						this.playersQueue.add(new IA("Cratos", this));
-						System.out.println("Attention, "+ ((Joueur)this.playersQueue.peek()).getName() +" est arrivé avec un air effrayant !");
+						System.out.println("Attention, Cratos est arrivé avec un air effrayant !");
 					case 2:
 						this.playersQueue.add(new IA("Price", this));
-						System.out.println(((Joueur)this.playersQueue.peek()).getName() +" est dans les parrages, vous avez vraiment décidé de ne pas vous salir les mains aujourd'hui !");
+						System.out.println("Price est dans les parrages, vous avez vraiment décidé de ne pas vous salir les mains aujourd'hui !");
 				}
 			}
 			
-			for(int i=0; i<(this.nbrIA+this.nbrJoueurs); i++) {
-				this.playersQueue.add(this.playersQueue.peek());
-				( (Joueur)this.playersQueue.poll() ).setVictory(this.deck.giveCard());
-				if(this.modeSpecial) {
-					( (Joueur)this.playersQueue.poll() ).setVictory(this.deck.giveCard());
-					( (Joueur)this.playersQueue.poll() ).setVictory(this.deck.giveCard());
-				}
+			if(this.mode != Mode.Personnalisé) {
+				this.deck.shuffleCards();
 			}
+			
+			for(int i=0; i<(this.nbrIA+this.nbrJoueurs); i++) {
+				if(this.mode == Mode.Personnalisé) {
+					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.modePerso());
+				}
+				else {
+					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.giveCard());
+					if(this.mode == Mode.Avancé) {
+						( (Joueur)this.playersQueue.peek() ).piocher(this.deck.giveCard());
+						( (Joueur)this.playersQueue.peek() ).piocher(this.deck.giveCard());
+					}
+				}
+				this.playersQueue.add(this.playersQueue.poll());
+			}
+			
+			if(this.mode == Mode.Personnalisé) {
+				this.deck.shuffleCards();
+			}
+			this.hiddenCard = this.deck.giveCard();
 		}
 	}
 	
 	public void tourDeJeu() {
 		Joueur joueurEnCours = (Joueur)this.playersQueue.peek();
+		System.out.println("C'est au tour de : " + joueurEnCours.getName());
 		this.playersQueue.add(this.playersQueue.poll());
 		joueurEnCours.piocher(this.deck.giveCard());
 		
@@ -105,17 +118,23 @@ public class Jeu {
 		monClavier.close();
 	}
 
- 	public void setModeSpecial() {
-		System.out.println("Entrez le mode de jeu : \n- 1= Classique\n- 2= personnalisé (choix de la VictoryCard)");
-		int mode = monClavier.nextInt();
+ 	public void setMode() {
+		System.out.println("Entrez le mode de jeu : \n- 1= Classique\n-2= Avancé (main de 3 cartes)\n- 3= personnalisé (choix de la VictoryCard)");
+		int choix = monClavier.nextInt();
 		
-		if(mode==1) {
-			this.modeSpecial = false;
+		switch(choix) {
+			case 1: 
+				this.mode = Mode.Classique;
+				break;
+			case 2:
+				this.mode = Mode.Avancé;
+				break;
+			case 3:
+				this.mode = Mode.Personnalisé;
+				break;
+			default:
+				this.mode = Mode.Classique;
 		}
-		else if(mode==2) {
-			this.modeSpecial = true;
-		}
-		else setModeSpecial();
 	}
 	
 	public void setNbrJoueurs() {
@@ -128,8 +147,8 @@ public class Jeu {
 		this.nbrIA = monClavier.nextInt();
 	}
 	
-	public boolean getMode() {
-		return this.modeSpecial;
+	public Mode getMode() {
+		return this.mode;
 	}
 	
 	public int getNbrJoueurs() {		

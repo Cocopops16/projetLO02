@@ -61,48 +61,48 @@ public class Plateau {
 		
 		if(colonne=='A') {
 			key = ((char)(65+this.xMax))+Integer.toString(ligne);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 			
 			key = ((char)((int)(colonne)+1))+Integer.toString(ligne);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 		}
 		else if(colonne==((char)(65+this.xMax)) ) {
 			key = ((char)((int)(colonne)-1))+Integer.toString(ligne);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 			
 			key = "A"+Integer.toString(ligne);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 		}
 		else {
 			key = ((char)((int)(colonne)-1))+Integer.toString(ligne);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 			
 			key = ((char)((int)(colonne)+1))+Integer.toString(ligne);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 		}
 		
 		if(ligne==1) {
 			key = colonne+Integer.toString(this.yMax);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 			
 			key = colonne+Integer.toString(ligne+1);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 		}
 		else if(ligne==this.yMax) {
 			key = colonne+Integer.toString(ligne-1);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 			
 			key = colonne+Integer.toString(1);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 		}
 		else {
 			key = colonne+Integer.toString(ligne-1);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 			
 			key = colonne+Integer.toString(ligne+1);
-			if(!this.positions.containsKey(key)) return false;
+			if(this.positions.containsKey(key)) return true;
 		}
-		return true;
+		return false;
 	}
 	
 	public void setCard(Card card, char colonne, int ligne) {
@@ -139,4 +139,21 @@ public class Plateau {
 	public Map<String, Object> accept(Visitor visitor) {
         return visitor.visit(this.positions);
     }
+	
+	public String toString() {
+		String affichageCartes = new String();
+		for(int j=1; j<=3; j++) {
+			for(int i=0; i<5; i++) {
+				String key = ((char)(65+i))+Integer.toString(j);
+				if(positions.containsKey(key)) {
+					affichageCartes = affichageCartes + " " + key + ":" + ( (Card)(this.positions.get(key)) ).toString();
+				}
+				else {
+					affichageCartes = affichageCartes + " " + key + ":" + "noCard";
+				}
+				if(i==4) affichageCartes = affichageCartes + "\n";
+			}
+		}
+		return affichageCartes;
+	}
 }
