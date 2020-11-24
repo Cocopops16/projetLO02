@@ -33,14 +33,16 @@ public class Deck {
 	
 	private int randomizer() {
 		Random rand = new Random();
-		int nbr = rand.nextInt(this.tabCards.size()) + 1;
+		int nbr = rand.nextInt(this.tabCards.size());
 		return nbr;
 	}
 	
 	public void shuffleCards() {
 		for(int i=0; i<18; i++) {
 			int index = randomizer();
+			System.out.println(this.tabCards.get(index).toString());
 			this.shuffledCards.add(this.tabCards.get(index));
+			this.tabCards.remove(index);
 		}
 	}
 	
