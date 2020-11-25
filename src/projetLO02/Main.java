@@ -6,10 +6,10 @@ public class Main {
 		// TODO Auto-generated method stub
 		Jeu jeu = new Jeu();
 		jeu.start();
-		while(!jeu.getDeck().isDeckEmpty()) {
+		while(!jeu.checkEndGame()) {
 			jeu.tourDeJeu();
 		}
-		if(jeu.getDeck().isDeckEmpty()) {
+		if(jeu.checkEndGame()) {
 			jeu.comptagePoints();
 			System.out.println("End of the game");
 		}

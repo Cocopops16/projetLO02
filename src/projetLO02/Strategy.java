@@ -1,5 +1,7 @@
 package projetLO02;
 
-public interface Strategy {
+import java.util.Map;
 
+public interface Strategy {
+	public String searchBestPosition(Map<String, Object> positions, Card victoryCard);
 }

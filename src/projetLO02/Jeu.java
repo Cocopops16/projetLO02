@@ -32,10 +32,14 @@ public class Jeu {
 			start();
 		else {
 			for(int i=0; i<this.nbrJoueurs; i++) {
-				System.out.println("Entrez le nom du Joueur n°"+i+" :");
+				System.out.println("Entrez le nom du Joueur n°"+(i+1)+" :");
 				String name = monClavier.next();
 				this.playersQueue.add(new Joueur(name, this));
 				System.out.println("Bienvenue "+ name);
+			}
+			for(int i=0; i<this.nbrJoueurs; i++) {
+				((Joueur)this.playersQueue.peek()).setIA(false);
+				this.playersQueue.add(this.playersQueue.poll());
 			}
 			
 			for(int i=0; i<this.nbrIA; i++) {
@@ -43,12 +47,21 @@ public class Jeu {
 					case 0:
 						this.playersQueue.add(new IA("Billy", this));
 						System.out.println( "Billy est dans la place !");
+						break;
 					case 1:
 						this.playersQueue.add(new IA("Cratos", this));
 						System.out.println("Attention, Cratos est arrivé avec un air effrayant !");
+						break;
 					case 2:
 						this.playersQueue.add(new IA("Price", this));
 						System.out.println("Price est dans les parrages, vous avez vraiment décidé de ne pas vous salir les mains aujourd'hui !");
+						break;
+				}
+			}
+			for(int i=0; i<(this.nbrJoueurs+this.nbrIA); i++) {
+				if(i>=this.nbrJoueurs) {
+					((Joueur)this.playersQueue.peek()).setIA(true);
+					this.playersQueue.add(this.playersQueue.poll());
 				}
 			}
 			
@@ -91,9 +104,21 @@ public class Jeu {
 		}
 		else if(joueurEnCours.getIA()) {
 			IA IAEnCours = (IA)joueurEnCours;
-			IAEnCours.chooseStrategy();
+			IAEnCours.jouer();
 		}
 		else System.out.println("problème sur le joueur : "+joueurEnCours.getName()+", est-il une IA ?");
+	}
+	
+	public boolean checkEndGame() {
+		if(this.deck.isDeckEmpty()) {
+			if( ((this.nbrIA+this.nbrJoueurs) == 3) && (this.plateau.getPositions().size()==14) )
+				return true;
+			else if( ((this.nbrIA+this.nbrJoueurs) == 2) && (this.plateau.getPositions().size()==15) )
+				return true;
+			else 
+				return false;
+		}
+		else return false;
 	}
 	
 	public void comptagePoints() {
@@ -155,7 +180,7 @@ public class Jeu {
 		return this.nbrJoueurs;
 	}
 	
-	public int getNbrIa() {
+	public int getNbrIA() {
 		return this.nbrIA;
  	}
 	

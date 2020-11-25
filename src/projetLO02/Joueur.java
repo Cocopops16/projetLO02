@@ -6,20 +6,23 @@ import java.util.Scanner;
 public class Joueur {
 	private boolean isIA;
 	private String name;
-	private Card victoryCard;
-	private Hand myHand;
-	private Jeu jeu;
+	protected Card victoryCard;
+	protected Hand myHand;
+	protected Jeu jeu;
 	private static final Scanner monClavier = new Scanner(System.in);
 	
 	public Joueur(String name, Jeu jeuEnCours) {
 		this.name = name;
-		this.isIA = false;
 		this.jeu = jeuEnCours;
 		this.myHand = new Hand();
 	}
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public void setIA(boolean etat) {
+		this.isIA = etat;
 	}
 	
 	public boolean getIA() {
@@ -70,17 +73,17 @@ public class Joueur {
 						this.myHand.removeCardFromHand(card);
 					}
 					else {
-						System.out.println("Pas de cartes autour");
+						System.out.println("Pas de cartes autour ("+colonne+";"+ligne+")");
 						placer(card);
 					}
 				}
 				else {
-					System.out.println("maximum du plateau atteint pour cette position");
+					System.out.println("maximum du plateau atteint pour cette position : ("+colonne+";"+ligne+")");
 					placer(card);
 				}
 			}
 			else {
-				System.out.println("Position déjà occupé");
+				System.out.println("Position : ("+colonne+";"+ligne+") déjà occupé");
 				placer(card);
 			}
 		}
