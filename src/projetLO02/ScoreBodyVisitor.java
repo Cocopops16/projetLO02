@@ -21,8 +21,8 @@ public class ScoreBodyVisitor implements Visitor {
 				String key = ((char)(65+i))+Integer.toString(j);
 				if(positions.containsKey(key)) {
 					Card card = (Card)positions.get(key);
-					if(card.getType3()==victoryCard.getType3()) {
-						scorePartiel = scorePartiel++;
+					if(card.getType2()==victoryCard.getType2()) {
+						scorePartiel++;
 					}
 					else{
 						if(scorePartiel>2) {
@@ -37,6 +37,9 @@ public class ScoreBodyVisitor implements Visitor {
 					}
 				}
 			}
+			if(scorePartiel>2) {
+				score = score+scorePartiel;
+			}
 			scorePartiel = 0;
 		}
 		
@@ -45,8 +48,8 @@ public class ScoreBodyVisitor implements Visitor {
 				String key = ((char)(65+i))+Integer.toString(j);
 				if(positions.containsKey(key)) {
 					Card card = (Card)positions.get(key);
-					if(card.getType3()==victoryCard.getType3()) {
-						scorePartiel = scorePartiel++;
+					if(card.getType2()==victoryCard.getType2()) {
+						scorePartiel++;
 					}
 					else{
 						if(scorePartiel>2) {
@@ -63,6 +66,9 @@ public class ScoreBodyVisitor implements Visitor {
 						}
 					}
 				}
+			}
+			if(scorePartiel>2) {
+				score = score+scorePartiel;
 			}
 			scorePartiel = 0;
 		}

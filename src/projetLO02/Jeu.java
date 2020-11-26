@@ -129,7 +129,9 @@ public class Jeu {
 		int scorePremier = -1;
 		String premier = new String();
 		for(int i=0; i<(this.nbrIA+this.nbrJoueurs); i++) {
-			scoreFinal = ( ( (Joueur)this.playersQueue.peek() ).accept(visitor1, this.plateau.accept(visitor1)) + ( (Joueur)this.playersQueue.peek() ).accept(visitor2, this.plateau.accept(visitor1)) + ( (Joueur)this.playersQueue.peek() ).accept(visitor3, this.plateau.accept(visitor1)));
+			scoreFinal = scoreFinal + ( (Joueur)this.playersQueue.peek() ).accept(visitor1, this.plateau.accept(visitor1));
+			scoreFinal = scoreFinal + ( (Joueur)this.playersQueue.peek() ).accept(visitor2, this.plateau.accept(visitor1));
+			scoreFinal = scoreFinal + ( (Joueur)this.playersQueue.peek() ).accept(visitor3, this.plateau.accept(visitor1));
 			System.out.println("Le joueur : "+( (Joueur)this.playersQueue.peek() ).getName()+" a accumulé : "+scoreFinal+" points");
 			if(scoreFinal>scorePremier) {
 				scorePremier = scoreFinal;
@@ -138,8 +140,9 @@ public class Jeu {
 			else {
 				this.playersQueue.poll();
 			}
+			scoreFinal = 0;
 		}
-		System.out.println("Félicitations "+premier+" ton plan s'est déroulé sans accros ;)");
+		System.out.println("Félicitations "+premier+" ton plan s'est déroulé sans accros ;) , tu as gagné avec : "+scorePremier+" points");
 		monClavier.close();
 	}
 

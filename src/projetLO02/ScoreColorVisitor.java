@@ -22,7 +22,7 @@ public class ScoreColorVisitor implements Visitor {
 				if(positions.containsKey(key)) {
 					Card card = (Card)positions.get(key);
 					if(card.getType3()==victoryCard.getType3()) {
-						scorePartiel = scorePartiel++;
+						scorePartiel++;
 					}
 					else{
 						if(scorePartiel>2) {
@@ -37,6 +37,9 @@ public class ScoreColorVisitor implements Visitor {
 					}
 				}
 			}
+			if(scorePartiel>2) {
+				score = score+scorePartiel+1;
+			}
 			scorePartiel = 0;
 		}
 		
@@ -46,7 +49,7 @@ public class ScoreColorVisitor implements Visitor {
 				if(positions.containsKey(key)) {
 					Card card = (Card)positions.get(key);
 					if(card.getType3()==victoryCard.getType3()) {
-						scorePartiel = scorePartiel++;
+						scorePartiel++;
 					}
 					else{
 						if(scorePartiel>2) {
@@ -63,6 +66,9 @@ public class ScoreColorVisitor implements Visitor {
 						}
 					}
 				}
+			}
+			if(scorePartiel>2) {
+				score = score+scorePartiel+1;
 			}
 			scorePartiel = 0;
 		}
