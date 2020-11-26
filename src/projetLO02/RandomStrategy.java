@@ -1,49 +1,53 @@
 package projetLO02;
 
-import java.util.Map;
-
 public class RandomStrategy implements Strategy {
 
-	public String searchBestPosition(Map<String, Object> positions, Card victoryCard) {
+	public String searchBestPosition(Plateau plateau, Card victoryCard) {
 		String key = new String();
-		int carteABloquer = 0;
+		String key2 = new String();
+		char colonne;
+		int ligne;
 		
 		for(int i=0; i<5; i++) {
 			for(int j=1; j<=3; j++) {
-				key = ((char)(65+i))+Integer.toString(j);
-				if(positions.containsKey(key)) {
-					Card card = (Card)positions.get(key);
-					if( (card.getType1()!=victoryCard.getType1())&&(card.getType1()!=victoryCard.getType1())&&(card.getType1()!=victoryCard.getType1()) ) {
-						carteABloquer = carteABloquer++;
+				colonne = (char)(65+i);
+				ligne = j;
+				key = colonne+Integer.toString(j);
+				if(plateau.getPositions().containsKey(key)) {
+					if(colonne=='A') {
+						key2 = ((char)((int)(colonne)+1))+Integer.toString(ligne);
+						if(!plateau.getPositions().containsKey(key2)) return key2;
 					}
-					else if(carteABloquer>0) {
-							return key;
+					else if(colonne==((char)(65+plateau.getXMax()-1)) ) {
+						key2 = ((char)((int)(colonne)-1))+Integer.toString(ligne);
+						if(!plateau.getPositions().containsKey(key2)) return key2;
+					}
+					else {
+						key2 = ((char)((int)(colonne)-1))+Integer.toString(ligne);
+						if(!plateau.getPositions().containsKey(key2)) return key2;
+						
+						key2 = ((char)((int)(colonne)+1))+Integer.toString(ligne);
+						if(!plateau.getPositions().containsKey(key2)) return key2;
+					}
+					
+					if(ligne==1) {
+						key2 = colonne+Integer.toString(ligne+1);
+						if(!plateau.getPositions().containsKey(key2)) return key2;
+					}
+					else if(ligne==plateau.getYMax()) {
+						key2 = colonne+Integer.toString(ligne-1);
+						if(!plateau.getPositions().containsKey(key2)) return key2;
+					}
+					else {
+						key2 = colonne+Integer.toString(ligne-1);
+						if(!plateau.getPositions().containsKey(key2)) return key2;
+						
+						key2 = colonne+Integer.toString(ligne+1);
+						if(!plateau.getPositions().containsKey(key2)) return key2;
 					}
 				}
 			}
-			carteABloquer = 0;
 		}
-		
-		for(int j=1; j<=3; j++) {
-			for(int i=0; i<5; i++) {
-				key = ((char)(65+i))+Integer.toString(j);
-				if(positions.containsKey(key)) {
-					Card card = (Card)positions.get(key);
-					if( (card.getType1()!=victoryCard.getType1())&&(card.getType1()!=victoryCard.getType1())&&(card.getType1()!=victoryCard.getType1()) ) {
-						carteABloquer = carteABloquer++;
-						if(carteABloquer<i) {
-							String key2 =((char)(65+i-carteABloquer))+Integer.toString(j);
-							return key2;
-						}
-					}
-					else if(carteABloquer>0) {
-						return key;
-					}
-				}
-			}
-			carteABloquer = 0;
-		}
-		
 		return null;
 	}
 

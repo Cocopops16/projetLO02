@@ -59,18 +59,12 @@ public class Plateau {
 	public boolean checkSiCartesAutour(char colonne, int ligne) {
 		String key;
 		
-		if(colonne=='A') {
-			key = ((char)(65+this.xMax))+Integer.toString(ligne);
-			if(this.positions.containsKey(key)) return true;
-			
+		if(colonne=='A') {			
 			key = ((char)((int)(colonne)+1))+Integer.toString(ligne);
 			if(this.positions.containsKey(key)) return true;
 		}
-		else if(colonne==((char)(65+this.xMax)) ) {
+		else if(colonne==((char)(65+this.xMax-1)) ) {
 			key = ((char)((int)(colonne)-1))+Integer.toString(ligne);
-			if(this.positions.containsKey(key)) return true;
-			
-			key = "A"+Integer.toString(ligne);
 			if(this.positions.containsKey(key)) return true;
 		}
 		else {
@@ -82,17 +76,11 @@ public class Plateau {
 		}
 		
 		if(ligne==1) {
-			key = colonne+Integer.toString(this.yMax);
-			if(this.positions.containsKey(key)) return true;
-			
 			key = colonne+Integer.toString(ligne+1);
 			if(this.positions.containsKey(key)) return true;
 		}
 		else if(ligne==this.yMax) {
 			key = colonne+Integer.toString(ligne-1);
-			if(this.positions.containsKey(key)) return true;
-			
-			key = colonne+Integer.toString(1);
 			if(this.positions.containsKey(key)) return true;
 		}
 		else {

@@ -24,17 +24,17 @@ public class IA extends Joueur{
 		boolean type2Best = false;
 		boolean type3Best = false;
 		
-		for(int i=0; i<3; i++) {
+		for(int i=0; i<this.myHand.checkNombreCartes(); i++) {
 			if(this.myHand.getCard(i).getType1()==this.victoryCard.getType1()) {
-				nbrTypeCommuns = nbrTypeCommuns++;
+				nbrTypeCommuns = nbrTypeCommuns+1;
 				type1 = true;
 			}
-			else if(this.myHand.getCard(i).getType2()==this.victoryCard.getType2()) {
-				nbrTypeCommuns = nbrTypeCommuns++;
+			if(this.myHand.getCard(i).getType2()==this.victoryCard.getType2()) {
+				nbrTypeCommuns = nbrTypeCommuns+1;
 				type2 = true;
 			}
-			else if(this.myHand.getCard(i).getType3()==this.victoryCard.getType3()) {
-				nbrTypeCommuns = nbrTypeCommuns++;
+			if(this.myHand.getCard(i).getType3()==this.victoryCard.getType3()) {
+				nbrTypeCommuns = nbrTypeCommuns+1;
 				type3 = true;
 			}
 			
@@ -62,18 +62,19 @@ public class IA extends Joueur{
 				this.Strategy = "shape";
 			}
 		}
-		else this.Strategy = "random";
+		else this.Strategy = "obstruct";
 		
 		return this.myHand.getCard(numCard);
 	}
 	
 	public Strategy chooseStrategy() {
-		if(jeu.getMode()==Mode.Avancé) {
-			this.cardToPlay = chooseCardToPlay();
-		}
-		else {
-			this.cardToPlay = this.myHand.getCard(0);
-		}
+//		if(jeu.getMode()==Mode.Avancé) {
+//			this.cardToPlay = chooseCardToPlay();
+//		}
+//		else {
+//			this.cardToPlay = this.myHand.getCard(0);
+//		}
+		this.cardToPlay = chooseCardToPlay();
 		
 		if(this.Strategy=="color") {
 			return new ColorStrategy();
@@ -84,17 +85,22 @@ public class IA extends Joueur{
 		else if(this.Strategy=="shape") {
 			return new ShapeStrategy();
 		}
-		else return new RandomStrategy();
+		else return new ObstructStrategy();
 	}
 	
 	public void jouer() {
 		Strategy strategy = chooseStrategy();
 		if(this.jeu.getPlateau().getFirstCard()) {
-			this.keyOuPlacer = strategy.searchBestPosition(this.jeu.getPlateau().getPositions(), this.victoryCard);
+			this.keyOuPlacer = strategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard);
 			if(this.keyOuPlacer == "0") {
-				Strategy randomStrategy = new RandomStrategy();
-				this.keyOuPlacer = randomStrategy.searchBestPosition(this.jeu.getPlateau().getPositions(), this.victoryCard);
+				Strategy obstructStrategy = new ObstructStrategy();
+				this.keyOuPlacer = obstructStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard);
 			}
+			if(this.keyOuPlacer == "1") {
+				Strategy randomStrategy = new RandomStrategy();
+				this.keyOuPlacer = randomStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard);
+			}
+			System.out.println(this.name+" a utilisé la strategie : "+this.Strategy);
 			placer(this.cardToPlay, this.keyOuPlacer.charAt(0), Character.getNumericValue(this.keyOuPlacer.charAt(1)));
 		}
 		else placer(this.cardToPlay, 'C', 2);

@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Joueur {
 	private boolean isIA;
-	private String name;
+	protected String name;
 	protected Card victoryCard;
 	protected Hand myHand;
 	protected Jeu jeu;
