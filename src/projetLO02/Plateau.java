@@ -40,20 +40,44 @@ public class Plateau {
 		return this.yMax;
 	}
 	
-	public boolean checkMaxXReached(int ligne) {
-		for(int i=0; i<5; i++) {
-			String key = ((char)(65+i))+Integer.toString(ligne);
-			if(!this.positions.containsKey(key)) return false;
+	public boolean checkMaxXReached(char colonne) {
+		if(colonne=='<') {
+			for(int j=1; j<=this.yMax; j++) {
+				String key = ((char)(65+this.xMax-1))+Integer.toString(j);
+				if(this.positions.containsKey(key)) {
+					return true;
+				}
+			}
 		}
-		return true;
+		else if(colonne=='>') {
+			for(int j=1; j<=this.yMax; j++) {
+				String key = 'A'+Integer.toString(j);
+				if(this.positions.containsKey(key)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
-	public boolean checkMaxYReached(char colonne) {
-		for(int i=1; i<=3; i++) {
-			String key = colonne+Integer.toString(i);
-			if(!this.positions.containsKey(key)) return false;
+	public boolean checkMaxYReached(int ligne) {
+		if(ligne==0) {
+			for(int i=0; i<this.xMax; i++) {
+				String key = ((char)(65+i))+Integer.toString(this.yMax);
+				if(this.positions.containsKey(key)) {
+					return true;
+				}
+			}
 		}
-		return true;
+		else if(ligne==this.yMax+1) {
+			for(int i=0; i<this.xMax; i++) {
+				String key = ((char)(65+i))+Integer.toString(1);
+				if(this.positions.containsKey(key)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public boolean checkSiCartesAutour(char colonne, int ligne) {
@@ -65,6 +89,14 @@ public class Plateau {
 		}
 		else if(colonne==((char)(65+this.xMax-1)) ) {
 			key = ((char)((int)(colonne)-1))+Integer.toString(ligne);
+			if(this.positions.containsKey(key)) return true;
+		}
+		else if(colonne=='<') {
+			key = 'A'+Integer.toString(ligne);
+			if(this.positions.containsKey(key)) return true;
+		}
+		else if(colonne=='>') {
+			key = ((char)(65+this.xMax-1))+Integer.toString(ligne);
 			if(this.positions.containsKey(key)) return true;
 		}
 		else {
@@ -83,6 +115,14 @@ public class Plateau {
 			key = colonne+Integer.toString(ligne-1);
 			if(this.positions.containsKey(key)) return true;
 		}
+		else if(ligne==0) {
+			key = colonne+Integer.toString(ligne+1);
+			if(this.positions.containsKey(key)) return true;
+		}
+		else if(ligne==this.yMax+1) {
+			key = colonne+Integer.toString(ligne-1);
+			if(this.positions.containsKey(key)) return true;
+		}
 		else {
 			key = colonne+Integer.toString(ligne-1);
 			if(this.positions.containsKey(key)) return true;
@@ -93,16 +133,85 @@ public class Plateau {
 		return false;
 	}
 	
+	public void moovePositions(Card card, char colonne, int ligne) {
+		if(colonne=='<') {
+			for(int j=1; j<=this.yMax; j++) {
+				for(int i=(this.xMax-2); i>=0; i--) {
+					String key = ((char)(65+i))+Integer.toString(j);
+					String key2 = ((char)(65+i+1))+Integer.toString(j);
+					if(this.positions.containsKey(key)) {
+						this.positions.put(key2, this.positions.get(key));
+						if(i==0) {
+							this.positions.remove(key);
+						}
+					}
+					else this.positions.remove(key2);
+				}
+			}
+			setCard(card, 'A', ligne);
+		}
+		else if(colonne=='>') {
+			for(int j=1; j<=this.yMax; j++) {
+				for(int i=1; i<this.xMax; i++) {
+					String key = ((char)(65+i))+Integer.toString(j);
+					String key2 = ((char)(65+i-1))+Integer.toString(j);
+					if(this.positions.containsKey(key)) {
+						this.positions.put(key2, this.positions.get(key));
+						if(i==(this.xMax-1)) {
+							this.positions.remove(key);
+						}
+					}
+					else this.positions.remove(key2);
+				}
+			}
+			setCard(card, (char)(65+this.xMax-1), ligne);
+		}
+		else if(ligne==0) {
+			for(int i=0; i<this.xMax; i++) {
+				for(int j=this.yMax-1; j>0; j--) {
+					String key = ((char)(65+i))+Integer.toString(j);
+					String key2 = ((char)(65+i))+Integer.toString(j+1);
+					if(this.positions.containsKey(key)) {
+						this.positions.put(key2, this.positions.get(key));
+						if(j==1) {
+							this.positions.remove(key);
+						}
+					}
+					else this.positions.remove(key2);
+				}
+			}
+			setCard(card, colonne, 1);
+		}
+		else if(ligne==this.yMax+1) {
+			for(int i=0; i<this.xMax; i++) {
+				for(int j=2; j<=this.yMax; j++) {
+					String key = ((char)(65+i))+Integer.toString(j);
+					String key2 = ((char)(65+i))+Integer.toString(j-1);
+					if(this.positions.containsKey(key)) {
+						this.positions.put(key2, this.positions.get(key));
+						if(j==this.yMax) {
+							this.positions.remove(key);
+						}
+					}
+					else this.positions.remove(key2);
+				}
+			}
+			setCard(card, colonne, 3);
+		}
+	}
+	
 	public void setCard(Card card, char colonne, int ligne) {
-		if(('a'<=colonne)&&('e'>=colonne)) {
-			colonne = (char)((int)colonne-32); //mise en majuscule
+		if((colonne=='<')||(colonne=='>')||(ligne==this.yMax+1)||(ligne==0)) {
+			moovePositions(card, colonne, ligne);
 		}
-		String key = colonne+Integer.toString(ligne);
-		
-		if(isPosAlreadyTaken(colonne, ligne)) {
-			this.positions.remove(key);
+		else {
+			String key = colonne+Integer.toString(ligne);
+			
+			if(isPosAlreadyTaken(colonne, ligne)) {
+				this.positions.remove(key);
+			}
+			this.positions.put(key, card);
 		}
-		this.positions.put(key, card);
 	}
 	
 	public Card getCard(char colonne, int ligne) {
@@ -111,6 +220,9 @@ public class Plateau {
 	}
 	
 	public boolean isPosAlreadyTaken(char colonne, int ligne) {
+		if((colonne=='<')||(colonne=='>')||(ligne==this.yMax+1)||(ligne==0)) {
+			return false;
+		}
 		String key = colonne+Integer.toString(ligne);
 		return this.positions.containsKey(key);
 	}

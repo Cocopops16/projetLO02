@@ -74,7 +74,7 @@ public class Joueur {
 	public void placer(Card card, char colonne, int ligne) {
 		if(this.jeu.getPlateau().getFirstCard()) {
 			if(!this.jeu.getPlateau().isPosAlreadyTaken(colonne, ligne)) {
-				if( (!this.jeu.getPlateau().checkMaxXReached(ligne)) && (!this.jeu.getPlateau().checkMaxYReached(colonne)) ) {
+				if( (!this.jeu.getPlateau().checkMaxXReached(colonne)) && (!this.jeu.getPlateau().checkMaxYReached(ligne)) ) {
 					if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
 						this.jeu.getPlateau().setCard(card, colonne, ligne);
 						System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
@@ -109,6 +109,10 @@ public class Joueur {
 		char colonne = monClavier.next().charAt(0);
 		System.out.println("Entrez la ligne où placer la carte");
 		int ligne = monClavier.nextInt();
+		
+		if(('a'<=colonne)&&('z'>=colonne)) {
+			colonne = (char)((int)colonne-32); //mise en majuscule
+		}
 		
 		placer(card, colonne, ligne);
 		this.myHand.removeCardFromHand(card);
