@@ -68,12 +68,6 @@ public class IA extends Joueur{
 	}
 	
 	public Strategy chooseStrategy() {
-//		if(jeu.getMode()==Mode.Avancé) {
-//			this.cardToPlay = chooseCardToPlay();
-//		}
-//		else {
-//			this.cardToPlay = this.myHand.getCard(0);
-//		}
 		this.cardToPlay = chooseCardToPlay();
 		
 		if(this.Strategy=="color") {

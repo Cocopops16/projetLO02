@@ -40,7 +40,8 @@ public class Deck {
 	}
 	
 	public void shuffleCards() {
-		for(int i=0; i<18; i++) {
+		int tailleTab = this.tabCards.size();
+		for(int i=0; i<tailleTab; i++) {
 			int index = randomizer();
 			this.shuffledCards.add(this.tabCards.get(index));
 			this.tabCards.remove(index);
@@ -48,18 +49,21 @@ public class Deck {
 	}
 	
 	public Card modePerso() {
+		Card card;
 		System.out.println("Choix de la victoryCard");
 		for(int i=0; i<18; i++) {
-			System.out.println( ( (Card)this.tabCards.get(i) ).toString() );
+			card = (Card)this.tabCards.get(i);
+			System.out.println(card.toString());
 			System.out.println("Prendre cette carte ? y/n");
 			char choix = monClavier.next().charAt(0);
 			if((choix=='y')||(choix=='Y')) {
-				return (Card)this.tabCards.get(i);
+				this.tabCards.remove(i);
+				return card;
 			}
 		}
 		System.out.println("Nous avons choisi une Victory Card pour vous");
 		int index = randomizer();
-		Card card = (Card)this.tabCards.get(index);
+		card = (Card)this.tabCards.get(index);
 		this.tabCards.remove(index);
 		return card;
 	}

@@ -61,6 +61,11 @@ public class Jeu {
 			for(int i=0; i<(this.nbrJoueurs+this.nbrIA); i++) {
 				if(i>=this.nbrJoueurs) {
 					((Joueur)this.playersQueue.peek()).setIA(true);
+					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme IA");
+					this.playersQueue.add(this.playersQueue.poll());
+				}
+				else {
+					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme Joueur");
 					this.playersQueue.add(this.playersQueue.poll());
 				}
 			}
@@ -70,21 +75,33 @@ public class Jeu {
 			}
 			
 			for(int i=0; i<(this.nbrIA+this.nbrJoueurs); i++) {
-				if(this.mode == Mode.Personnalisé) {
+				if((this.mode == Mode.Personnalisé)&&(this.nbrJoueurs>0)) {
+					if(i==this.nbrJoueurs-1) {
+						i=(this.nbrIA+this.nbrJoueurs);
+					}
+					System.out.println( ((Joueur)this.playersQueue.peek()).getName()+" vous allez choisir votre Victory Card, mettez vous à l'abri des regards");
 					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.modePerso());
 				}
-				else {
+				else if(this.mode == Mode.Avancé) {
+					( (Joueur)this.playersQueue.peek() ).piocher(this.deck.giveCard());
+					( (Joueur)this.playersQueue.peek() ).piocher(this.deck.giveCard());
+					( (Joueur)this.playersQueue.peek() ).piocher(this.deck.giveCard());
+				}
+				else if(this.mode == Mode.Classique) {
 					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.giveCard());
-					if(this.mode == Mode.Avancé) {
-						( (Joueur)this.playersQueue.peek() ).piocher(this.deck.giveCard());
-						( (Joueur)this.playersQueue.peek() ).piocher(this.deck.giveCard());
-					}
+					
 				}
 				this.playersQueue.add(this.playersQueue.poll());
 			}
 			
 			if(this.mode == Mode.Personnalisé) {
 				this.deck.shuffleCards();
+				if(this.nbrIA>0) {
+					for(int i=0; i<this.nbrIA; i++) {
+						( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.giveCard());
+						this.playersQueue.add(this.playersQueue.poll());
+					}
+				}
 			}
 			this.hiddenCard = this.deck.giveCard();
 		}
@@ -94,7 +111,9 @@ public class Jeu {
 		Joueur joueurEnCours = (Joueur)this.playersQueue.peek();
 		System.out.println("C'est au tour de : " + joueurEnCours.getName());
 		this.playersQueue.add(this.playersQueue.poll());
-		joueurEnCours.piocher(this.deck.giveCard());
+		if(this.mode != Mode.Avancé) {
+			joueurEnCours.piocher(this.deck.giveCard());
+		}
 		
 		if(!joueurEnCours.getIA()) {
 			joueurEnCours.placer(joueurEnCours.chooseCardToPlay());
@@ -105,6 +124,10 @@ public class Jeu {
 		else if(joueurEnCours.getIA()) {
 			IA IAEnCours = (IA)joueurEnCours;
 			IAEnCours.jouer();
+		}
+		
+		if( (this.mode == Mode.Avancé) && (!this.deck.isDeckEmpty()) ) {
+			joueurEnCours.piocher(this.deck.giveCard());
 		}
 		else System.out.println("problème sur le joueur : "+joueurEnCours.getName()+", est-il une IA ?");
 	}
