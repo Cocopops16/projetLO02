@@ -125,11 +125,11 @@ public class Jeu {
 			IA IAEnCours = (IA)joueurEnCours;
 			IAEnCours.jouer();
 		}
+		else System.out.println("problème sur le joueur : "+joueurEnCours.getName()+", est-il une IA ?");
 		
 		if( (this.mode == Mode.Avancé) && (!this.deck.isDeckEmpty()) ) {
 			joueurEnCours.piocher(this.deck.giveCard());
 		}
-		else System.out.println("problème sur le joueur : "+joueurEnCours.getName()+", est-il une IA ?");
 	}
 	
 	public boolean checkEndGame() {
@@ -152,17 +152,19 @@ public class Jeu {
 		int scorePremier = -1;
 		String premier = new String();
 		for(int i=0; i<(this.nbrIA+this.nbrJoueurs); i++) {
-			scoreFinal = scoreFinal + ( (Joueur)this.playersQueue.peek() ).accept(visitor1, this.plateau.accept(visitor1));
-			scoreFinal = scoreFinal + ( (Joueur)this.playersQueue.peek() ).accept(visitor2, this.plateau.accept(visitor1));
-			scoreFinal = scoreFinal + ( (Joueur)this.playersQueue.peek() ).accept(visitor3, this.plateau.accept(visitor1));
-			System.out.println("Le joueur : "+( (Joueur)this.playersQueue.peek() ).getName()+" a accumulé : "+scoreFinal+" points");
+			Joueur joueur = (Joueur)this.playersQueue.peek();
+			if(this.mode == Mode.Avancé) {
+				joueur.setVictory();
+			}
+			scoreFinal = scoreFinal + joueur.accept(visitor1, this.plateau.accept(visitor1));
+			scoreFinal = scoreFinal + joueur.accept(visitor2, this.plateau.accept(visitor1));
+			scoreFinal = scoreFinal + joueur.accept(visitor3, this.plateau.accept(visitor1));
+			System.out.println("Le joueur : "+joueur.getName()+" a accumulé : "+scoreFinal+" points");
 			if(scoreFinal>scorePremier) {
 				scorePremier = scoreFinal;
-				premier = ( (Joueur)this.playersQueue.poll() ).getName();
+				premier = joueur.getName();
 			}
-			else {
-				this.playersQueue.poll();
-			}
+			this.playersQueue.poll();
 			scoreFinal = 0;
 		}
 		System.out.println("Félicitations "+premier+" ton plan s'est déroulé sans accros ;) , tu as gagné avec : "+scorePremier+" points");

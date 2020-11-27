@@ -39,6 +39,14 @@ public class Joueur {
 		this.victoryCard = card;
 	}
 	
+	public void setVictory() {
+		if(this.jeu.getMode() == Mode.Avancé) {
+			this.victoryCard = this.myHand.getCard(0);
+			this.myHand.removeCardFromHand(this.victoryCard);
+			System.out.println("Victory Card de "+this.name+ " : " + this.victoryCard.toString());
+		}
+	}
+	
 	public Card getVictory() {
 		return this.victoryCard;
 	}

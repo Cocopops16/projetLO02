@@ -82,7 +82,32 @@ public class IA extends Joueur{
 		else return new ObstructStrategy();
 	}
 	
+	public void chooseVictory() {
+		Visitor visitor1 = new ScoreBodyVisitor();
+		Visitor visitor2 = new ScoreColorVisitor();
+		Visitor visitor3 = new ScoreShapeVisitor();
+		int scoreFinal = 0;
+		int scorePremier = -1;
+		Card bestVictoryCard = null;
+		for(int i=0; i<(this.myHand.checkNombreCartes()); i++) {
+			this.victoryCard = this.myHand.getCard(i);
+			scoreFinal = scoreFinal + (accept(visitor1, this.jeu.getPlateau().accept(visitor1)));
+			scoreFinal = scoreFinal + (accept(visitor2, this.jeu.getPlateau().accept(visitor1)));
+			scoreFinal = scoreFinal + (accept(visitor3, this.jeu.getPlateau().accept(visitor1)));
+			if(scoreFinal>scorePremier) {
+				scorePremier = scoreFinal;
+				bestVictoryCard = this.victoryCard;
+			}
+			scoreFinal = 0;
+		}
+		this.victoryCard = bestVictoryCard;
+		this.myHand.removeCardFromHand(this.victoryCard);
+	}
+	
 	public void jouer() {
+		if(this.jeu.getMode()==Mode.Avancé) {
+			chooseVictory();
+		}
 		Strategy strategy = chooseStrategy();
 		if(this.jeu.getPlateau().getFirstCard()) {
 			this.keyOuPlacer = strategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard);
@@ -98,6 +123,11 @@ public class IA extends Joueur{
 			placer(this.cardToPlay, this.keyOuPlacer.charAt(0), Character.getNumericValue(this.keyOuPlacer.charAt(1)));
 		}
 		else placer(this.cardToPlay, 'C', 2);
+		
+		if(this.jeu.getMode()==Mode.Avancé) {
+			this.myHand.addCardToHand(this.victoryCard);
+			this.victoryCard = null;
+		}
 	}
 	
 }
