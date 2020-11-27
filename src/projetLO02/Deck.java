@@ -50,8 +50,9 @@ public class Deck {
 	
 	public Card modePerso() {
 		Card card;
+		int tailleTab = this.tabCards.size();
 		System.out.println("Choix de la victoryCard");
-		for(int i=0; i<18; i++) {
+		for(int i=0; i<tailleTab; i++) {
 			card = (Card)this.tabCards.get(i);
 			System.out.println(card.toString());
 			System.out.println("Prendre cette carte ? y/n");

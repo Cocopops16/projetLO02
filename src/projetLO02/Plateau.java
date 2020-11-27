@@ -242,8 +242,8 @@ public class Plateau {
 	
 	public String toString() {
 		String affichageCartes = new String();
-		for(int j=1; j<=3; j++) {
-			for(int i=0; i<5; i++) {
+		for(int j=this.yMax; j>0; j--) {
+			for(int i=0; i<this.xMax; i++) {
 				String key = ((char)(65+i))+Integer.toString(j);
 				if(positions.containsKey(key)) {
 					affichageCartes = affichageCartes + " " + key + ":" + ( (Card)(this.positions.get(key)) ).toString();
@@ -251,7 +251,7 @@ public class Plateau {
 				else {
 					affichageCartes = affichageCartes + " " + key + ":" + "noCard";
 				}
-				if(i==4) affichageCartes = affichageCartes + "\n";
+				if(i==(this.xMax-1)) affichageCartes = affichageCartes + "\n";
 			}
 		}
 		return affichageCartes;

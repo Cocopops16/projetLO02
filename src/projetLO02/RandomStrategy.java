@@ -8,8 +8,8 @@ public class RandomStrategy implements Strategy {
 		char colonne;
 		int ligne;
 		
-		for(int i=0; i<5; i++) {
-			for(int j=1; j<=3; j++) {
+		for(int i=0; i<plateau.getXMax(); i++) {
+			for(int j=1; j<=plateau.getYMax(); j++) {
 				colonne = (char)(65+i);
 				ligne = j;
 				key = colonne+Integer.toString(j);

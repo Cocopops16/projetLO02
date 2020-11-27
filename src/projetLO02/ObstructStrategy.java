@@ -6,8 +6,8 @@ public class ObstructStrategy implements Strategy {
 		String key = new String();
 		int carteABloquer = 0;
 		
-		for(int i=0; i<5; i++) {
-			for(int j=1; j<=3; j++) {
+		for(int i=0; i<plateau.getXMax(); i++) {
+			for(int j=1; j<=plateau.getYMax(); j++) {
 				key = ((char)(65+i))+Integer.toString(j);
 				if(plateau.getPositions().containsKey(key)) {
 					Card card = (Card)plateau.getPositions().get(key);
@@ -23,8 +23,8 @@ public class ObstructStrategy implements Strategy {
 			carteABloquer = 0;
 		}
 		
-		for(int j=1; j<=3; j++) {
-			for(int i=0; i<5; i++) {
+		for(int j=1; j<=plateau.getYMax(); j++) {
+			for(int i=0; i<plateau.getXMax(); i++) {
 				key = ((char)(65+i))+Integer.toString(j);
 				if(plateau.getPositions().containsKey(key)) {
 					Card card = (Card)plateau.getPositions().get(key);
