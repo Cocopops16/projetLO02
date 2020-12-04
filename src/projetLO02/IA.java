@@ -1,5 +1,9 @@
 package projetLO02;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
+
 public class IA extends Joueur{
 	private boolean isIA;
 	private String keyOuPlacer, keyOuDeplacer1, keyOuDeplacer2, Strategy;
@@ -104,30 +108,93 @@ public class IA extends Joueur{
 		this.myHand.removeCardFromHand(this.victoryCard);
 	}
 	
+	public void deplacer() {
+		Strategy strategy = new ColorStrategy();
+		this.keyOuDeplacer1 = "1";
+		this.keyOuDeplacer2 = "1";
+		int i=0;
+		char colonne1, colonne2;
+		int ligne1, ligne2;
+		boolean deplacementEffectue = false;
+		
+		while((this.keyOuDeplacer1 != "0")&&(this.keyOuDeplacer2 != "0")&&(!deplacementEffectue)) {
+			this.keyOuDeplacer1 = strategy.searchPosDeplacement(jeu.getPlateau(), this.victoryCard, i);
+			this.keyOuDeplacer2 = strategy.searchBestPosition(jeu.getPlateau(), this.victoryCard, this.keyOuDeplacer1);
+			i++;
+			if((this.keyOuDeplacer1 != "0")&&(this.keyOuDeplacer2 != "0")) {
+				colonne1 = this.keyOuDeplacer1.charAt(0);
+				ligne1 = Character.getNumericValue(this.keyOuDeplacer1.charAt(1));
+				colonne2 = this.keyOuDeplacer2.charAt(0);
+				ligne2 = Character.getNumericValue(this.keyOuDeplacer2.charAt(1));
+				deplacer(colonne1, ligne1, colonne2, ligne2);
+				deplacementEffectue = true;
+			}
+		}
+		if(!deplacementEffectue) {
+			strategy = new BodyStrategy();
+			this.keyOuDeplacer1 = "1";
+			this.keyOuDeplacer2 = "1";
+			i=0;
+			while((this.keyOuDeplacer1 != "0")&&(this.keyOuDeplacer2 != "0")&&(!deplacementEffectue)) {
+				this.keyOuDeplacer1 = strategy.searchPosDeplacement(jeu.getPlateau(), this.victoryCard, i);
+				this.keyOuDeplacer2 = strategy.searchBestPosition(jeu.getPlateau(), this.victoryCard, this.keyOuDeplacer1);
+				i++;
+				if((this.keyOuDeplacer1 != "0")&&(this.keyOuDeplacer2 != "0")) {
+					colonne1 = this.keyOuDeplacer1.charAt(0);
+					ligne1 = Character.getNumericValue(this.keyOuDeplacer1.charAt(1));
+					colonne2 = this.keyOuDeplacer2.charAt(0);
+					ligne2 = Character.getNumericValue(this.keyOuDeplacer2.charAt(1));
+					deplacer(colonne1, ligne1, colonne2, ligne2);
+					deplacementEffectue = true;
+				}
+			}
+			if(!deplacementEffectue) {
+				strategy = new ShapeStrategy();
+				this.keyOuDeplacer1 = "1";
+				this.keyOuDeplacer2 = "1";
+				i=0;
+				while((this.keyOuDeplacer1 != "0")&&(this.keyOuDeplacer2 != "0")&&(!deplacementEffectue)) {
+					this.keyOuDeplacer1 = strategy.searchPosDeplacement(jeu.getPlateau(), this.victoryCard, i);
+					this.keyOuDeplacer2 = strategy.searchBestPosition(jeu.getPlateau(), this.victoryCard, this.keyOuDeplacer1);
+					i++;
+					if((this.keyOuDeplacer1 != "0")&&(this.keyOuDeplacer2 != "0")) {
+						colonne1 = this.keyOuDeplacer1.charAt(0);
+						ligne1 = Character.getNumericValue(this.keyOuDeplacer1.charAt(1));
+						colonne2 = this.keyOuDeplacer2.charAt(0);
+						ligne2 = Character.getNumericValue(this.keyOuDeplacer2.charAt(1));
+						deplacer(colonne1, ligne1, colonne2, ligne2);
+						deplacementEffectue = true;
+					}
+				}
+			}
+		}
+	}
+	
 	public void jouer() {
 		if(this.jeu.getMode()==Mode.Avancé) {
 			chooseVictory();
 		}
 		Strategy strategy = chooseStrategy();
 		if(this.jeu.getPlateau().getFirstCard()) {
-			this.keyOuPlacer = strategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard);
+			this.keyOuPlacer = strategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard, "0");
 			if(this.keyOuPlacer == "0") {
 				Strategy obstructStrategy = new ObstructStrategy();
-				this.keyOuPlacer = obstructStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard);
+				this.keyOuPlacer = obstructStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard, "0");
 			}
 			if(this.keyOuPlacer == "1") {
 				Strategy randomStrategy = new RandomStrategy();
-				this.keyOuPlacer = randomStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard);
+				this.keyOuPlacer = randomStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard, "0");
 			}
 			System.out.println(this.name+" a utilisé la strategie : "+this.Strategy);
 			placer(this.cardToPlay, this.keyOuPlacer.charAt(0), Character.getNumericValue(this.keyOuPlacer.charAt(1)));
 		}
 		else placer(this.cardToPlay, 'C', 2);
 		
+		deplacer();
+		
 		if(this.jeu.getMode()==Mode.Avancé) {
 			this.myHand.addCardToHand(this.victoryCard);
 			this.victoryCard = null;
 		}
 	}
-	
 }

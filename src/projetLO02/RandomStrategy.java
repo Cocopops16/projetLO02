@@ -2,7 +2,7 @@ package projetLO02;
 
 public class RandomStrategy implements Strategy {
 
-	public String searchBestPosition(Plateau plateau, Card victoryCard) {
+	public String searchBestPosition(Plateau plateau, Card victoryCard, String cardToIgnore) {
 		String key = new String();
 		String key2 = new String();
 		char colonne;
@@ -48,6 +48,12 @@ public class RandomStrategy implements Strategy {
 				}
 			}
 		}
+		return null;
+	}
+
+	@Override
+	public String searchPosDeplacement(Plateau plateau, Card victoryCard, int compteur) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -6,16 +6,18 @@ import java.util.TreeMap;
 
 public class BodyStrategy  implements Strategy {
 	
-	public String searchBestPosition(Plateau plateau, Card victoryCard) {
+	public String searchBestPosition(Plateau plateau, Card victoryCard, String cardToIgnore) {
 		Map<String, Integer> Occurence = new TreeMap<String, Integer>();
 		int sameCards = 0;
 		int cardsAligned;
 		String key = new String();
+		cardToIgnore = cardToIgnore.intern();
 		
 		for(int i=0; i<plateau.getXMax(); i++) {
 			for(int j=1; j<=plateau.getYMax(); j++) {
 				key = ((char)(65+i))+Integer.toString(j);
-				if(plateau.getPositions().containsKey(key)) {
+				key = key.intern();
+				if((plateau.getPositions().containsKey(key))&&(key!=cardToIgnore)) {
 					Card card = (Card)plateau.getPositions().get(key);
 					if(card.getType2()==victoryCard.getType2()) {
 						sameCards = sameCards+1;
@@ -44,7 +46,8 @@ public class BodyStrategy  implements Strategy {
 		for(int j=1; j<=plateau.getYMax(); j++) {
 			for(int i=0; i<plateau.getXMax(); i++) {
 				key = ((char)(65+i))+Integer.toString(j);
-				if(plateau.getPositions().containsKey(key)) {
+				key = key.intern();
+				if((plateau.getPositions().containsKey(key))&&(key!=cardToIgnore)) {
 					Card card = (Card)plateau.getPositions().get(key);
 					if(card.getType2()==victoryCard.getType2()) {
 						sameCards = sameCards+1;
@@ -88,5 +91,153 @@ public class BodyStrategy  implements Strategy {
 			return bestPosition;
 		}
 		else return "0";
+	}
+	
+	public String searchPosDeplacement(Plateau plateau, Card victoryCard, int compteur) {
+		Map<String, Integer> Occurence = new TreeMap<String, Integer>();
+		int sameCards = 0;
+		int nbrOccurencePos;
+		
+		String key = new String();
+		String key2 = new String();
+		
+		for(int i=0; i<plateau.getXMax(); i++) {
+			for(int j=1; j<=plateau.getYMax(); j++) {
+				key = ((char)(65+i))+Integer.toString(j);
+				key2 =((char)(65+i))+Integer.toString(j-1);
+				if(plateau.getPositions().containsKey(key)) {
+					Card card = (Card)plateau.getPositions().get(key);
+					if(card.getType2()==victoryCard.getType2()) {
+						sameCards++;
+					}
+					else if(sameCards>=1) {
+						if(plateau.getPositions().containsKey(key2)) {
+							for(int x=1; x<=sameCards; x++) {
+								key2 =((char)(65+i))+Integer.toString(j-x);
+								if(Occurence.containsKey(key2)) {
+									nbrOccurencePos = Occurence.get(key2);
+									if(sameCards>nbrOccurencePos) {
+										Occurence.put(key2, sameCards);
+									}
+								}
+								else {
+									Occurence.put(key2, sameCards);
+								}
+							}
+						}
+						sameCards = 0;
+					}
+				}
+				else if(sameCards>=1) {
+					if(plateau.getPositions().containsKey(key2)) {
+						for(int x=1; x<=sameCards; x++) {
+							key2 =((char)(65+i))+Integer.toString(j-x);
+							if(Occurence.containsKey(key2)) {
+								nbrOccurencePos = Occurence.get(key2);
+								if(sameCards>nbrOccurencePos) {
+									Occurence.put(key2, sameCards);
+								}
+							}
+							else {
+								Occurence.put(key2, sameCards);
+							}
+						}
+					}
+					sameCards = 0;
+				}
+			}
+			if(sameCards>=1) {
+				if(plateau.getPositions().containsKey(key)) {
+					for(int x=0; x<sameCards; x++) {
+						key2 =((char)(65+i))+Integer.toString(plateau.getYMax()-x);
+						if(Occurence.containsKey(key2)) {
+							nbrOccurencePos = Occurence.get(key2);
+							if(sameCards>nbrOccurencePos) {
+								Occurence.put(key2, sameCards);
+							}
+						}
+						else {
+							Occurence.put(key2, sameCards);
+						}
+					}
+				}
+				sameCards = 0;
+			}
+		}
+		
+		for(int j=1; j<=plateau.getYMax(); j++) {
+			for(int i=0; i<plateau.getXMax(); i++) {
+				key = ((char)(65+i))+Integer.toString(j);
+				key2 =((char)(65+i-1))+Integer.toString(j);
+				if(plateau.getPositions().containsKey(key)) {
+					Card card = (Card)plateau.getPositions().get(key);
+					if(card.getType2()==victoryCard.getType2()) {
+						sameCards++;
+					}
+					else if(sameCards>=1) {
+						if(plateau.getPositions().containsKey(key2)) {
+							for(int x=1; x<=sameCards; x++) {
+								key2 =((char)(65+i-x))+Integer.toString(j);
+								if(Occurence.containsKey(key2)) {
+									nbrOccurencePos = Occurence.get(key2);
+									if(sameCards>nbrOccurencePos) {
+										Occurence.put(key2, sameCards);
+									}
+								}
+								else {
+									Occurence.put(key2, sameCards);
+								}
+							}
+						}
+						sameCards = 0;
+					}
+				}
+				else if(sameCards>=1) {
+					if(plateau.getPositions().containsKey(key2)) {
+						for(int x=1; x<=sameCards; x++) {
+							key2 =((char)(65+i-x))+Integer.toString(j);
+							if(Occurence.containsKey(key2)) {
+								nbrOccurencePos = Occurence.get(key2);
+								if(sameCards>nbrOccurencePos) {
+									Occurence.put(key2, sameCards);
+								}
+							}
+							else {
+								Occurence.put(key2, sameCards);
+							}
+						}
+					}
+					sameCards = 0;
+				}
+			}
+			if(sameCards>=1) {
+				if(plateau.getPositions().containsKey(key)) {
+					for(int x=0; x<sameCards; x++) {
+						key2 =((char)(65+plateau.getXMax()-1-x))+Integer.toString(j);
+						if(Occurence.containsKey(key2)) {
+							nbrOccurencePos = Occurence.get(key2);
+							if(sameCards>nbrOccurencePos) {
+								Occurence.put(key2, sameCards);
+							}
+						}
+						else {
+							Occurence.put(key2, sameCards);
+						}
+					}
+				}
+				sameCards = 0;
+			}
+		}
+		
+		for(Iterator<String> it=Occurence.keySet().iterator(); it.hasNext();) {
+			 key = it.next();
+			 if((Occurence.get(key) == 1)&&(compteur==0)) {
+				 return key;
+			 }
+			 else if(compteur>0) {
+				 compteur--;
+			 }
+		}
+		return "0";		
 	}
 }

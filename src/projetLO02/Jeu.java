@@ -108,6 +108,7 @@ public class Jeu {
 	}
 	
 	public void tourDeJeu() {
+		System.out.println(this.plateau.toString());
 		Joueur joueurEnCours = (Joueur)this.playersQueue.peek();
 		System.out.println("C'est au tour de : " + joueurEnCours.getName());
 		this.playersQueue.add(this.playersQueue.poll());

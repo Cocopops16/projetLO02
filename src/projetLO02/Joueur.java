@@ -101,7 +101,6 @@ public class Joueur {
 			System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
 			this.myHand.removeCardFromHand(card);
 		}
-		System.out.println(this.jeu.getPlateau().toString());
 	}
 	
 	public void placer(Card card) {
@@ -118,11 +117,30 @@ public class Joueur {
 		this.myHand.removeCardFromHand(card);
 	}
 	
+	public void deplacer(char colonne1, int ligne1, char colonne2, int ligne2) {
+		System.out.println(this.jeu.getPlateau().toString());
+		if(this.jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
+			Card card1 = this.jeu.getPlateau().getCard(colonne1, ligne1);
+			Card card2 = this.jeu.getPlateau().getCard(colonne2, ligne2);
+			this.jeu.getPlateau().setCard(card2, colonne1, ligne1);
+			this.jeu.getPlateau().setCard(card1, colonne2, ligne2);
+		}
+		else {
+			placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
+			this.jeu.getPlateau().removeCard(colonne1, ligne1);
+		}
+		System.out.println("Carte déplacée de ("+colonne1+";"+ligne1+") à ("+colonne2+";"+ligne2+")");
+	}
+	
 	public void deplacer() {
 		System.out.println("Entrez la colonne de la carte à déplacer");
 		char colonne1 = monClavier.next().charAt(0);
 		System.out.println("Entrez la ligne de la carte à déplacer");
 		int ligne1 = monClavier.nextInt();
+		
+		if(('a'<=colonne1)&&('z'>=colonne1)) {
+			colonne1 = (char)((int)colonne1-32); //mise en majuscule
+		}
 		
 		if(this.jeu.getPlateau().isPosAlreadyTaken(colonne1, ligne1)) {
 			System.out.println("Entrez la colonne où placer la carte");
@@ -130,22 +148,22 @@ public class Joueur {
 			System.out.println("Entrez la ligne où placer la carte");
 			int ligne2 = monClavier.nextInt();
 			
-			if(this.jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
-				Card card1 = this.jeu.getPlateau().getCard(colonne1, ligne1);
-				Card card2 = this.jeu.getPlateau().getCard(colonne2, ligne2);
-				this.jeu.getPlateau().setCard(card2, colonne1, ligne1);
-				this.jeu.getPlateau().setCard(card1, colonne2, ligne2);
+			if(('a'<=colonne2)&&('z'>=colonne2)) {
+				colonne2 = (char)((int)colonne2-32); //mise en majuscule
+			}
+			
+			if(this.jeu.getPlateau().checkSiCartesAutour(colonne2, ligne2)) {
+				deplacer(colonne1, ligne1, colonne2, ligne2);
 			}
 			else {
-				placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
-				this.jeu.getPlateau().removeCard(colonne1, ligne1);
+				System.out.println("Position sans carte autour");
+				deplacer();
 			}
 		}
 		else {
 			System.out.println("Position non occupée");
 			deplacer();
 		}
-		System.out.println(this.jeu.getPlateau().toString());
 	}
 	
 	public int accept(Visitor visitor, Map<String, Object> positions) {
