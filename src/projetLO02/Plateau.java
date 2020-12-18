@@ -3,6 +3,8 @@ package projetLO02;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.swing.JComponent;
+
 public class Plateau {
 	private Map<String, Object> positions;
 	private int xMax, yMax;
