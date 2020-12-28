@@ -1,26 +1,43 @@
 package View;
 
+
+
 import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
+
+import Controleur.ControleurPiocher;
+import Controleur.ControleurPlacer;
+import projetLO02.Deck;
+import projetLO02.Joueur;
+
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 import java.awt.event.ActionEvent;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
 import javax.swing.ImageIcon;
 
-public class InterfacePlateau {
+public class InterfacePlateau implements Observer {
 
 	private JFrame frame;
+	private Joueur joueurPioche;
+	private JButton btnPiocher;
+	private Joueur joueurPlace;
+	private JButton btnPlacer;
 	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		Joueur joueurPioche = new Joueur();
+		Joueur joueurPlace = new Joueur();
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -36,8 +53,11 @@ public class InterfacePlateau {
 	/**
 	 * Create the application.
 	 */
-	public InterfacePlateau() {
+	public InterfacePlateau(Joueur joueur) {
 		initialize();
+		//Création du Controleur : lien entre le Modéle et la Vue
+		new ControleurPiocher(joueurPioche, btnPiocher);
+		new ControleurPlacer(joueurPlace, btnPlacer);
 	}
 
 	/**
@@ -54,7 +74,7 @@ public class InterfacePlateau {
 		frame.getContentPane().add(btnPiocher);
 		
 		JButton btnDeplacer = new JButton("deplacer");
-		btnDeplacer.setBounds(773, 143, 114, 30);
+		btnDeplacer.setBounds(773, 173, 114, 30);
 		frame.getContentPane().add(btnDeplacer);
 		
 		JLabel lblCartePiochee = new JLabel("Votre carte piochee :");
@@ -122,7 +142,7 @@ public class InterfacePlateau {
 		JLabel lblcaseE1 = new JLabel("E1");
 		panel.add(lblcaseE1);
 		
-		JLabel lblNomDuJoueur = new JLabel("nom ");
+		JLabel lblNomDuJoueur = new JLabel("nom");
 		lblNomDuJoueur.setBounds(808, 28, 127, 34);
 		frame.getContentPane().add(lblNomDuJoueur);
 		
@@ -134,6 +154,14 @@ public class InterfacePlateau {
 		lblPlaceVictoryCard.setBounds(711, 452, 153, 226);
 		frame.getContentPane().add(lblPlaceVictoryCard);
 		
+		JButton btnPlacer = new JButton("Placer");
+		btnPlacer.setBounds(773, 127, 114, 30);
+		frame.getContentPane().add(btnPlacer);
+		
+		
+	}
+	
+	public void update(Observable instanceObservable, Object arg1) {
 		
 	}
 }
