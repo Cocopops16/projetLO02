@@ -13,6 +13,7 @@ import javax.swing.JTextPane;
 import Controleur.ControleurPiocher;
 import Controleur.ControleurPlacer;
 import projetLO02.Deck;
+import projetLO02.Jeu;
 import projetLO02.Joueur;
 
 import javax.swing.JLabel;
@@ -61,7 +62,7 @@ public class InterfacePlateau implements Observer {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		Joueur joueurPioche = new Joueur();
+		Joueur joueurPioche = new Joueur(); 
 		Joueur joueurPlace = new Joueur();
 		
 		EventQueue.invokeLater(new Runnable() {
@@ -79,11 +80,15 @@ public class InterfacePlateau implements Observer {
 	/**
 	 * Create the application.
 	 */
-	public InterfacePlateau(Joueur joueur) {
+	public InterfacePlateau() {
 		initialize();
 		//Création du Controleur : lien entre le Modéle et la Vue
 		new ControleurPiocher(joueurPioche, btnPiocher);
 		new ControleurPlacer(joueurPlace, btnPlacer);
+	}
+	
+	public JFrame getFrame() {
+		return this.frame;
 	}
 
 	/**
@@ -100,7 +105,7 @@ public class InterfacePlateau implements Observer {
 		frame.getContentPane().add(btnPiocher);
 		
 		btnDeplacer = new JButton("deplacer");
-		btnDeplacer.setBounds(773, 173, 114, 30);
+		btnDeplacer.setBounds(773, 184, 114, 30);
 		frame.getContentPane().add(btnDeplacer);
 		
 		lblCartePiochee = new JLabel("Votre carte piochee :");
@@ -181,7 +186,7 @@ public class InterfacePlateau implements Observer {
 		frame.getContentPane().add(lblPlaceVictoryCard);
 		
 		btnPlacer = new JButton("Placer");
-		btnPlacer.setBounds(773, 127, 114, 30);
+		btnPlacer.setBounds(773, 133, 114, 30);
 		frame.getContentPane().add(btnPlacer);
 		
 		
