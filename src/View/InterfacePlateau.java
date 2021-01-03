@@ -18,6 +18,7 @@ import projetLO02.Joueur;
 
 import javax.swing.JLabel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 import java.awt.event.ActionEvent;
@@ -33,37 +34,44 @@ public class InterfacePlateau implements Observer {
 	private Joueur joueurPioche;
 	private JButton btnPiocher;
 	private Joueur joueurPlace;
-	private JButton btnPlacer;
 	private JButton btnDeplacer;
 	private JLabel lblCartePiochee;
 	private JLabel lblVictoryCard;
 	private JLabel lblJoueur;
 	private JPanel panel;
-	private JLabel lblcaseA3;
-	private JLabel lblcaseB3;
-	private JLabel lblcaseC3;
-	private JLabel lblcaseD3;
-	private JLabel lblcaseE3;
-	private JLabel lblcaseA2;
-	private JLabel lblcaseB2;
-	private JLabel lblcaseC2;
-	private JLabel lblcaseD2;
-	private JLabel lblcaseE2;
-	private JLabel lblcaseA1;
-	private JLabel lblcaseB1;
-	private JLabel lblcaseC1;
-	private JLabel lblcaseD1;
-	private JLabel lblcaseE1;
 	private JLabel lblNomDuJoueur;
 	private JLabel lblPlaceCartePiochee;
 	private JLabel lblPlaceVictoryCard;
+	private JButton btnC1;
+	private JButton btnB1;
+	private JButton btnA1;
+	private JButton btnE2;
+	private JButton btnD2;
+	private JButton btnC2;
+	private JButton btnB2;
+	private JButton btnA2;
+	private JButton btnE3;
+	private JButton btnD3;
+	private JButton btnA3;
+	private JButton btnC3;
+	private JButton btnB3;
+	private JButton btnD1;
+	private JButton btnE1;
+	
+	private Menu ajoutJoueurs = new Menu(); 
+	ArrayList<String> temp = new ArrayList<>();
+	ArrayList<JButton> cardPlateauButtons = new ArrayList<JButton>();
+	ArrayList<String> cardIds;
+	Jeu jeu;
+	
+	
 	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		Joueur joueurPioche = new Joueur(); 
-		Joueur joueurPlace = new Joueur();
+		
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -80,12 +88,34 @@ public class InterfacePlateau implements Observer {
 	/**
 	 * Create the application.
 	 */
-	public InterfacePlateau() {
+	public InterfacePlateau(ArrayList<String> playerIds) {
 		initialize();
+		 temp = playerIds;
+		 jeu = new Jeu();
 		//Création du Controleur : lien entre le Modéle et la Vue
 		new ControleurPiocher(joueurPioche, btnPiocher);
-		new ControleurPlacer(joueurPlace, btnPlacer);
+		
 	}
+	
+	public void remplirArrayList() {
+	  	cardPlateauButtons.add(btnA1);
+	  	cardPlateauButtons.add(btnA2);
+	  	cardPlateauButtons.add(btnA3);
+	  	cardPlateauButtons.add(btnB1);
+	  	cardPlateauButtons.add(btnB2);
+	  	cardPlateauButtons.add(btnB3);
+	  	cardPlateauButtons.add(btnC1);
+	  	cardPlateauButtons.add(btnC2);
+	  	cardPlateauButtons.add(btnC3);
+	  	cardPlateauButtons.add(btnD1);
+	  	cardPlateauButtons.add(btnD2);
+	  	cardPlateauButtons.add(btnD3);
+	  	cardPlateauButtons.add(btnE1);
+	  	cardPlateauButtons.add(btnE2);	  	
+	  	cardPlateauButtons.add(btnE3);
+		
+	}
+	
 	
 	public JFrame getFrame() {
 		return this.frame;
@@ -105,7 +135,7 @@ public class InterfacePlateau implements Observer {
 		frame.getContentPane().add(btnPiocher);
 		
 		btnDeplacer = new JButton("deplacer");
-		btnDeplacer.setBounds(773, 184, 114, 30);
+		btnDeplacer.setBounds(773, 142, 114, 30);
 		frame.getContentPane().add(btnDeplacer);
 		
 		lblCartePiochee = new JLabel("Votre carte piochee :");
@@ -128,50 +158,50 @@ public class InterfacePlateau implements Observer {
 		frame.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(3, 5, 0, 0));
 		
-		lblcaseA3 = new JLabel("A3");
-		panel.add(lblcaseA3);
+		btnA3 = new JButton("A3");
+		panel.add(btnA3);
 		
-		lblcaseB3 = new JLabel("B3");
-		panel.add(lblcaseB3);
+		btnB3 = new JButton("B3");
+		panel.add(btnB3);
 		
-		lblcaseC3 = new JLabel("C3");
-		panel.add(lblcaseC3);
+		btnC3 = new JButton("C3");
+		panel.add(btnC3);
 		
-		lblcaseD3 = new JLabel("D3");
-		panel.add(lblcaseD3);
+		btnD3 = new JButton("D3");
+		panel.add(btnD3);
 		
-		lblcaseE3 = new JLabel("E3");
-		panel.add(lblcaseE3);
+		btnE3 = new JButton("E3");
+		panel.add(btnE3);
 		
-		lblcaseA2 = new JLabel("A2");
-		panel.add(lblcaseA2);
+		btnA2 = new JButton("A2");
+		panel.add(btnA2);
 		
-		lblcaseB2 = new JLabel("B2");
-		panel.add(lblcaseB2);
+		btnB2 = new JButton("B2");
+		panel.add(btnB2);
 		
-		lblcaseC2 = new JLabel("C2");
-		panel.add(lblcaseC2);
+		btnC2 = new JButton("C2");
+		panel.add(btnC2);
 		
-		lblcaseD2 = new JLabel("D2");
-		panel.add(lblcaseD2);
+		btnD2 = new JButton("D2");
+		panel.add(btnD2);
 		
-		lblcaseE2 = new JLabel("E2");
-		panel.add(lblcaseE2);
+		btnE2 = new JButton("E2");
+		panel.add(btnE2);
 		
-		lblcaseA1 = new JLabel("A1");
-		panel.add(lblcaseA1);
+		btnA1 = new JButton("A1");
+		panel.add(btnA1);
 		
-		lblcaseB1 = new JLabel("B1");
-		panel.add(lblcaseB1);
+		btnB1 = new JButton("B1");
+		panel.add(btnB1);
 		
-		lblcaseC1 = new JLabel("C1");
-		panel.add(lblcaseC1);
+		btnC1 = new JButton("C1");
+		panel.add(btnC1);
 		
-		lblcaseD1 = new JLabel("D1");
-		panel.add(lblcaseD1);
+		btnD1 = new JButton("D1");
+		panel.add(btnD1);
 		
-		lblcaseE1 = new JLabel("E1");
-		panel.add(lblcaseE1);
+		btnE1 = new JButton("E1");
+		panel.add(btnE1);
 		
 		lblNomDuJoueur = new JLabel("nom");
 		lblNomDuJoueur.setBounds(808, 28, 127, 34);
@@ -184,10 +214,6 @@ public class InterfacePlateau implements Observer {
 		lblPlaceVictoryCard = new JLabel("Victory Card");
 		lblPlaceVictoryCard.setBounds(711, 452, 153, 226);
 		frame.getContentPane().add(lblPlaceVictoryCard);
-		
-		btnPlacer = new JButton("Placer");
-		btnPlacer.setBounds(773, 133, 114, 30);
-		frame.getContentPane().add(btnPlacer);
 		
 		
 	}

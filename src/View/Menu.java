@@ -128,7 +128,7 @@ public class Menu {
 		JButton btnLancerPartie = new JButton("Jouer");
 		btnLancerPartie.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) { 
-				new InterfacePlateau().getFrame().setVisible(true); //permet d'ouvrir l'interface graphique "interfacePlateau"
+				new InterfacePlateau(playerIds).getFrame().setVisible(true); //permet d'ouvrir l'interface graphique "interfacePlateau"
 			}
 		});
 		btnLancerPartie.setFont(new Font("Tahoma", Font.PLAIN, 24));
