@@ -1,24 +1,25 @@
 package projetLO02;
 
 import java.util.Map;
+
 import java.util.Scanner;
 
 public class Joueur {
 	private boolean isIA;
-	protected String name;
+	protected static String name;
 	protected Card victoryCard;
 	protected Hand myHand;
 	protected Jeu jeu;
 	private static final Scanner monClavier = new Scanner(System.in);
 	
 	public Joueur(String name, Jeu jeuEnCours) {
-		this.name = name;
+		Joueur.name = name;
 		this.jeu = jeuEnCours;
 		this.myHand = new Hand();
 	}
 	
-	public String getName() {
-		return this.name;
+	public static String getName() {
+		return name;
 	}
 	
 	public void setIA(boolean etat) {
@@ -35,7 +36,7 @@ public class Joueur {
 	}
 	
 	public void setVictory(Card card) {
-		System.out.println("Victory Card de "+this.name+ " : " + card.toString());
+		System.out.println("Victory Card de "+Joueur.name+ " : " + card.toString());
 		this.victoryCard = card;
 	}
 	
@@ -43,7 +44,7 @@ public class Joueur {
 		if(this.jeu.getMode() == Mode.Avancé) {
 			this.victoryCard = this.myHand.getCard(0);
 			this.myHand.removeCardFromHand(this.victoryCard);
-			System.out.println("Victory Card de "+this.name+ " : " + this.victoryCard.toString());
+			System.out.println("Victory Card de "+Joueur.name+ " : " + this.victoryCard.toString());
 		}
 	}
 	
@@ -77,7 +78,7 @@ public class Joueur {
 				if( (!this.jeu.getPlateau().checkMaxXReached(colonne)) && (!this.jeu.getPlateau().checkMaxYReached(ligne)) ) {
 					if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
 						this.jeu.getPlateau().setCard(card, colonne, ligne);
-						System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
+						System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+Joueur.name);
 						this.myHand.removeCardFromHand(card);
 					}
 					else {
@@ -98,7 +99,7 @@ public class Joueur {
 		else {
 			this.jeu.getPlateau().setFirstCard();
 			this.jeu.getPlateau().setCard(card, colonne, ligne);
-			System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
+			System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+Joueur.name);
 			this.myHand.removeCardFromHand(card);
 		}
 	}

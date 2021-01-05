@@ -5,21 +5,21 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import projetLO02.Joueur;
+import projetLO02.Deck;
 
 
 public class ControleurPiocher {
 	
-	private Joueur joueurPioche;
+	private Deck joueurPioche;
 	private JButton btnPiocher;
 	
-	public ControleurPiocher(Joueur pioche, JButton bouton){
+	public ControleurPiocher(Deck pioche, JButton bouton){
 	joueurPioche = pioche;
 	btnPiocher = bouton;
 	
 	btnPiocher.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
-			joueurPioche.piocher(Card);
+			joueurPioche.giveCard();
 		}
 	});
 }

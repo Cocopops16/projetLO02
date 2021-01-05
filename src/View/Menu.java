@@ -89,8 +89,9 @@ public class Menu {
 					message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					JOptionPane.showMessageDialog(null, message);
 				}
-				else { String name = textPane.getText().trim(); //copie le texte présent dans le Jtext
-				playerIds.add(name);
+				else { 
+					String name = textPane.getText().trim(); //copie le texte présent dans le Jtext
+				    playerIds.add(name);
 				
 				  if(playerIds.size() == 1) { 
 					lblJoueur1.setText(playerIds.get(0));
@@ -98,17 +99,17 @@ public class Menu {
 				  else if (playerIds.size() == 2) {
 					lblJoueur1.setText(playerIds.get(0));
 					lblJoueur2.setText(playerIds.get(1));
-			      }
+			      } 
 				  else if (playerIds.size() == 3) {
 					lblJoueur1.setText(playerIds.get(0));
 					lblJoueur2.setText(playerIds.get(1));
 					lblJoueur3.setText(playerIds.get(2));
 				  }
 				  if(playerIds.size()>0 && playerIds.size()<4) {
-					  JLabel message = new JLabel("Le nom  a été enregistré avec succès !");
+					  JLabel message = new JLabel("Le nom a été enregistré avec succès !");
 					  message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					  JOptionPane.showMessageDialog(null, message);
-					  textPane.setText(""); //réinitialise la zone de text pour 
+					  textPane.setText(""); //réinitialise la zone de text 
 				  }
 				  if(playerIds.size() == 4) {
 					  playerIds.remove(name);
