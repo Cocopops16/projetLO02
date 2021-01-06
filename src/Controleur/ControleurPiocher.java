@@ -13,15 +13,15 @@ public class ControleurPiocher {
 	private Joueur joueurPioche;
 	private JButton btnPiocher;
 	
-	public ControleurPiocher(Joueur pioche, JButton bouton){
-	joueurPioche = pioche;
-	btnPiocher = bouton;
-	
-	btnPiocher.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-			joueurPioche.piocher(Card);
-		}
-	});
-}
+	public ControleurPiocher(Joueur pioche, JButton bouton) {
+		joueurPioche = pioche;
+		btnPiocher = bouton;
+		
+		btnPiocher.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				joueurPioche.piocher(Card);
+			}
+		});
+	}
 	
 }

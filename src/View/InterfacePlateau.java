@@ -1,8 +1,7 @@
 package View;
 
-
-
 import java.awt.EventQueue;
+
 
 import java.awt.Font;
 
@@ -27,14 +26,16 @@ import java.awt.GridLayout;
 import javax.swing.ImageIcon;
 import javax.swing.Icon;
 
+@SuppressWarnings("deprecation")
 public class InterfacePlateau implements Observer {
 
 	//propriétés de la classe
 	private JFrame frame;
-	private Joueur joueurPioche;
+	private Deck joueurPioche;
 	private JButton btnPiocher;
-	private Joueur joueurPlace;
+	
 	private JButton btnDeplacer;
+	private JButton btnFinTour;
 	private JLabel lblCartePiochee;
 	private JLabel lblVictoryCard;
 	private JLabel lblJoueur;
@@ -42,6 +43,7 @@ public class InterfacePlateau implements Observer {
 	private JLabel lblNomDuJoueur;
 	private JLabel lblPlaceCartePiochee;
 	private JLabel lblPlaceVictoryCard;
+	private Joueur joueurPlace;
 	private JButton btnC1;
 	private JButton btnB1;
 	private JButton btnA1;
@@ -59,7 +61,7 @@ public class InterfacePlateau implements Observer {
 	private JButton btnE1;
 	
 	private Menu ajoutJoueurs = new Menu(); 
-	ArrayList<String> temp = new ArrayList<>();
+	static ArrayList<String>  player = new ArrayList<>();
 	ArrayList<JButton> cardPlateauButtons = new ArrayList<JButton>();
 	ArrayList<String> cardIds;
 	Jeu jeu;
@@ -70,13 +72,12 @@ public class InterfacePlateau implements Observer {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		Joueur joueurPioche = new Joueur(); 
-		
-		
+		Deck joueurPioche = new Deck(); 
+				
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					InterfacePlateau window = new InterfacePlateau();
+					InterfacePlateau window = new InterfacePlateau(player);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -88,14 +89,18 @@ public class InterfacePlateau implements Observer {
 	/**
 	 * Create the application.
 	 */
-	public InterfacePlateau(ArrayList<String> playerIds) {
+	public InterfacePlateau(Jeu jeu) {
 		initialize();
-		 temp = playerIds;
-		 jeu = new Jeu();
+		this.jeu = jeu;
+		jeu.start();
+		setName();
+		 
 		//Création du Controleur : lien entre le Modéle et la Vue
 		new ControleurPiocher(joueurPioche, btnPiocher);
-		
+		new ControleurPlacer(joueurPlace, );
+				
 	}
+	
 	
 	public void remplirArrayList() {
 	  	cardPlateauButtons.add(btnA1);
@@ -116,7 +121,12 @@ public class InterfacePlateau implements Observer {
 		
 	}
 	
+	public void setName(){
+		String name = jeu.getPlayerName(1);
+		lblNomDuJoueur.setText(name);
+	 }
 	
+		
 	public JFrame getFrame() {
 		return this.frame;
 	}
@@ -135,16 +145,20 @@ public class InterfacePlateau implements Observer {
 		frame.getContentPane().add(btnPiocher);
 		
 		btnDeplacer = new JButton("deplacer");
-		btnDeplacer.setBounds(773, 142, 114, 30);
+		btnDeplacer.setBounds(773, 140, 114, 30);
 		frame.getContentPane().add(btnDeplacer);
 		
+		btnFinTour = new JButton("Passer la main");
+		btnFinTour.setBounds(773, 193, 114, 30);
+		frame.getContentPane().add(btnFinTour);
+				
 		lblCartePiochee = new JLabel("Votre carte piochee :");
 		lblCartePiochee.setBounds(701, 226, 176, 31);
 		frame.getContentPane().add(lblCartePiochee);
 		lblCartePiochee.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
 		lblVictoryCard = new JLabel("Votre Victory Card :");
-		lblVictoryCard.setBounds(701, 412, 153, 30);
+		lblVictoryCard.setBounds(701, 478, 153, 30);
 		frame.getContentPane().add(lblVictoryCard);
 		lblVictoryCard.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
@@ -203,22 +217,24 @@ public class InterfacePlateau implements Observer {
 		btnE1 = new JButton("E1");
 		panel.add(btnE1);
 		
-		lblNomDuJoueur = new JLabel("nom");
+		lblNomDuJoueur = new JLabel("");
 		lblNomDuJoueur.setBounds(808, 28, 127, 34);
 		frame.getContentPane().add(lblNomDuJoueur);
 		
 		lblPlaceCartePiochee = new JLabel("Carte piochee");
-		lblPlaceCartePiochee.setBounds(701, 267, 161, 135);
+		lblPlaceCartePiochee.setBounds(701, 267, 161, 201);
 		frame.getContentPane().add(lblPlaceCartePiochee);
 		
 		lblPlaceVictoryCard = new JLabel("Victory Card");
-		lblPlaceVictoryCard.setBounds(711, 452, 153, 226);
+		lblPlaceVictoryCard.setBounds(709, 522, 153, 201);
 		frame.getContentPane().add(lblPlaceVictoryCard);
 		
 		
 	}
 	
-	public void update(Observable instanceObservable, Object arg1) {
-		
+	public void update(Observable o, Object arg) {
+		if(o instanceof Jeu) {
+			this.jeu = (Jeu) o;
+		}
 	}
 }

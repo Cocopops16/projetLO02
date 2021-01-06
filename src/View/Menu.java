@@ -3,21 +3,37 @@ package View;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.awt.event.ActionEvent;
 
-public class Menu {
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.JRadioButton;
+
+import Controleur.ControleurMenu;
+import projetLO02.Jeu;
+
+@SuppressWarnings("deprecation")
+public class Menu implements Observer {
 
 	private JFrame frame;
-	public ArrayList<String> playerIds;
+	private JTextPane textPane;
+	private JLabel lblMenu;
+	private JLabel lblEntrezNomJoueur;
+	private JLabel lblJoueur1;
+	private JLabel lblJoueur2;
+	private JLabel lblJoueur3;
+	private JButton btnSaveJoueur;
+	private JLabel lblChooseMode;
+	private JRadioButton rdbtnModeClassique;
+	private JRadioButton rdbtnModeAvance;
+	private JRadioButton rdbtnModePerso;
+	private JButton btnLancerPartie;
+	
+	protected Jeu jeu;
 
 	/**
 	 * Launch the application.
@@ -40,7 +56,9 @@ public class Menu {
 	 */
 	public Menu() {
 		initialize();
-		playerIds = new ArrayList<>();
+		jeu = new Jeu(this);
+		
+		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie);
 	}
 	
 	
@@ -50,89 +68,77 @@ public class Menu {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
-		frame.setBounds(100, 100, 644, 437);
+		frame.setBounds(100, 100, 644, 520);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		textPane.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textPane.setBounds(305, 111, 193, 28);
 		frame.getContentPane().add(textPane);
 		
-		JLabel lblMenu = new JLabel("Shape Up !");
+		lblMenu = new JLabel("Shape Up !");
 		lblMenu.setFont(new Font("Tahoma", Font.BOLD, 36));
 		lblMenu.setBounds(195, 10, 210, 44);
 		frame.getContentPane().add(lblMenu);
 		
-		JLabel lblEntrezNomJoueur = new JLabel("Entrez le nom des joueurs :");
+		lblEntrezNomJoueur = new JLabel("Entrez le nom des joueurs :");
 		lblEntrezNomJoueur.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		lblEntrezNomJoueur.setBounds(10, 111, 283, 28);
 		frame.getContentPane().add(lblEntrezNomJoueur);
 		
-		JLabel lblJoueur1 = new JLabel("");
+		lblJoueur1 = new JLabel("");
 		lblJoueur1.setBounds(66, 203, 80, 28);
 		frame.getContentPane().add(lblJoueur1);
 		
-		JLabel lblJoueur2 = new JLabel("");
+		lblJoueur2 = new JLabel("");
 		lblJoueur2.setBounds(274, 203, 80, 28);
 		frame.getContentPane().add(lblJoueur2);
 		
-		JLabel lblJoueur3 = new JLabel("");
+		lblJoueur3 = new JLabel("");
 		lblJoueur3.setBounds(473, 203, 80, 28);
 		frame.getContentPane().add(lblJoueur3);
 		
-		JButton btnSaveJoueur = new JButton("save");
-		btnSaveJoueur.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(textPane.getText().isEmpty()) {
-					JLabel message = new JLabel("Entrez un nom!");
-					message.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					JOptionPane.showMessageDialog(null, message);
-				}
-				else { String name = textPane.getText().trim(); //copie le texte présent dans le Jtext
-				playerIds.add(name);
-				
-				  if(playerIds.size() == 1) { 
-					lblJoueur1.setText(playerIds.get(0));
-				  }
-				  else if (playerIds.size() == 2) {
-					lblJoueur1.setText(playerIds.get(0));
-					lblJoueur2.setText(playerIds.get(1));
-			      }
-				  else if (playerIds.size() == 3) {
-					lblJoueur1.setText(playerIds.get(0));
-					lblJoueur2.setText(playerIds.get(1));
-					lblJoueur3.setText(playerIds.get(2));
-				  }
-				  if(playerIds.size()>0 && playerIds.size()<4) {
-					  JLabel message = new JLabel("Le nom  a été enregistré avec succès !");
-					  message.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					  JOptionPane.showMessageDialog(null, message);
-					  textPane.setText(""); //réinitialise la zone de text pour 
-				  }
-				  if(playerIds.size() == 4) {
-					  playerIds.remove(name);
-					  JLabel message = new JLabel("Il ne peut pas y avoir plus de 3 joueurs !");
-					  message.setFont(new Font("Tahoma", Font.PLAIN, 15));
-					  JOptionPane.showMessageDialog(null, message);
-					  textPane.setText("");
-				  }
-				}
-			}
-		});
-		
+		btnSaveJoueur = new JButton("save");		
 		btnSaveJoueur.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnSaveJoueur.setBounds(508, 111, 112, 30);
 		frame.getContentPane().add(btnSaveJoueur);
 		
-		JButton btnLancerPartie = new JButton("Jouer");
-		btnLancerPartie.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) { 
-				new InterfacePlateau(playerIds).getFrame().setVisible(true); //permet d'ouvrir l'interface graphique "interfacePlateau"
-			}
-		});
+		lblChooseMode = new JLabel("Choisissez le mode de jeu :");
+		lblChooseMode.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblChooseMode.setBounds(10, 242, 283, 28);
+		frame.getContentPane().add(lblChooseMode);
+		
+		ButtonGroup rdbnGroupe = new ButtonGroup();
+		
+		rdbtnModeClassique = new JRadioButton("Mode Classique");
+		rdbtnModeClassique.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		rdbtnModeClassique.setSelected(true);
+		rdbtnModeClassique.setBounds(296, 250, 136, 23);
+		frame.getContentPane().add(rdbtnModeClassique);
+		rdbnGroupe.add(rdbtnModeClassique);
+		
+		rdbtnModeAvance = new JRadioButton("Mode Avanc\u00E9");
+		rdbtnModeAvance.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		rdbtnModeAvance.setBounds(296, 277, 123, 23);
+		frame.getContentPane().add(rdbtnModeAvance);
+		rdbnGroupe.add(rdbtnModeAvance);
+		
+		rdbtnModePerso = new JRadioButton("Mode Personnalis\u00E9");
+		rdbtnModePerso.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		rdbtnModePerso.setBounds(296, 303, 153, 23);
+		frame.getContentPane().add(rdbtnModePerso);
+		rdbnGroupe.add(rdbtnModePerso);
+		
+		btnLancerPartie = new JButton("Jouer");
 		btnLancerPartie.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		btnLancerPartie.setBounds(244, 334, 129, 56);
-		frame.getContentPane().add(btnLancerPartie);
+		btnLancerPartie.setBounds(245, 414, 129, 56);
+		frame.getContentPane().add(btnLancerPartie);	
+	}
+
+	public void update(Observable o, Object arg) {
+		if(o instanceof Jeu) {
+			this.jeu = (Jeu) o;
+		}
 	}
 }

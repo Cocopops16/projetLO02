@@ -1,71 +1,114 @@
 package projetLO02;
 
 import java.util.LinkedList;
+import java.util.Observable;
 import java.util.Queue;
-import java.util.Scanner;
 
-public class Jeu {
+import Controleur.MsgBox;
+import View.Menu;
+
+@SuppressWarnings("deprecation")
+public class Jeu extends Observable implements Runnable {
 	private int nbrJoueurs, nbrIA;
 	private Mode mode;
 	private Card hiddenCard;
 	private Plateau plateau;
 	private Deck deck;
 	private Queue<Object> playersQueue = new LinkedList<Object>();
-	private static final Scanner monClavier = new Scanner(System.in);
+	protected MsgBox msgBox;
+	private String msgToSend;
+	private Thread thread;
 	
-	
-	public Jeu() {
-		System.out.println("Entrez la largeur du plateau :");
-		int xMax = monClavier.nextInt();
-		System.out.println("Entrez la hauteur du plateau :");
-		int yMax = monClavier.nextInt();
-		this.plateau = new Plateau(xMax, yMax);
+	public Jeu(Menu observer) {
+		this.msgBox = new MsgBox();
 		
+		this.msgToSend = null;
+		
+		this.mode = null;
+		this.nbrJoueurs = 0;
+		this.nbrIA = 0;
+		this.plateau = new Plateau(5, 3);
 		this.deck = new Deck();
+		
+		addObserver(observer);
 	}
 	
-	public void start() {		
-		setMode();
-		setNbrJoueurs();
-		setNbrIA();
-		if((this.nbrIA+this.nbrJoueurs) > 3)
-			start();
-		else {
-			for(int i=0; i<this.nbrJoueurs; i++) {
-				System.out.println("Entrez le nom du Joueur n°"+(i+1)+" :");
-				String name = monClavier.next();
-				this.playersQueue.add(new Joueur(name, this));
-				System.out.println("Bienvenue "+ name);
-			}
-			for(int i=0; i<this.nbrJoueurs; i++) {
-				((Joueur)this.playersQueue.peek()).setIA(false);
-				this.playersQueue.add(this.playersQueue.poll());
-			}
+	public void sendMsg(String msg) {
+		this.msgToSend = msg;
+		this.thread = new Thread(this);
+		this.thread.start();
+	}
+	
+	public void addJoueur(String name) {
+		if((this.nbrIA+this.nbrJoueurs)<4) {
+			Joueur joueur = new Joueur(name, this);
+			joueur.setIA(false);
+			this.playersQueue.add(joueur);
+			sendMsg("Bienvenue "+ name);
+			this.nbrJoueurs++;
 			
-			for(int i=0; i<this.nbrIA; i++) {
-				switch(i) {
-					case 0:
-						this.playersQueue.add(new IA("Billy", this));
-						System.out.println( "Billy est dans la place !");
-						break;
-					case 1:
-						this.playersQueue.add(new IA("Cratos", this));
-						System.out.println("Attention, Cratos est arrivé avec un air effrayant !");
-						break;
-					case 2:
-						this.playersQueue.add(new IA("Price", this));
-						System.out.println("Price est dans les parrages, vous avez vraiment décidé de ne pas vous salir les mains aujourd'hui !");
-						break;
-				}
+			setChanged();
+			clearChanged();
+		}
+	}
+	
+	public void setMode(int mode) {	
+ 		//sendMsg("Entrez le mode de jeu : \n- 1= Classique\n-2= Avancé (main de 3 cartes)\n- 3= personnalisé (choix de la VictoryCard)");
+		switch(mode) {
+			case 1: 
+				this.mode = Mode.Classique;
+				break;
+			case 2:
+				this.mode = Mode.Avancé;
+				break;
+			case 3:
+				this.mode = Mode.Personnalisé;
+				break;
+			default:
+				this.mode = Mode.Classique;
+		}
+		
+		setChanged();
+		clearChanged();
+	}
+	
+	public void addIA() {
+		if((this.nbrIA+this.nbrJoueurs)<4) {
+			String name = "IA";
+			switch(this.nbrIA) {
+				case 0:
+					name = "[IA]Billy";
+					sendMsg( "Billy est dans la place !");
+					break;
+				case 1:
+					name = "[IA]Cratos";
+					sendMsg("Attention, Cratos est arrivé avec un air effrayant !");
+					break;
+				case 2:
+					name = "[IA]Price";
+					sendMsg("Price est dans les parrages, vous avez vraiment décidé de ne pas vous salir les mains aujourd'hui !");
+					break;
 			}
+			Joueur joueurIA = new IA(name, this);
+			joueurIA.setIA(true);
+			this.playersQueue.add(joueurIA);
+			this.nbrIA++;
+			
+			setChanged();
+			clearChanged();
+		}
+	}
+	
+	public void start() throws InvalidModeException,InvalidNbrOfPlayersException {
+		if( (this.mode!=null)&&((this.nbrIA+this.nbrJoueurs)>=2) ) {
 			for(int i=0; i<(this.nbrJoueurs+this.nbrIA); i++) {
 				if(i>=this.nbrJoueurs) {
 					((Joueur)this.playersQueue.peek()).setIA(true);
-					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme IA");
+					sendMsg( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme IA");
 					this.playersQueue.add(this.playersQueue.poll());
 				}
 				else {
-					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme Joueur");
+					sendMsg( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme Joueur");
 					this.playersQueue.add(this.playersQueue.poll());
 				}
 			}
@@ -79,7 +122,7 @@ public class Jeu {
 					if(i==this.nbrJoueurs-1) {
 						i=(this.nbrIA+this.nbrJoueurs);
 					}
-					System.out.println( ((Joueur)this.playersQueue.peek()).getName()+" vous allez choisir votre Victory Card, mettez vous à l'abri des regards");
+					sendMsg( ((Joueur)this.playersQueue.peek()).getName()+" vous allez choisir votre Victory Card, mettez vous à l'abri des regards");
 					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.modePerso());
 				}
 				else if(this.mode == Mode.Avancé) {
@@ -104,13 +147,29 @@ public class Jeu {
 				}
 			}
 			this.hiddenCard = this.deck.giveCard();
+			
+			//début de la partie :
+			while(!checkEndGame()) {
+				tourDeJeu();
+			}
+			if(checkEndGame()) {
+				comptagePoints();
+				sendMsg("End of the game");
+			}
+			else sendMsg("Problème critique dans le déroulement de la partie");
+		}
+		else if(this.mode==null){
+			throw new InvalidModeException("Mode non choisi");
+		}
+		else if((this.nbrIA+this.nbrJoueurs)<2){
+			throw new InvalidNbrOfPlayersException("Nbr joueurs actuels <2, deux joueurs minimum sont nécessaires pour lancer la partie");
 		}
 	}
 	
 	public void tourDeJeu() {
-		System.out.println(this.plateau.toString());
+		sendMsg(this.plateau.toString());
 		Joueur joueurEnCours = (Joueur)this.playersQueue.peek();
-		System.out.println("C'est au tour de : " + joueurEnCours.getName());
+		sendMsg("C'est au tour de : " + joueurEnCours.getName());
 		this.playersQueue.add(this.playersQueue.poll());
 		if(this.mode != Mode.Avancé) {
 			joueurEnCours.piocher(this.deck.giveCard());
@@ -126,7 +185,7 @@ public class Jeu {
 			IA IAEnCours = (IA)joueurEnCours;
 			IAEnCours.jouer();
 		}
-		else System.out.println("problème sur le joueur : "+joueurEnCours.getName()+", est-il une IA ?");
+		else sendMsg("problème sur le joueur : "+joueurEnCours.getName()+", est-il une IA ?");
 		
 		if( (this.mode == Mode.Avancé) && (!this.deck.isDeckEmpty()) ) {
 			joueurEnCours.piocher(this.deck.giveCard());
@@ -160,7 +219,7 @@ public class Jeu {
 			scoreFinal = scoreFinal + joueur.accept(visitor1, this.plateau.accept(visitor1));
 			scoreFinal = scoreFinal + joueur.accept(visitor2, this.plateau.accept(visitor1));
 			scoreFinal = scoreFinal + joueur.accept(visitor3, this.plateau.accept(visitor1));
-			System.out.println("Le joueur : "+joueur.getName()+" a accumulé : "+scoreFinal+" points");
+			sendMsg("Le joueur : "+joueur.getName()+" a accumulé : "+scoreFinal+" points");
 			if(scoreFinal>scorePremier) {
 				scorePremier = scoreFinal;
 				premier = joueur.getName();
@@ -168,37 +227,7 @@ public class Jeu {
 			this.playersQueue.poll();
 			scoreFinal = 0;
 		}
-		System.out.println("Félicitations "+premier+" ton plan s'est déroulé sans accros ;) , tu as gagné avec : "+scorePremier+" points");
-		monClavier.close();
-	}
-
- 	public void setMode() {
-		System.out.println("Entrez le mode de jeu : \n- 1= Classique\n-2= Avancé (main de 3 cartes)\n- 3= personnalisé (choix de la VictoryCard)");
-		int choix = monClavier.nextInt();
-		
-		switch(choix) {
-			case 1: 
-				this.mode = Mode.Classique;
-				break;
-			case 2:
-				this.mode = Mode.Avancé;
-				break;
-			case 3:
-				this.mode = Mode.Personnalisé;
-				break;
-			default:
-				this.mode = Mode.Classique;
-		}
-	}
-	
-	public void setNbrJoueurs() {
-		System.out.println("Choix du nombre de joueurs reels participant : ");
-		this.nbrJoueurs = monClavier.nextInt();
-	}
-	
-	public void setNbrIA() {
-		System.out.println("Choix du nombre de joueurs virtuels participant : ");
-		this.nbrIA = monClavier.nextInt();
+		sendMsg("Félicitations "+premier+" ton plan s'est déroulé sans accros ;) , tu as gagné avec : "+scorePremier+" points");
 	}
 	
 	public Mode getMode() {
@@ -223,5 +252,23 @@ public class Jeu {
 	
 	public Card getHinddenCard() {
 		return this.hiddenCard;
+	}
+	
+	public String getPlayerName(int playerNum) {
+		for(int i=1; i<playerNum; i++) {
+			this.playersQueue.add(this.playersQueue.poll());
+		}
+		String name = ( (Joueur)this.playersQueue.peek() ).getName();
+		for(int i=1; i<(this.nbrIA+this.nbrJoueurs); i++) {
+			this.playersQueue.add(this.playersQueue.poll());
+		}
+		return name;
+	}
+	
+	public void run() {
+		if(this.msgToSend != null) {
+			this.msgBox.addMsg(this.msgToSend);	
+			this.msgToSend = null;
+		}
 	}
 }
