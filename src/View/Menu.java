@@ -27,6 +27,7 @@ public class Menu implements Observer {
 	private JLabel lblJoueur2;
 	private JLabel lblJoueur3;
 	private JButton btnSaveJoueur;
+	private JButton btnAddIA;
 	private JLabel lblChooseMode;
 	private JRadioButton rdbtnModeClassique;
 	private JRadioButton rdbtnModeAvance;
@@ -58,7 +59,8 @@ public class Menu implements Observer {
 		initialize();
 		jeu = new Jeu(this);
 		
-		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie);
+		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie);
+		
 	}
 	
 	
@@ -103,6 +105,11 @@ public class Menu implements Observer {
 		btnSaveJoueur.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnSaveJoueur.setBounds(508, 111, 112, 30);
 		frame.getContentPane().add(btnSaveJoueur);
+		
+		btnAddIA = new JButton("Add IA");
+		btnAddIA.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnAddIA.setBounds(274, 164, 80, 28);
+		frame.getContentPane().add(btnAddIA);
 		
 		lblChooseMode = new JLabel("Choisissez le mode de jeu :");
 		lblChooseMode.setFont(new Font("Tahoma", Font.PLAIN, 22));

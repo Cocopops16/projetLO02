@@ -52,26 +52,6 @@ public class Jeu extends Observable implements Runnable {
 		}
 	}
 	
-	public void setMode(int mode) {	
- 		//sendMsg("Entrez le mode de jeu : \n- 1= Classique\n-2= Avancé (main de 3 cartes)\n- 3= personnalisé (choix de la VictoryCard)");
-		switch(mode) {
-			case 1: 
-				this.mode = Mode.Classique;
-				break;
-			case 2:
-				this.mode = Mode.Avancé;
-				break;
-			case 3:
-				this.mode = Mode.Personnalisé;
-				break;
-			default:
-				this.mode = Mode.Classique;
-		}
-		
-		setChanged();
-		clearChanged();
-	}
-	
 	public void addIA() {
 		if((this.nbrIA+this.nbrJoueurs)<4) {
 			String name = "IA";
@@ -98,6 +78,27 @@ public class Jeu extends Observable implements Runnable {
 			clearChanged();
 		}
 	}
+	
+	public void setMode(int mode) {	
+ 		//sendMsg("Entrez le mode de jeu : \n- 1= Classique\n-2= Avancé (main de 3 cartes)\n- 3= personnalisé (choix de la VictoryCard)");
+		switch(mode) {
+			case 1: 
+				this.mode = Mode.Classique;
+				break;
+			case 2:
+				this.mode = Mode.Avancé;
+				break;
+			case 3:
+				this.mode = Mode.Personnalisé;
+				break;
+			default:
+				this.mode = Mode.Classique;
+		}
+		
+		setChanged();
+		clearChanged();
+	}
+	
 	
 	public void start() throws InvalidModeException,InvalidNbrOfPlayersException {
 		if( (this.mode!=null)&&((this.nbrIA+this.nbrJoueurs)>=2) ) {
@@ -259,8 +260,10 @@ public class Jeu extends Observable implements Runnable {
 			this.playersQueue.add(this.playersQueue.poll());
 		}
 		String name = ( (Joueur)this.playersQueue.peek() ).getName();
-		for(int i=1; i<(this.nbrIA+this.nbrJoueurs); i++) {
-			this.playersQueue.add(this.playersQueue.poll());
+		if(playerNum>1) {
+			for(int i=(this.nbrIA+this.nbrJoueurs); i>=playerNum; i--) {
+				this.playersQueue.add(this.playersQueue.poll());
+			}
 		}
 		return name;
 	}

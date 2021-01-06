@@ -19,6 +19,7 @@ public class ControleurMenu implements Runnable {
 	private JLabel lblJoueur2;
 	private JLabel lblJoueur3;
 	private JButton btnSaveJoueur;
+	private JButton btnAddIA;
 	private JRadioButton rdbtnModeClassique;
 	private JRadioButton rdbtnModeAvance;
 	private JRadioButton rdbtnModePerso;
@@ -27,12 +28,13 @@ public class ControleurMenu implements Runnable {
 	private Jeu jeu;
 	private Thread thread;
 
-	public ControleurMenu(Jeu jeu, JTextPane textPane, JLabel lblJoueur1, JLabel lblJoueur2, JLabel lblJoueur3, JButton btnSaveJoueur, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie) {
+	public ControleurMenu(Jeu jeu, JTextPane textPane, JLabel lblJoueur1, JLabel lblJoueur2, JLabel lblJoueur3, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie) {
 		this.textPane = textPane;
 		this.lblJoueur1 = lblJoueur1;
 		this.lblJoueur2 = lblJoueur2;
 		this.lblJoueur3 = lblJoueur3;
 		this.btnSaveJoueur = btnSaveJoueur;
+		this.btnAddIA = btnAddIA;
 		this.rdbtnModeClassique = rdbtnModeClassique;
 		this.rdbtnModeAvance = rdbtnModeAvance;
 		this.rdbtnModePerso = rdbtnModePerso;
@@ -73,6 +75,29 @@ public class ControleurMenu implements Runnable {
 						JOptionPane.showMessageDialog(null, message);
 					}
 					textPane.setText(""); //réinitialise la zone de text pour 
+				}
+			}
+		});
+		
+		btnAddIA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				jeu.addIA();
+				if((jeu.getNbrJoueurs()+jeu.getNbrIA()) == 1) { 
+					lblJoueur1.setText(jeu.getPlayerName(1));
+				}
+				else if ((jeu.getNbrJoueurs()+jeu.getNbrIA()) == 2) {
+					lblJoueur1.setText(jeu.getPlayerName(1));
+					lblJoueur2.setText(jeu.getPlayerName(2));
+				}
+				else if ((jeu.getNbrJoueurs()+jeu.getNbrIA()) == 3) {
+					lblJoueur1.setText(jeu.getPlayerName(1));
+					lblJoueur2.setText(jeu.getPlayerName(2));
+					lblJoueur3.setText(jeu.getPlayerName(3));
+				}
+				if( ( (jeu.getNbrJoueurs()+jeu.getNbrIA())>0 ) && ( (jeu.getNbrJoueurs()+jeu.getNbrIA())<4 ) ) {
+					JLabel message = new JLabel("IA ajoutée avec succès !");
+					message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+					JOptionPane.showMessageDialog(null, message);
 				}
 			}
 		});
