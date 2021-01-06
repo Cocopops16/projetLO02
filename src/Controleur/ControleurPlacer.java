@@ -135,6 +135,6 @@ public class ControleurPlacer {
 				joueurPlace.placer(card, 'E', 3);
 			}
 		});
-		
+			
 	}
 }
