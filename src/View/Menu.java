@@ -99,6 +99,7 @@ public class Menu implements Observer {
 		lblJoueur3.setBounds(473, 203, 80, 28);
 		frame.getContentPane().add(lblJoueur3);
 		
+		btnSaveJoueur = new JButton("save");
 		btnSaveJoueur.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnSaveJoueur.setBounds(508, 111, 112, 30);
 		frame.getContentPane().add(btnSaveJoueur);
