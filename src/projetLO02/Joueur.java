@@ -7,6 +7,7 @@ public class Joueur {
 	private boolean isIA;
 	protected String name;
 	protected Card victoryCard;
+	private boolean aDejaPioche;
 	protected Hand myHand;
 	protected Jeu jeu;
 	private static final Scanner monClavier = new Scanner(System.in);
@@ -15,6 +16,7 @@ public class Joueur {
 		this.name = name;
 		this.jeu = jeuEnCours;
 		this.myHand = new Hand();
+		this.aDejaPioche = false;
 	}
 	
 	public String getName() {
@@ -29,9 +31,13 @@ public class Joueur {
 		return this.isIA;
 	}
 	
-	public void piocher(Card card) {
-		System.out.println("Vous piochez : " + card.toString());
-		this.myHand.addCardToHand(card);
+	public void piocher() {
+		if(!this.aDejaPioche) {
+			this.aDejaPioche = true;
+			Card card = jeu.getDeck().giveCard();
+			System.out.println("Vous piochez : " + card.toString());
+			this.myHand.addCardToHand(card);
+		}
 	}
 	
 	public void setVictory(Card card) {

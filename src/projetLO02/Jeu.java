@@ -5,7 +5,7 @@ import java.util.Observable;
 import java.util.Queue;
 
 import Controleur.MsgBox;
-import View.Menu;
+import View.MonInterface;
 
 @SuppressWarnings("deprecation")
 public class Jeu extends Observable implements Runnable {
@@ -19,7 +19,7 @@ public class Jeu extends Observable implements Runnable {
 	private String msgToSend;
 	private Thread thread;
 	
-	public Jeu(Menu observer) {
+	public Jeu(MonInterface monInterface) {
 		this.msgBox = new MsgBox();
 		
 		this.msgToSend = null;
@@ -30,7 +30,7 @@ public class Jeu extends Observable implements Runnable {
 		this.plateau = new Plateau(5, 3);
 		this.deck = new Deck();
 		
-		addObserver(observer);
+		addObserver(monInterface);
 	}
 	
 	public void sendMsg(String msg) {
@@ -127,9 +127,9 @@ public class Jeu extends Observable implements Runnable {
 					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.modePerso());
 				}
 				else if(this.mode == Mode.Avancé) {
-					( (Joueur)this.playersQueue.peek() ).piocher(this.deck.giveCard());
-					( (Joueur)this.playersQueue.peek() ).piocher(this.deck.giveCard());
-					( (Joueur)this.playersQueue.peek() ).piocher(this.deck.giveCard());
+					( (Joueur)this.playersQueue.peek() ).piocher();
+					( (Joueur)this.playersQueue.peek() ).piocher();
+					( (Joueur)this.playersQueue.peek() ).piocher();
 				}
 				else if(this.mode == Mode.Classique) {
 					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.giveCard());
@@ -173,7 +173,7 @@ public class Jeu extends Observable implements Runnable {
 		sendMsg("C'est au tour de : " + joueurEnCours.getName());
 		this.playersQueue.add(this.playersQueue.poll());
 		if(this.mode != Mode.Avancé) {
-			joueurEnCours.piocher(this.deck.giveCard());
+			joueurEnCours.piocher();
 		}
 		
 		if(!joueurEnCours.getIA()) {
@@ -189,7 +189,7 @@ public class Jeu extends Observable implements Runnable {
 		else sendMsg("problème sur le joueur : "+joueurEnCours.getName()+", est-il une IA ?");
 		
 		if( (this.mode == Mode.Avancé) && (!this.deck.isDeckEmpty()) ) {
-			joueurEnCours.piocher(this.deck.giveCard());
+			joueurEnCours.piocher();
 		}
 	}
 	

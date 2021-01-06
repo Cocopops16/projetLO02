@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -24,11 +25,13 @@ public class ControleurMenu implements Runnable {
 	private JRadioButton rdbtnModeAvance;
 	private JRadioButton rdbtnModePerso;
 	private JButton btnLancerPartie;
+	private JFrame frameMenu;
+	private JFrame framePlateau;
 	
 	private Jeu jeu;
 	private Thread thread;
 
-	public ControleurMenu(Jeu jeu, JTextPane textPane, JLabel lblJoueur1, JLabel lblJoueur2, JLabel lblJoueur3, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie) {
+	public ControleurMenu(Jeu jeu, JTextPane textPane, JLabel lblJoueur1, JLabel lblJoueur2, JLabel lblJoueur3, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie, JFrame frameMenu, JFrame framePlateau) {
 		this.textPane = textPane;
 		this.lblJoueur1 = lblJoueur1;
 		this.lblJoueur2 = lblJoueur2;
@@ -39,6 +42,8 @@ public class ControleurMenu implements Runnable {
 		this.rdbtnModeAvance = rdbtnModeAvance;
 		this.rdbtnModePerso = rdbtnModePerso;
 		this.btnLancerPartie = btnLancerPartie;
+		this.frameMenu = frameMenu;
+		this.framePlateau = framePlateau;
 		
 		this.jeu = jeu;
 		
@@ -120,7 +125,8 @@ public class ControleurMenu implements Runnable {
 					message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					JOptionPane.showMessageDialog(null, message);
 				}
-				new InterfacePlateau(jeu).getFrame().setVisible(true); //permet d'ouvrir l'interface graphique "interfacePlateau"
+				framePlateau.setVisible(true); //permet d'ouvrir l'interface graphique du Plateau
+				frameMenu.setVisible(false);
 			}
 		});
 	}
