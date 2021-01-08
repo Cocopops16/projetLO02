@@ -1,6 +1,7 @@
 package Controleur;
 
 import java.awt.Font;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -10,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 
-import View.InterfacePlateau;
+import View.MonInterfacePlateau;
 import projetLO02.Jeu;
 
 public class ControleurMenu implements Runnable {
@@ -75,11 +76,11 @@ public class ControleurMenu implements Runnable {
 						lblJoueur3.setText(jeu.getPlayerName(3));
 					}
 					if( ( (jeu.getNbrJoueurs()+jeu.getNbrIA())>0 ) && ( (jeu.getNbrJoueurs()+jeu.getNbrIA())<4 ) ) {
-						JLabel message = new JLabel("Le nom  a été enregistré avec succès !");
+						JLabel message = new JLabel("Le nom a été enregistré avec succès !");
 						message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 						JOptionPane.showMessageDialog(null, message);
 					}
-					textPane.setText(""); //réinitialise la zone de text pour 
+					textPane.setText(""); //réinitialise la zone de texte 
 				}
 			}
 		});

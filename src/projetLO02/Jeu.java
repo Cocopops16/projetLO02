@@ -1,11 +1,12 @@
 package projetLO02;
 
 import java.util.LinkedList;
+
 import java.util.Observable;
 import java.util.Queue;
 
 import Controleur.MsgBox;
-import View.MonInterface;
+import View.MonInterfacePlateau;
 
 @SuppressWarnings("deprecation")
 public class Jeu extends Observable implements Runnable {
@@ -19,7 +20,7 @@ public class Jeu extends Observable implements Runnable {
 	private String msgToSend;
 	private Thread thread;
 	
-	public Jeu(MonInterface monInterface) {
+	public Jeu(MonInterfacePlateau monInterface) {
 		this.msgBox = new MsgBox();
 		
 		this.msgToSend = null;

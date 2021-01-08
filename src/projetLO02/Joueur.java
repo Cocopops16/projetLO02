@@ -1,22 +1,25 @@
 package projetLO02;
 
 import java.util.Map;
+import java.util.Observable;
 import java.util.Scanner;
 
-public class Joueur {
+public class Joueur extends Observable{
 	private boolean isIA;
 	protected String name;
 	protected Card victoryCard;
 	private boolean aDejaPioche;
+	private boolean aDejaPlace;
 	protected Hand myHand;
 	protected Jeu jeu;
 	private static final Scanner monClavier = new Scanner(System.in);
 	
-	public Joueur(String name, Jeu jeuEnCours) {
+	public Joueur(String name, Jeu jeuEnCours){
 		this.name = name;
 		this.jeu = jeuEnCours;
 		this.myHand = new Hand();
 		this.aDejaPioche = false;
+		this.aDejaPlace = false;
 	}
 	
 	public String getName() {
@@ -34,9 +37,12 @@ public class Joueur {
 	public void piocher() {
 		if(!this.aDejaPioche) {
 			this.aDejaPioche = true;
+			this.setChanged();
+			this.notifyObservers();
 			Card card = jeu.getDeck().giveCard();
 			System.out.println("Vous piochez : " + card.toString());
 			this.myHand.addCardToHand(card);
+			
 		}
 	}
 	
@@ -78,11 +84,16 @@ public class Joueur {
 	}
 	
 	public void placer(Card card, char colonne, int ligne) {
+		if(!aDejaPlace) {
+				
 		if(this.jeu.getPlateau().getFirstCard()) {
 			if(!this.jeu.getPlateau().isPosAlreadyTaken(colonne, ligne)) {
 				if( (!this.jeu.getPlateau().checkMaxXReached(colonne)) && (!this.jeu.getPlateau().checkMaxYReached(ligne)) ) {
 					if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
 						this.jeu.getPlateau().setCard(card, colonne, ligne);
+						this.aDejaPlace = true;
+						this.setChanged();
+						this.notifyObservers();
 						System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
 						this.myHand.removeCardFromHand(card);
 					}
@@ -107,6 +118,7 @@ public class Joueur {
 			System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
 			this.myHand.removeCardFromHand(card);
 		}
+	  }
 	}
 	
 	public void placer(Card card) {
@@ -170,6 +182,14 @@ public class Joueur {
 			System.out.println("Position non occupée");
 			deplacer();
 		}
+	}
+	
+	public boolean aPioche() {
+		return aDejaPioche;
+	}
+	
+	public boolean aPlace() {
+		return aDejaPlace;
 	}
 	
 	public int accept(Visitor visitor, Map<String, Object> positions) {

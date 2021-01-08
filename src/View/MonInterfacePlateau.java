@@ -1,13 +1,17 @@
 package View;
 
 import java.awt.EventQueue;
+
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,11 +20,15 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 
 import Controleur.ControleurMenu;
+import Controleur.ControleurPiocher;
+import Controleur.ControleurPlacer;
+import projetLO02.Hand;
 import projetLO02.Jeu;
 import projetLO02.Joueur;
+import java.awt.Color;
 
 @SuppressWarnings("deprecation")
-public class MonInterface implements Observer {
+public class MonInterfacePlateau implements Observer {
 
 	private JFrame frameMenu;
 	private JTextPane textPane;
@@ -65,7 +73,47 @@ public class MonInterface implements Observer {
 	private JButton btnE1;
 	
 	protected Jeu jeu;
+	protected Hand hand;
 	private Joueur joueurEnCours;
+	
+
+  	ImageIcon icon1 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_bleu_plein.PNG"));
+  	ImageIcon SQUARE_SOLID_BLUE = new ImageIcon((icon1).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon2 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_bleu_vide.PNG"));
+  	ImageIcon SQUARE_HOLLOW_BLUE = new ImageIcon((icon2).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon3 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_rouge_plein.PNG"));
+  	ImageIcon SQUARE_SOLID_RED = new ImageIcon((icon3).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon4 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_rouge_vide.PNG"));
+  	ImageIcon SQUARE_HOLLOW_RED = new ImageIcon((icon4).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon5 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_vert_plein.PNG"));
+  	ImageIcon SQUARE_SOLID_GREEN = new ImageIcon((icon5).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon6 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_vert_vide.PNG"));
+  	ImageIcon SQUARE_HOLLOW_GREEN = new ImageIcon((icon6).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon7 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_bleu_plein.PNG"));
+  	ImageIcon CIRCLE_SOLID_BLUE = new ImageIcon((icon7).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon8 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_bleu_vide.PNG"));
+  	ImageIcon CIRCLE_HOLLOW_BLUE = new ImageIcon((icon8).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon9 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_rouge_plein.PNG"));
+  	ImageIcon CIRCLE_SOLID_RED = new ImageIcon((icon9).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon10 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_rouge_vide.PNG"));
+  	ImageIcon CIRCLE_HOLLOW_RED = new ImageIcon((icon10).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon11 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_vert_plein.PNG"));
+  	ImageIcon CIRCLE_SOLID_GREEN = new ImageIcon((icon11).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon12 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_vert_vide.PNG"));
+  	ImageIcon CIRCLE_HOLLOW_GREEN = new ImageIcon((icon12).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon13 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_bleu_plein.PNG"));
+  	ImageIcon TRIANGLE_SOLID_BLUE = new ImageIcon((icon13).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon14 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_bleu_vide.PNG"));
+  	ImageIcon TRIANGLE_HOLLOW_BLUE = new ImageIcon((icon14).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon15 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_rouge_plein.PNG"));
+  	ImageIcon TRIANGLE_SOLID_RED = new ImageIcon((icon15).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon16 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_rouge_vide.PNG"));
+  	ImageIcon TRIANGLE_HOLLOW_RED = new ImageIcon((icon16).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon17 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_vert_plein.PNG"));
+  	ImageIcon TRIANGLE_SOLID_GREEN = new ImageIcon((icon17).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon icon18 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_vert_vide.PNG"));
+  	ImageIcon TRIANGLE_HOLLOW_GREEN = new ImageIcon((icon18).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	
 	
 	private ArrayList<JButton> cardPlateauButtons = new ArrayList<JButton>();
 
@@ -76,7 +124,7 @@ public class MonInterface implements Observer {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MonInterface window = new MonInterface();
+					MonInterfacePlateau window = new MonInterfacePlateau();
 					window.frameMenu.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -88,12 +136,14 @@ public class MonInterface implements Observer {
 	/**
 	 * Create the application.
 	 */
-	public MonInterface() {
+	public MonInterfacePlateau() {
 		initialize();
 		jeu = new Jeu(this);
+		//joueurEnCours.addObserver(this);
 		
 		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau);
-		
+		new ControleurPlacer(this.joueurEnCours, this.hand, this.jeu, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3);
+	    new ControleurPiocher(this.joueurEnCours, this.btnPiocher);
 	}
 
 	/**
@@ -244,6 +294,7 @@ public class MonInterface implements Observer {
 		panel.add(btnE2);
 		
 		btnA1 = new JButton("A1");
+		btnA1.setBackground(new Color(240, 240, 240));
 		panel.add(btnA1);
 		
 		btnB1 = new JButton("B1");
@@ -263,7 +314,7 @@ public class MonInterface implements Observer {
 		framePlateau.getContentPane().add(lblNomDuJoueur);
 		
 		lblPlaceCartePiochee = new JLabel("Carte piochee");
-		lblPlaceCartePiochee.setBounds(701, 267, 161, 201);
+		lblPlaceCartePiochee.setBounds(700, 267, 161, 201);
 		framePlateau.getContentPane().add(lblPlaceCartePiochee);
 		
 		lblPlaceVictoryCard = new JLabel("Victory Card");
@@ -285,11 +336,30 @@ public class MonInterface implements Observer {
 	  	cardPlateauButtons.add(btnE1);
 	  	cardPlateauButtons.add(btnE2);	  	
 	  	cardPlateauButtons.add(btnE3);
+	  	
+	  		  	
+	  	btnB1.setIcon(SQUARE_SOLID_BLUE); //essai
+	  	
+	         
 	}
+	
 
 	public void update(Observable o, Object arg) {
 		if(o instanceof Jeu) {
 			this.jeu = (Jeu) o;
 		}
+		
+		if(o instanceof Joueur) {
+			
+			if(joueurEnCours.aPioche()) {
+				lblPlaceCartePiochee.setIcon(hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3());
+			}
+			
+			if(joueurEnCours.aPlace()) {
+								
+			}
+									
+		}
+		
 	}
 }

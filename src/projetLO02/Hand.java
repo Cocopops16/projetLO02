@@ -1,9 +1,11 @@
 package projetLO02;
 
 import java.util.LinkedList;
+
 import java.util.List;
 
-public class Hand {
+
+public class Hand{
 	private List<Object> hand;
 	
 	public Hand() {
