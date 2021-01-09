@@ -23,9 +23,13 @@ import Controleur.ControleurMenu;
 import Controleur.ControleurPiocher;
 import Controleur.ControleurPlacer;
 import projetLO02.Hand;
+import projetLO02.InvalidModeException;
+import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
 import projetLO02.Joueur;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("deprecation")
 public class MonInterfacePlateau implements Observer {
@@ -54,7 +58,9 @@ public class MonInterfacePlateau implements Observer {
 	private JLabel lblJoueur;
 	private JPanel panel;
 	private JLabel lblNomDuJoueur;
-	private JLabel lblPlaceCartePiochee;
+	private JLabel lblPlaceCartePiocheeNumero1;
+	private JLabel lblPlaceCartePiocheeNumero2;
+	private JLabel lblPlaceCartePiocheeNumero3;
 	private JLabel lblPlaceVictoryCard;
 	private JButton btnC1;
 	private JButton btnB1;
@@ -135,15 +141,20 @@ public class MonInterfacePlateau implements Observer {
 
 	/**
 	 * Create the application.
+	 * @throws InvalidNbrOfPlayersException 
+	 * @throws InvalidModeException 
 	 */
 	public MonInterfacePlateau() {
 		initialize();
 		jeu = new Jeu(this);
-		//joueurEnCours.addObserver(this);
+		
+				//joueurEnCours.addObserver(this);
 		
 		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau);
-		new ControleurPlacer(this.joueurEnCours, this.hand, this.jeu, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3);
-	    new ControleurPiocher(this.joueurEnCours, this.btnPiocher);
+	    new ControleurPiocher(this.joueurEnCours, this.jeu, this.btnPiocher);
+	    new ControleurPlacer(this.joueurEnCours, this.hand, this.jeu, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3);
+	    
+	  
 	}
 
 	/**
@@ -227,34 +238,42 @@ public class MonInterfacePlateau implements Observer {
 		
 		framePlateau = new JFrame();
 		framePlateau.setVisible(false);
-		framePlateau.setBounds(100, 100, 992, 770);
+		framePlateau.setBounds(100, 100, 1234, 770);
 		framePlateau.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		framePlateau.getContentPane().setLayout(null);
 		
 		btnPiocher = new JButton("Piocher");
-		btnPiocher.setBounds(773, 87, 114, 30);
+		btnPiocher.setBounds(773, 40, 127, 30);
 		framePlateau.getContentPane().add(btnPiocher);
 		
 		btnDeplacer = new JButton("deplacer");
-		btnDeplacer.setBounds(773, 140, 114, 30);
+		btnDeplacer.setBounds(773, 82, 127, 30);
 		framePlateau.getContentPane().add(btnDeplacer);
 		
 		btnFinTour = new JButton("Passer la main");
-		btnFinTour.setBounds(773, 193, 114, 30);
+		btnFinTour.setBounds(773, 122, 127, 30);
 		framePlateau.getContentPane().add(btnFinTour);
 				
 		lblCartePiochee = new JLabel("Votre carte piochee :");
-		lblCartePiochee.setBounds(701, 226, 176, 31);
+		lblCartePiochee.setBounds(683, 162, 176, 31);
 		framePlateau.getContentPane().add(lblCartePiochee);
 		lblCartePiochee.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
+				
+		lblPlaceCartePiocheeNumero2 = new JLabel("Carte piochee numero 2");
+		lblPlaceCartePiocheeNumero2.setBounds(864, 203, 142, 232);
+		framePlateau.getContentPane().add(lblPlaceCartePiocheeNumero2);
+		    
+		lblPlaceCartePiocheeNumero3 = new JLabel("Carte piochee numero 3");
+		lblPlaceCartePiocheeNumero3.setBounds(1029, 203, 142, 232);
+		framePlateau.getContentPane().add(lblPlaceCartePiocheeNumero3);
 		
 		lblVictoryCard = new JLabel("Votre Victory Card :");
-		lblVictoryCard.setBounds(701, 478, 153, 30);
+		lblVictoryCard.setBounds(693, 465, 153, 30);
 		framePlateau.getContentPane().add(lblVictoryCard);
 		lblVictoryCard.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
 		lblJoueur = new JLabel("Joueur : ");
-		lblJoueur.setBounds(735, 21, 74, 44);
+		lblJoueur.setBounds(683, 0, 74, 44);
 		framePlateau.getContentPane().add(lblJoueur);
 		lblJoueur.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
@@ -262,6 +281,9 @@ public class MonInterfacePlateau implements Observer {
 		panel.setBounds(10, 10, 657, 697);
 		framePlateau.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(3, 5, 0, 0));
+		
+		btnE2 = new JButton("E2");
+		panel.add(btnE2);
 		
 		btnA3 = new JButton("A3");
 		panel.add(btnA3);
@@ -290,9 +312,6 @@ public class MonInterfacePlateau implements Observer {
 		btnD2 = new JButton("D2");
 		panel.add(btnD2);
 		
-		btnE2 = new JButton("E2");
-		panel.add(btnE2);
-		
 		btnA1 = new JButton("A1");
 		btnA1.setBackground(new Color(240, 240, 240));
 		panel.add(btnA1);
@@ -310,15 +329,15 @@ public class MonInterfacePlateau implements Observer {
 		panel.add(btnE1);
 		
 		lblNomDuJoueur = new JLabel("");
-		lblNomDuJoueur.setBounds(808, 28, 127, 34);
+		lblNomDuJoueur.setBounds(750, 0, 127, 34);
 		framePlateau.getContentPane().add(lblNomDuJoueur);
 		
-		lblPlaceCartePiochee = new JLabel("Carte piochee");
-		lblPlaceCartePiochee.setBounds(700, 267, 161, 201);
-		framePlateau.getContentPane().add(lblPlaceCartePiochee);
+		lblPlaceCartePiocheeNumero1 = new JLabel("Carte piochee numero 1");
+		lblPlaceCartePiocheeNumero1.setBounds(693, 203, 142, 232);
+		framePlateau.getContentPane().add(lblPlaceCartePiocheeNumero1);
 		
 		lblPlaceVictoryCard = new JLabel("Victory Card");
-		lblPlaceVictoryCard.setBounds(709, 522, 153, 201);
+		lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
 		framePlateau.getContentPane().add(lblPlaceVictoryCard);
 		
 		cardPlateauButtons.add(btnA1);
@@ -334,7 +353,7 @@ public class MonInterfacePlateau implements Observer {
 	  	cardPlateauButtons.add(btnD2);
 	  	cardPlateauButtons.add(btnD3);
 	  	cardPlateauButtons.add(btnE1);
-	  	cardPlateauButtons.add(btnE2);	  	
+	  	cardPlateauButtons.add(btnE2);	
 	  	cardPlateauButtons.add(btnE3);
 	  	
 	  		  	
@@ -343,6 +362,11 @@ public class MonInterfacePlateau implements Observer {
 	         
 	}
 	
+	public void setPlayerName() {
+		String currentPlayer = this.jeu.getPlayerName(1); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
+		lblNomDuJoueur.setText(currentPlayer);            // je ne sais pas encore comment faire
+	}
+	 
 
 	public void update(Observable o, Object arg) {
 		if(o instanceof Jeu) {
@@ -352,7 +376,7 @@ public class MonInterfacePlateau implements Observer {
 		if(o instanceof Joueur) {
 			
 			if(joueurEnCours.aPioche()) {
-				lblPlaceCartePiochee.setIcon(hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3());
+				lblPlaceCartePiocheeNumero1.setIcon(hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3());
 			}
 			
 			if(joueurEnCours.aPlace()) {
