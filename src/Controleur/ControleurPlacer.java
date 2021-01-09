@@ -62,7 +62,8 @@ public class ControleurPlacer {
 						
 		btnA1.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-			    joueurEnCours.placer(hand.getCard(0),'A', 1);
+		    	joueurEnCours.placer(hand.getCard(0),'A', 1);
+			    
 		    }
 	    });
 		

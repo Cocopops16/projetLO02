@@ -33,7 +33,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 @SuppressWarnings("deprecation")
-public class MonInterfacePlateau implements Observer {
+public class MonInterfacePlateau implements Observer, ActionListener{
 
 	private JFrame frameMenu;
 	private JTextPane textPane;
@@ -266,51 +266,73 @@ public class MonInterfacePlateau implements Observer {
 		framePlateau.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(3, 5, 0, 0));
 		
-		btnE2 = new JButton("E2");
-		panel.add(btnE2);
-		
 		btnA3 = new JButton("A3");
 		panel.add(btnA3);
+		btnA3.addActionListener(this);
+		cardPlateauButtons.add(btnA3);
 		
 		btnB3 = new JButton("B3");
 		panel.add(btnB3);
+		btnB3.addActionListener(this);
+		cardPlateauButtons.add(btnB3);
 		
 		btnC3 = new JButton("C3");
 		panel.add(btnC3);
+		btnC3.addActionListener(this);
+		cardPlateauButtons.add(btnC3);
 		
 		btnD3 = new JButton("D3");
 		panel.add(btnD3);
+		btnD3.addActionListener(this);
+		cardPlateauButtons.add(btnD3);
 		
-		btnE3 = new JButton("E3");
-		panel.add(btnE3);
+		btnE2 = new JButton("E2");
+		panel.add(btnE2);
+		btnE2.addActionListener(this);
 		
 		btnA2 = new JButton("A2");
 		panel.add(btnA2);
+		btnA2.addActionListener(this);
+		cardPlateauButtons.add(btnA2);
 		
 		btnB2 = new JButton("B2");
 		panel.add(btnB2);
+		btnB2.addActionListener(this);
+		cardPlateauButtons.add(btnB2);
 		
 		btnC2 = new JButton("C2");
 		panel.add(btnC2);
+		btnC2.addActionListener(this);
+		cardPlateauButtons.add(btnC2);
 		
 		btnD2 = new JButton("D2");
 		panel.add(btnD2);
+		btnD2.addActionListener(this);
+		cardPlateauButtons.add(btnD2);
+		
+		btnE3 = new JButton("E3");
+		panel.add(btnE3);
+		btnE3.addActionListener(this);
 		
 		btnA1 = new JButton("A1");
-		btnA1.setBackground(new Color(240, 240, 240));
 		panel.add(btnA1);
+		btnA1.addActionListener(this);
 		
 		btnB1 = new JButton("B1");
 		panel.add(btnB1);
+		btnB1.addActionListener(this);
 		
 		btnC1 = new JButton("C1");
 		panel.add(btnC1);
+		btnC1.addActionListener(this);
 		
 		btnD1 = new JButton("D1");
 		panel.add(btnD1);
+		btnD1.addActionListener(this);
 		
 		btnE1 = new JButton("E1");
 		panel.add(btnE1);
+		btnE1.addActionListener(this);
 		
 		lblNomDuJoueur = new JLabel("");
 		lblNomDuJoueur.setBounds(750, 0, 127, 34);
@@ -325,24 +347,12 @@ public class MonInterfacePlateau implements Observer {
 		framePlateau.getContentPane().add(lblPlaceVictoryCard);
 		
 		cardPlateauButtons.add(btnA1);
-	  	cardPlateauButtons.add(btnA2);
-	  	cardPlateauButtons.add(btnA3);
 	  	cardPlateauButtons.add(btnB1);
-	  	cardPlateauButtons.add(btnB2);
-	  	cardPlateauButtons.add(btnB3);
 	  	cardPlateauButtons.add(btnC1);
-	  	cardPlateauButtons.add(btnC2);
-	  	cardPlateauButtons.add(btnC3);
 	  	cardPlateauButtons.add(btnD1);
-	  	cardPlateauButtons.add(btnD2);
-	  	cardPlateauButtons.add(btnD3);
 	  	cardPlateauButtons.add(btnE1);
 	  	cardPlateauButtons.add(btnE2);	
-	  	cardPlateauButtons.add(btnE3);
-	  	
-	  		  	
-	  	btnB1.setIcon(SQUARE_SOLID_BLUE); //essai
-	  	
+	  	cardPlateauButtons.add(btnE3);	
 	         
 	}
 	
@@ -362,12 +372,76 @@ public class MonInterfacePlateau implements Observer {
 			if(joueurEnCours.aPioche()) {
 				lblPlaceCartePiocheeNumero1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
 			}
-			
-			if(joueurEnCours.aPlace()) {
-								
-			}
 									
 		}
 		
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) { 
+		if(e.getSource() == btnA1) { //La méthode getSource() renvoie l'objet qui a généré l'événement
+			btnA1.setIcon((Icon) new ImageIcon((SQUARE_SOLID_BLUE).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT))); //essai avec le carré bleu plein
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); //on réinitialise la pioche pour faire disparaitre la carte qui a été placée
+		}
+		if(e.getSource() == btnA2) { 
+			btnA2.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnA3) { 
+			btnA3.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnB1) { 
+			btnB1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnB2) { 
+			btnB2.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnB3) { 
+			btnB3.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnC1) { 
+			btnC1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnC2) { 
+			btnC2.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnC3) { 
+			btnC3.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnD1) { 
+			btnD1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnD2) { 
+			btnD2.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnD3) { 
+			btnD3.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnE1) { 
+			btnE1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnE2) { 
+			btnE2.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		if(e.getSource() == btnE3) { 
+			btnE3.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
+		}
+		
+		
+		
+	} 
+
 }
