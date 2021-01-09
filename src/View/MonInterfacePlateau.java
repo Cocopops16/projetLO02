@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 
+import Controleur.ControleurFinTour;
 import Controleur.ControleurMenu;
 import Controleur.ControleurPiocher;
 import Controleur.ControleurPlacer;
@@ -83,42 +84,25 @@ public class MonInterfacePlateau implements Observer {
 	private Joueur joueurEnCours;
 	
 
-  	ImageIcon icon1 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_bleu_plein.PNG"));
-  	ImageIcon SQUARE_SOLID_BLUE = new ImageIcon((icon1).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon2 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_bleu_vide.PNG"));
-  	ImageIcon SQUARE_HOLLOW_BLUE = new ImageIcon((icon2).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon3 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_rouge_plein.PNG"));
-  	ImageIcon SQUARE_SOLID_RED = new ImageIcon((icon3).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon4 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_rouge_vide.PNG"));
-  	ImageIcon SQUARE_HOLLOW_RED = new ImageIcon((icon4).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon5 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_vert_plein.PNG"));
-  	ImageIcon SQUARE_SOLID_GREEN = new ImageIcon((icon5).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon6 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_vert_vide.PNG"));
-  	ImageIcon SQUARE_HOLLOW_GREEN = new ImageIcon((icon6).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon7 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_bleu_plein.PNG"));
-  	ImageIcon CIRCLE_SOLID_BLUE = new ImageIcon((icon7).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon8 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_bleu_vide.PNG"));
-  	ImageIcon CIRCLE_HOLLOW_BLUE = new ImageIcon((icon8).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon9 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_rouge_plein.PNG"));
-  	ImageIcon CIRCLE_SOLID_RED = new ImageIcon((icon9).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon10 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_rouge_vide.PNG"));
-  	ImageIcon CIRCLE_HOLLOW_RED = new ImageIcon((icon10).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon11 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_vert_plein.PNG"));
-  	ImageIcon CIRCLE_SOLID_GREEN = new ImageIcon((icon11).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon12 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_vert_vide.PNG"));
-  	ImageIcon CIRCLE_HOLLOW_GREEN = new ImageIcon((icon12).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon13 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_bleu_plein.PNG"));
-  	ImageIcon TRIANGLE_SOLID_BLUE = new ImageIcon((icon13).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon14 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_bleu_vide.PNG"));
-  	ImageIcon TRIANGLE_HOLLOW_BLUE = new ImageIcon((icon14).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon15 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_rouge_plein.PNG"));
-  	ImageIcon TRIANGLE_SOLID_RED = new ImageIcon((icon15).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon16 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_rouge_vide.PNG"));
-  	ImageIcon TRIANGLE_HOLLOW_RED = new ImageIcon((icon16).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon17 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_vert_plein.PNG"));
-  	ImageIcon TRIANGLE_SOLID_GREEN = new ImageIcon((icon17).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-  	ImageIcon icon18 = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_vert_vide.PNG"));
-  	ImageIcon TRIANGLE_HOLLOW_GREEN = new ImageIcon((icon18).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+  	ImageIcon SQUARE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_bleu_plein.PNG"));
+  	ImageIcon SQUARE_HOLLOW_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_bleu_vide.PNG"));
+  	ImageIcon SQUARE_SOLID_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_rouge_plein.PNG"));
+   	ImageIcon SQUARE_HOLLOW_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_rouge_vide.PNG"));
+   	ImageIcon SQUARE_SOLID_GREEN= new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_vert_plein.PNG"));
+   	ImageIcon SQUARE_HOLLOW_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_vert_vide.PNG"));
+   	ImageIcon CIRCLE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_bleu_plein.PNG"));
+   	ImageIcon CIRCLE_HOLLOW_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_bleu_vide.PNG"));
+   	ImageIcon CIRCLE_SOLID_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_rouge_plein.PNG"));
+   	ImageIcon CIRCLE_HOLLOW_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_rouge_vide.PNG"));
+   	ImageIcon CIRCLE_SOLID_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_vert_plein.PNG"));
+   	ImageIcon CIRCLE_HOLLOW_GREEN  = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_vert_vide.PNG"));
+   	ImageIcon TRIANGLE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_bleu_plein.PNG"));
+  	ImageIcon TRIANGLE_HOLLOW_BLUE= new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_bleu_vide.PNG"));
+   	ImageIcon TRIANGLE_SOLID_RED  = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_rouge_plein.PNG"));
+   	ImageIcon TRIANGLE_HOLLOW_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_rouge_vide.PNG"));
+   	ImageIcon TRIANGLE_SOLID_GREEN  = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_vert_plein.PNG"));
+    ImageIcon TRIANGLE_HOLLOW_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_vert_vide.PNG"));
+  
   	
 	
 	private ArrayList<JButton> cardPlateauButtons = new ArrayList<JButton>();
@@ -153,7 +137,7 @@ public class MonInterfacePlateau implements Observer {
 		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau);
 	    new ControleurPiocher(this.joueurEnCours, this.jeu, this.btnPiocher);
 	    new ControleurPlacer(this.joueurEnCours, this.hand, this.jeu, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3);
-	    
+	    new ControleurFinTour(this.jeu, this.btnFinTour);
 	  
 	}
 
@@ -376,7 +360,7 @@ public class MonInterfacePlateau implements Observer {
 		if(o instanceof Joueur) {
 			
 			if(joueurEnCours.aPioche()) {
-				lblPlaceCartePiocheeNumero1.setIcon(hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3());
+				lblPlaceCartePiocheeNumero1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
 			}
 			
 			if(joueurEnCours.aPlace()) {

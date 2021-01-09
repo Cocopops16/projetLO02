@@ -13,13 +13,13 @@ import projetLO02.Mode;
 
 public class ControleurPiocher {
 	
-	private Joueur joueurPioche;
+	private Joueur joueurEnCours;
 	private JButton btnPiocher;
 	private Jeu jeu;
 	
 	public ControleurPiocher(Joueur joueur, Jeu jeu, JButton bouton){
 		
-		this.joueurPioche = joueur;
+		this.joueurEnCours = joueur;
 		this.btnPiocher = bouton;
 		this.jeu = jeu;
 		
@@ -27,7 +27,7 @@ public class ControleurPiocher {
 		
 		btnPiocher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPioche.piocher();
+				joueurEnCours.piocher();
 			}
 		});
 	}
@@ -36,9 +36,9 @@ public class ControleurPiocher {
 		
 		btnPiocher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPioche.piocher();
-				joueurPioche.piocher();
-				joueurPioche.piocher();
+				joueurEnCours.piocher();
+				joueurEnCours.piocher();
+				joueurEnCours.piocher();
 			}
 		});
 

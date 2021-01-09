@@ -30,7 +30,7 @@ public class ControleurPlacer {
 	private JButton btnE1;
 	private JButton btnE2;
 	private JButton btnE3;
-	private Joueur joueurPlace;
+	private Joueur joueurEnCours;
 	
 	private Hand hand;
 	private Jeu jeu;
@@ -53,7 +53,7 @@ public class ControleurPlacer {
 		this.btnE1 = boutonE1;
 		this.btnE2 = boutonE2;
 		this.btnE3 = boutonE3;
-		this.joueurPlace = joueur;
+		this.joueurEnCours = joueur;
 		this.hand = hnd;
 		this.jeu = jeu;
 		
@@ -62,91 +62,91 @@ public class ControleurPlacer {
 						
 		btnA1.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e) {
-			    joueurPlace.placer(hand.getCard(0),'A', 1);
+			    joueurEnCours.placer(hand.getCard(0),'A', 1);
 		    }
 	    });
 		
 		btnA2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0),'A', 2);
+				joueurEnCours.placer(hand.getCard(0),'A', 2);
 			}
 	   });
 		
 		btnA3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'A', 3);
+				joueurEnCours.placer(hand.getCard(0), 'A', 3);
 			}
 		});
 		
 		btnB1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'B', 1);
+				joueurEnCours.placer(hand.getCard(0), 'B', 1);
 			}
 		});
 		
 		btnB2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'B', 2);
+				joueurEnCours.placer(hand.getCard(0), 'B', 2);
 			}
 		});
 		
 		btnB3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'B', 3);
+				joueurEnCours.placer(hand.getCard(0), 'B', 3);
 			}
 		});
 		
 		btnC1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'C', 1);				
+				joueurEnCours.placer(hand.getCard(0), 'C', 1);				
 			}
 		});
 		
 		btnC2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'C', 2);
+				joueurEnCours.placer(hand.getCard(0), 'C', 2);
 			}
 		});
 		
 		btnC3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'C', 3);
+				joueurEnCours.placer(hand.getCard(0), 'C', 3);
 			}
 		});
 		
 		btnD1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'D', 1);
+				joueurEnCours.placer(hand.getCard(0), 'D', 1);
 			}
 		});
 		
 		btnD2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'D', 2);
+				joueurEnCours.placer(hand.getCard(0), 'D', 2);
 			}
 		});
 		
 		btnD3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'D', 3);
+				joueurEnCours.placer(hand.getCard(0), 'D', 3);
 			}
 		});
 		
 		btnE1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'E', 1);
+				joueurEnCours.placer(hand.getCard(0), 'E', 1);
 			}
 		});
 		
 		btnE2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'E', 2);
+				joueurEnCours.placer(hand.getCard(0), 'E', 2);
 			}
 		});
 		
 		btnE3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurPlace.placer(hand.getCard(0), 'E', 3);
+				joueurEnCours.placer(hand.getCard(0), 'E', 3);
 			}
 		});
 	}
@@ -161,16 +161,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'A', 1);
+		            	joueurEnCours.placer(hand.getCard(0),'A', 1);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'A', 1);
+		            	joueurEnCours.placer(hand.getCard(1),'A', 1);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'A', 1);
+		            	joueurEnCours.placer(hand.getCard(2),'A', 1);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'A', 1);
+		            	joueurEnCours.placer(hand.getCard(0),'A', 1);
 		            	
 		        }
 			}
@@ -184,16 +184,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'A', 2);
+		            	joueurEnCours.placer(hand.getCard(0),'A', 2);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'A', 2);
+		            	joueurEnCours.placer(hand.getCard(1),'A', 2);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'A', 2);
+		            	joueurEnCours.placer(hand.getCard(2),'A', 2);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'A', 2);
+		            	joueurEnCours.placer(hand.getCard(0),'A', 2);
 		            	
 		        }
 			}
@@ -207,16 +207,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'A', 3);
+		            	joueurEnCours.placer(hand.getCard(0),'A', 3);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'A', 3);
+		            	joueurEnCours.placer(hand.getCard(1),'A', 3);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'A', 3);
+		            	joueurEnCours.placer(hand.getCard(2),'A', 3);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'A', 3);
+		            	joueurEnCours.placer(hand.getCard(0),'A', 3);
 		            	
 		        }
 			}
@@ -230,16 +230,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'B', 1);
+		            	joueurEnCours.placer(hand.getCard(0),'B', 1);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'B', 1);
+		            	joueurEnCours.placer(hand.getCard(1),'B', 1);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'B', 1);
+		            	joueurEnCours.placer(hand.getCard(2),'B', 1);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'B', 1);
+		            	joueurEnCours.placer(hand.getCard(0),'B', 1);
 		            	
 		        }
 			}
@@ -253,16 +253,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'B', 2);
+		            	joueurEnCours.placer(hand.getCard(0),'B', 2);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'B', 2);
+		            	joueurEnCours.placer(hand.getCard(1),'B', 2);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'B', 2);
+		            	joueurEnCours.placer(hand.getCard(2),'B', 2);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'B', 2);
+		            	joueurEnCours.placer(hand.getCard(0),'B', 2);
 		            	
 		        }
 			}
@@ -276,16 +276,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'B', 3);
+		            	joueurEnCours.placer(hand.getCard(0),'B', 3);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'B', 3);
+		            	joueurEnCours.placer(hand.getCard(1),'B', 3);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'B', 3);
+		            	joueurEnCours.placer(hand.getCard(2),'B', 3);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'B', 3);
+		            	joueurEnCours.placer(hand.getCard(0),'B', 3);
 		            	
 		        }
 			}
@@ -299,16 +299,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'C', 1);
+		            	joueurEnCours.placer(hand.getCard(0),'C', 1);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'C', 1);
+		            	joueurEnCours.placer(hand.getCard(1),'C', 1);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'C', 1);
+		            	joueurEnCours.placer(hand.getCard(2),'C', 1);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'C', 1);
+		            	joueurEnCours.placer(hand.getCard(0),'C', 1);
 		            	
 		        }				
 			}
@@ -322,16 +322,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'C', 2);
+		            	joueurEnCours.placer(hand.getCard(0),'C', 2);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'C', 2);
+		            	joueurEnCours.placer(hand.getCard(1),'C', 2);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'C', 2);
+		            	joueurEnCours.placer(hand.getCard(2),'C', 2);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'C', 2);
+		            	joueurEnCours.placer(hand.getCard(0),'C', 2);
 		            	
 		        }
 			}
@@ -345,16 +345,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'C', 3);
+		            	joueurEnCours.placer(hand.getCard(0),'C', 3);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'C', 3);
+		            	joueurEnCours.placer(hand.getCard(1),'C', 3);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'C', 3);
+		            	joueurEnCours.placer(hand.getCard(2),'C', 3);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'C', 3);
+		            	joueurEnCours.placer(hand.getCard(0),'C', 3);
 		            	
 		        }
 			}
@@ -368,16 +368,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'D', 1);
+		            	joueurEnCours.placer(hand.getCard(0),'D', 1);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'D', 1);
+		            	joueurEnCours.placer(hand.getCard(1),'D', 1);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'D', 1);
+		            	joueurEnCours.placer(hand.getCard(2),'D', 1);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'D', 1);
+		            	joueurEnCours.placer(hand.getCard(0),'D', 1);
 		            	
 		        }
 			}
@@ -391,16 +391,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'D', 2);
+		            	joueurEnCours.placer(hand.getCard(0),'D', 2);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'D', 2);
+		            	joueurEnCours.placer(hand.getCard(1),'D', 2);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'D', 2);
+		            	joueurEnCours.placer(hand.getCard(2),'D', 2);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'D', 2);
+		            	joueurEnCours.placer(hand.getCard(0),'D', 2);
 		            	
 		        }
 			}
@@ -414,16 +414,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'D', 3);
+		            	joueurEnCours.placer(hand.getCard(0),'D', 3);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'D', 3);
+		            	joueurEnCours.placer(hand.getCard(1),'D', 3);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'D', 3);
+		            	joueurEnCours.placer(hand.getCard(2),'D', 3);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'D', 3);
+		            	joueurEnCours.placer(hand.getCard(0),'D', 3);
 		            	
 		        }
 			}
@@ -437,16 +437,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'E', 1);
+		            	joueurEnCours.placer(hand.getCard(0),'E', 1);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'E', 1);
+		            	joueurEnCours.placer(hand.getCard(1),'E', 1);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'E', 1);
+		            	joueurEnCours.placer(hand.getCard(2),'E', 1);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'E', 1);
+		            	joueurEnCours.placer(hand.getCard(0),'E', 1);
 		            	
 		        }
 			}
@@ -460,16 +460,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'E', 2);
+		            	joueurEnCours.placer(hand.getCard(0),'E', 2);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'E', 2);
+		            	joueurEnCours.placer(hand.getCard(1),'E', 2);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'E', 2);
+		            	joueurEnCours.placer(hand.getCard(2),'E', 2);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'E', 2);
+		            	joueurEnCours.placer(hand.getCard(0),'E', 2);
 		            	
 		        }
 			}
@@ -483,16 +483,16 @@ public class ControleurPlacer {
 		    	int resultatNumero = Integer.parseInt(numero); 
 		          switch(resultatNumero) {
 		            case 1 :  
-		            	joueurPlace.placer(hand.getCard(0),'E', 3);
+		            	joueurEnCours.placer(hand.getCard(0),'E', 3);
 		                break;
 		            case 2 : 
-		            	joueurPlace.placer(hand.getCard(1),'E', 3);
+		            	joueurEnCours.placer(hand.getCard(1),'E', 3);
 		            	break;
 		            case 3 : 
-		            	joueurPlace.placer(hand.getCard(2),'E', 3);
+		            	joueurEnCours.placer(hand.getCard(2),'E', 3);
 		            	break;
 		            default : 
-		            	joueurPlace.placer(hand.getCard(0),'E', 3);
+		            	joueurEnCours.placer(hand.getCard(0),'E', 3);
 		            	
 		        }
 			}
