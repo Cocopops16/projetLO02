@@ -87,27 +87,26 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	private Joueur joueurEnCours;
 	
 
-  	ImageIcon SQUARE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_bleu_plein.PNG"));
-  	ImageIcon SQUARE_HOLLOW_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_bleu_vide.PNG"));
-  	ImageIcon SQUARE_SOLID_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_rouge_plein.PNG"));
-   	ImageIcon SQUARE_HOLLOW_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_rouge_vide.PNG"));
-   	ImageIcon SQUARE_SOLID_GREEN= new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_vert_plein.PNG"));
-   	ImageIcon SQUARE_HOLLOW_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/carré_vert_vide.PNG"));
-   	ImageIcon CIRCLE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_bleu_plein.PNG"));
-   	ImageIcon CIRCLE_HOLLOW_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_bleu_vide.PNG"));
-   	ImageIcon CIRCLE_SOLID_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_rouge_plein.PNG"));
-   	ImageIcon CIRCLE_HOLLOW_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_rouge_vide.PNG"));
-   	ImageIcon CIRCLE_SOLID_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_vert_plein.PNG"));
-   	ImageIcon CIRCLE_HOLLOW_GREEN  = new ImageIcon(MonInterfacePlateau.class.getResource("/image/rond_vert_vide.PNG"));
-   	ImageIcon TRIANGLE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_bleu_plein.PNG"));
-  	ImageIcon TRIANGLE_HOLLOW_BLUE= new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_bleu_vide.PNG"));
-   	ImageIcon TRIANGLE_SOLID_RED  = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_rouge_plein.PNG"));
-   	ImageIcon TRIANGLE_HOLLOW_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_rouge_vide.PNG"));
-   	ImageIcon TRIANGLE_SOLID_GREEN  = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_vert_plein.PNG"));
-    ImageIcon TRIANGLE_HOLLOW_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/triangle_vert_vide.PNG"));
+  	ImageIcon SQUARE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_SOLID_BLUE.PNG"));
+  	ImageIcon SQUARE_HOLLOW_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_HOLLOW_BLUE.PNG"));
+  	ImageIcon SQUARE_SOLID_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_SOLID_RED.PNG"));
+   	ImageIcon SQUARE_HOLLOW_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_HOLLOW_RED.PNG"));
+   	ImageIcon SQUARE_SOLID_GREEN= new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_SOLID_GREEN.PNG"));
+   	ImageIcon SQUARE_HOLLOW_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_HOLLOW_GREEN.PNG"));
+   	ImageIcon CIRCLE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/CIRCLE_SOLID_BLUE.PNG"));
+   	ImageIcon CIRCLE_HOLLOW_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/CIRCLE_HOLLOW_BLUE.PNG"));
+   	ImageIcon CIRCLE_SOLID_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/CIRCLE_SOLID_RED.PNG"));
+   	ImageIcon CIRCLE_HOLLOW_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/CIRCLE_HOLLOW_RED.PNG"));
+   	ImageIcon CIRCLE_SOLID_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/CIRCLE_SOLID_GREEN.PNG"));
+   	ImageIcon CIRCLE_HOLLOW_GREEN  = new ImageIcon(MonInterfacePlateau.class.getResource("/image/CIRCLE_HOLLOW_GREEN.PNG"));
+   	ImageIcon TRIANGLE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/TRIANGLE_SOLID_BLUE.PNG"));
+  	ImageIcon TRIANGLE_HOLLOW_BLUE= new ImageIcon(MonInterfacePlateau.class.getResource("/image/TRIANGLE_HOLLOW_BLUE.PNG"));
+   	ImageIcon TRIANGLE_SOLID_RED  = new ImageIcon(MonInterfacePlateau.class.getResource("/image/TRIANGLE_SOLID_RED.PNG"));
+   	ImageIcon TRIANGLE_HOLLOW_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/TRIANGLE_HOLLOW_RED.PNG"));
+   	ImageIcon TRIANGLE_SOLID_GREEN  = new ImageIcon(MonInterfacePlateau.class.getResource("/image/TRIANGLE_SOLID_GREEN.PNG"));
+    ImageIcon TRIANGLE_HOLLOW_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/TRIANGLE_HOLLOW_GREEN.PNG"));
   
-  	
-	
+ 
 	private ArrayList<JButton> cardPlateauButtons = new ArrayList<JButton>();
 	private JTextField textCaseDeDepart;
 	private JTextField textCaseDArrivee;
@@ -145,15 +144,7 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	    new ControleurFinTour(this.jeu, this.btnFinTour);
 	    new ControleurDeplacer(this.joueurEnCours, this.btnDeplacer, this);
 	    
-	    textCaseDeDepart = new JTextField();
-	    textCaseDeDepart.setBounds(666, 83, 96, 30);
-	    framePlateau.getContentPane().add(textCaseDeDepart);
-	    textCaseDeDepart.setColumns(10);
 	    
-	    textCaseDArrivee = new JTextField();
-	    textCaseDArrivee.setBounds(910, 82, 96, 30);
-	    framePlateau.getContentPane().add(textCaseDArrivee);
-	    textCaseDArrivee.setColumns(10);
 	  
 	}
 
@@ -277,6 +268,15 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 		framePlateau.getContentPane().add(lblJoueur);
 		lblJoueur.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
+		textCaseDeDepart = new JTextField();
+	    textCaseDeDepart.setBounds(666, 83, 96, 30);
+	    framePlateau.getContentPane().add(textCaseDeDepart);
+	    textCaseDeDepart.setColumns(10);
+	    
+	    textCaseDArrivee = new JTextField();
+	    textCaseDArrivee.setBounds(910, 82, 96, 30);
+	    framePlateau.getContentPane().add(textCaseDArrivee);
+	    textCaseDArrivee.setColumns(10);
 		panel = new JPanel();
 		panel.setBounds(10, 10, 657, 697);
 		framePlateau.getContentPane().add(panel);
@@ -369,7 +369,8 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	  	cardPlateauButtons.add(btnE1);
 	  	cardPlateauButtons.add(btnE2);	
 	  	cardPlateauButtons.add(btnE3);	
-	         
+	  	
+	  	  	
 	}
 	
 	public char getFirstCaractereCaseDeDepart() {
@@ -410,7 +411,62 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 		if(o instanceof Joueur) {
 			
 			if(joueurEnCours.aPioche()) {
-				lblPlaceCartePiocheeNumero1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			  	ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+			  	Image newImage = image.getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT); 
+				lblPlaceCartePiocheeNumero1.setIcon((Icon)newImage);
+			}
+			 //à completer, c'est un premier essai, je ne sais pas encore comment afficher l'image du bouton de depart à celui d'arrivée
+			if(joueurEnCours.aDeplace()) {
+				if(getFirstCaractereCaseDArrivee()=='A') {
+					switch(getSecondCaractereCaseDArrivee()) {
+				       case 1 : btnA1.setIcon(null); //dans setIcon() il faudrait récuperer l'image de la case de part pour que la méthode l'ajoute ensuite à la case d'arrivée
+				       break;
+				       case 2 : btnA2.setIcon(null);
+				       break;
+				       case 3 : btnA3.setIcon(null);
+				       break; 
+				   }
+				}
+				if(getFirstCaractereCaseDArrivee()=='B') {
+					switch(getSecondCaractereCaseDArrivee()) {
+				       case 1 : btnB1.setIcon(null);
+				       break;
+				       case 2 : btnB2.setIcon(null);
+				       break;
+				       case 3 : btnB3.setIcon(null);
+				       break; 
+					}
+				}
+				if(getFirstCaractereCaseDArrivee()=='C') {
+					switch(getSecondCaractereCaseDArrivee()) {
+				       case 1 : btnC1.setIcon(null);
+				       break;
+				       case 2 : btnC2.setIcon(null);
+				       break;
+				       case 3 : btnC3.setIcon(null);
+				       break; 
+					}
+				}
+				if(getFirstCaractereCaseDArrivee()=='D') {
+					switch(getSecondCaractereCaseDArrivee()) {
+				       case 1 : btnD1.setIcon(null);
+				       break;
+				       case 2 : btnD2.setIcon(null);
+				       break;
+				       case 3 : btnD3.setIcon(null);
+				       break; 
+					}
+				}
+				if(getFirstCaractereCaseDArrivee()=='E') {
+					switch(getSecondCaractereCaseDArrivee()) {
+				       case 1 : btnE1.setIcon(null);
+				       break;
+				       case 2 : btnE2.setIcon(null);
+				       break;
+				       case 3 : btnE3.setIcon(null);
+				       break; 
+					}
+				}	
 			}
 									
 		}
@@ -420,63 +476,93 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) { 
 		if(e.getSource() == btnA1) { //La méthode getSource() renvoie l'objet qui a généré l'événement
-			btnA1.setIcon((Icon) new ImageIcon((SQUARE_SOLID_BLUE).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT))); //essai avec le carré bleu plein
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_SOLID_BLUE.PNG"));//essai avec le carré bleu plein
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			btnA1.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); //on réinitialise la pioche pour faire disparaitre la carte qui a été placée
 		}
 		if(e.getSource() == btnA2) { 
-			btnA2.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnA2.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnA3) { 
-			btnA3.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnA3.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnB1) { 
-			btnB1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage =new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnB1.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnB2) { 
-			btnB2.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnB2.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnB3) { 
-			btnB3.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnB3.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnC1) { 
-			btnC1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnC1.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnC2) { 
-			btnC2.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnC2.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnC3) { 
-			btnC3.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnC3.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnD1) { 
-			btnD1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			btnD1.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnD2) { 
-			btnD2.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			btnD2.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnD3) { 
-			btnD3.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			btnD3.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnE1) { 
-			btnE1.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnE1.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnE2) { 
-			btnE2.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnE2.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		if(e.getSource() == btnE3) { 
-			btnE3.setIcon((Icon) new ImageIcon((hand.getCard(0).getType1() +"_"+ hand.getCard(0).getType2() +"_"+ hand.getCard(0).getType3())).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
+		    ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
+			btnE3.setIcon(newImage); 
 			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
 		}
 		

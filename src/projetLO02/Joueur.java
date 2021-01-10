@@ -195,6 +195,10 @@ public class Joueur extends Observable{
 		return aDejaPioche;
 	}
 	
+	public boolean aDeplace() {
+		return aDejaDeplace;
+	}
+	
 	public boolean aPlace() {
 		return aDejaPlace;
 	}
