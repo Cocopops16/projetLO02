@@ -10,6 +10,7 @@ public class Joueur extends Observable{
 	protected Card victoryCard;
 	private boolean aDejaPioche;
 	private boolean aDejaPlace;
+	private boolean aDejaDeplace;
 	protected Hand myHand;
 	protected Jeu jeu;
 	private static final Scanner monClavier = new Scanner(System.in);
@@ -20,6 +21,7 @@ public class Joueur extends Observable{
 		this.myHand = new Hand();
 		this.aDejaPioche = false;
 		this.aDejaPlace = false;
+		this.aDejaDeplace = false;
 	}
 	
 	public String getName() {
@@ -136,6 +138,7 @@ public class Joueur extends Observable{
 	}
 	
 	public void deplacer(char colonne1, int ligne1, char colonne2, int ligne2) {
+	  if(!aDejaDeplace) {
 		System.out.println(this.jeu.getPlateau().toString());
 		if(this.jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
 			Card card1 = this.jeu.getPlateau().getCard(colonne1, ligne1);
@@ -148,6 +151,10 @@ public class Joueur extends Observable{
 			this.jeu.getPlateau().removeCard(colonne1, ligne1);
 		}
 		System.out.println("Carte déplacée de ("+colonne1+";"+ligne1+") à ("+colonne2+";"+ligne2+")");
+		this.aDejaDeplace = true;
+		this.setChanged();
+		this.notifyObservers();
+	  }
 	}
 	
 	public void deplacer() {

@@ -15,10 +15,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 
+import Controleur.ControleurDeplacer;
 import Controleur.ControleurFinTour;
 import Controleur.ControleurMenu;
 import Controleur.ControleurPiocher;
@@ -31,6 +33,7 @@ import projetLO02.Joueur;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 
 @SuppressWarnings("deprecation")
 public class MonInterfacePlateau implements Observer, ActionListener{
@@ -106,6 +109,8 @@ public class MonInterfacePlateau implements Observer, ActionListener{
   	
 	
 	private ArrayList<JButton> cardPlateauButtons = new ArrayList<JButton>();
+	private JTextField textCaseDeDepart;
+	private JTextField textCaseDArrivee;
 
 	/**
 	 * Launch the application.
@@ -138,6 +143,17 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	    new ControleurPiocher(this.joueurEnCours, this.jeu, this.btnPiocher);
 	    new ControleurPlacer(this.joueurEnCours, this.hand, this.jeu, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3);
 	    new ControleurFinTour(this.jeu, this.btnFinTour);
+	    new ControleurDeplacer(this.joueurEnCours, this.btnDeplacer, this);
+	    
+	    textCaseDeDepart = new JTextField();
+	    textCaseDeDepart.setBounds(666, 83, 96, 30);
+	    framePlateau.getContentPane().add(textCaseDeDepart);
+	    textCaseDeDepart.setColumns(10);
+	    
+	    textCaseDArrivee = new JTextField();
+	    textCaseDArrivee.setBounds(910, 82, 96, 30);
+	    framePlateau.getContentPane().add(textCaseDArrivee);
+	    textCaseDArrivee.setColumns(10);
 	  
 	}
 
@@ -230,7 +246,7 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 		btnPiocher.setBounds(773, 40, 127, 30);
 		framePlateau.getContentPane().add(btnPiocher);
 		
-		btnDeplacer = new JButton("deplacer");
+		btnDeplacer = new JButton("deplacer vers");
 		btnDeplacer.setBounds(773, 82, 127, 30);
 		framePlateau.getContentPane().add(btnDeplacer);
 		
@@ -356,6 +372,30 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	         
 	}
 	
+	public char getFirstCaractereCaseDeDepart() {
+		String firstCaractereDeDepart = textCaseDeDepart.getText();
+		char premierCaractereDepart = firstCaractereDeDepart.charAt(0);
+		return premierCaractereDepart;
+	}
+	
+	public int getSecondCaractereCaseDeDepart() {
+		String secondCaractereDeDepart = textCaseDeDepart.getText();
+		int secondCaractereDepart = secondCaractereDeDepart.charAt(1);
+		return secondCaractereDepart;
+	}
+	
+	public char getFirstCaractereCaseDArrivee() {
+		String firstCaractereDArrivee = textCaseDArrivee.getText();
+		char premierCaractereArrivee = firstCaractereDArrivee.charAt(0);
+		return premierCaractereArrivee;
+	}
+	
+	public int getSecondCaractereCaseDArrivee() {
+		String secondCaractereDArrivee = textCaseDArrivee.getText();
+		char secondCaractereArrivee = secondCaractereDArrivee.charAt(1);
+		return secondCaractereArrivee;
+	}
+	
 	public void setPlayerName() {
 		String currentPlayer = this.jeu.getPlayerName(1); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
 		lblNomDuJoueur.setText(currentPlayer);            // je ne sais pas encore comment faire
@@ -443,5 +483,4 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 		
 		
 	} 
-
 }
