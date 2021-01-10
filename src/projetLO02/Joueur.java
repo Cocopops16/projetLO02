@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Scanner;
 
+@SuppressWarnings("deprecation")
 public class Joueur extends Observable{
 	private boolean isIA;
 	protected String name;

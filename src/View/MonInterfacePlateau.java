@@ -138,10 +138,10 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 		
 				//joueurEnCours.addObserver(this);
 		
-		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau);
-	    new ControleurPiocher(this.joueurEnCours, this.jeu, this.btnPiocher);
+		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau, this.lblNomDuJoueur);
+	    new ControleurPiocher(this.joueurEnCours, this.btnPiocher);
 	    new ControleurPlacer(this.joueurEnCours, this.hand, this.jeu, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3);
-	    new ControleurFinTour(this.jeu, this.btnFinTour);
+	    new ControleurFinTour(this.jeu, this.btnFinTour, this.lblNomDuJoueur);
 	    new ControleurDeplacer(this.joueurEnCours, this.btnDeplacer, this);
 	    
 	    

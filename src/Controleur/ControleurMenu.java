@@ -12,6 +12,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 
 import View.MonInterfacePlateau;
+import projetLO02.InvalidModeException;
+import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
 
 public class ControleurMenu implements Runnable {
@@ -28,11 +30,12 @@ public class ControleurMenu implements Runnable {
 	private JButton btnLancerPartie;
 	private JFrame frameMenu;
 	private JFrame framePlateau;
+	private JLabel lblNomDuJoueur;
 	
 	private Jeu jeu;
 	private Thread thread;
 
-	public ControleurMenu(Jeu jeu, JTextPane textPane, JLabel lblJoueur1, JLabel lblJoueur2, JLabel lblJoueur3, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie, JFrame frameMenu, JFrame framePlateau) {
+	public ControleurMenu(Jeu jeu, JTextPane textPane, JLabel lblJoueur1, JLabel lblJoueur2, JLabel lblJoueur3, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie, JFrame frameMenu, JFrame framePlateau, JLabel lblNomDuJoueur) {
 		this.textPane = textPane;
 		this.lblJoueur1 = lblJoueur1;
 		this.lblJoueur2 = lblJoueur2;
@@ -45,6 +48,7 @@ public class ControleurMenu implements Runnable {
 		this.btnLancerPartie = btnLancerPartie;
 		this.frameMenu = frameMenu;
 		this.framePlateau = framePlateau;
+		this.lblNomDuJoueur = lblNomDuJoueur;
 		
 		this.jeu = jeu;
 		
@@ -128,6 +132,17 @@ public class ControleurMenu implements Runnable {
 				}
 				framePlateau.setVisible(true); //permet d'ouvrir l'interface graphique du Plateau
 				frameMenu.setVisible(false);
+				String currentPlayer = jeu.getPlayerName(1); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
+				lblNomDuJoueur.setText(currentPlayer); 
+				try {
+					jeu.start();
+				} catch (InvalidModeException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InvalidNbrOfPlayersException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	}
