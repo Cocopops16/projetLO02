@@ -6,22 +6,21 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
+import projetLO02.Jeu;
 import projetLO02.Joueur;
 
 
 public class ControleurPiocher {
 	
-	private Joueur joueurEnCours;
 	private JButton btnPiocher;
 	
-	public ControleurPiocher(Joueur joueur, JButton bouton){
+	public ControleurPiocher(Jeu jeu, JButton bouton){
 		
-		this.joueurEnCours = joueur;
 		this.btnPiocher = bouton;
 		
 		btnPiocher.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				joueurEnCours.piocher();
+				jeu.getJoueurEnCours().piocher();
 			}
 		});
 

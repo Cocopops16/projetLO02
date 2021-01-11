@@ -19,6 +19,7 @@ public class Jeu extends Observable implements Runnable {
 	protected MsgBox msgBox;
 	private String msgToSend;
 	private Thread thread;
+	private Joueur joueurEnCours;
 	
 	public Jeu(MonInterfacePlateau monInterface) {
 		this.msgBox = new MsgBox();
@@ -170,15 +171,17 @@ public class Jeu extends Observable implements Runnable {
 	
 	public void tourDeJeu() {
 		sendMsg(this.plateau.toString());
-		Joueur joueurEnCours = (Joueur)this.playersQueue.peek();
+		this.joueurEnCours = (Joueur)this.playersQueue.peek();
+		this.setChanged();
+		this.clearChanged();
 		sendMsg("C'est au tour de : " + joueurEnCours.getName());
 		
-		if(!joueurEnCours.getIA()) {
+		if(!this.joueurEnCours.getIA()) {
 //			joueurEnCours.placer(joueurEnCours.chooseCardToPlay());
 //			if(joueurEnCours.choixSiDeplacer()) {
 //				joueurEnCours.deplacer();
 //			}
-			while( (!joueurEnCours.aPioche()) || (!joueurEnCours.aDeplace()) || (!joueurEnCours.aPlace()) ) {
+			while( (!this.joueurEnCours.aPioche()) || (!this.joueurEnCours.aDeplace()) || (!this.joueurEnCours.aPlace()) ) {
 				try {
 					this.wait();
 				} catch (InterruptedException e) {
@@ -187,9 +190,9 @@ public class Jeu extends Observable implements Runnable {
 				}
 			}
 		}
-		else if(joueurEnCours.getIA()) {
+		else if(this.joueurEnCours.getIA()) {
 			if(this.mode != Mode.Avancé) {
-				joueurEnCours.piocher();
+				this.joueurEnCours.piocher();
 			}
 			IA IAEnCours = (IA)joueurEnCours;
 			IAEnCours.jouer();
@@ -288,7 +291,7 @@ public class Jeu extends Observable implements Runnable {
 	}
 	
 	public Joueur getJoueurEnCours() {
-		return (Joueur)this.playersQueue.peek();
+		return this.joueurEnCours;
 	}
 	
 	public void run() {

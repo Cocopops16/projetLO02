@@ -84,7 +84,6 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	
 	protected Jeu jeu;
 	protected Hand hand;
-	private Joueur joueurEnCours;
 	
 
   	ImageIcon SQUARE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_SOLID_BLUE.PNG"));
@@ -139,10 +138,10 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 				//joueurEnCours.addObserver(this);
 		
 		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau, this.lblNomDuJoueur);
-	    new ControleurPiocher(this.joueurEnCours, this.btnPiocher);
-	    new ControleurPlacer(this.joueurEnCours, this.hand, this.jeu, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3);
+	    new ControleurPiocher(this.jeu, this.btnPiocher);
+	    new ControleurPlacer(this.jeu, this.hand, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3);
 	    new ControleurFinTour(this.jeu, this.btnFinTour, this.lblNomDuJoueur);
-	    new ControleurDeplacer(this.joueurEnCours, this.btnDeplacer, this);
+	    new ControleurDeplacer(this.jeu, this.btnDeplacer, this);
 	    
 	    
 	  
@@ -410,13 +409,13 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 		
 		if(o instanceof Joueur) {
 			
-			if(joueurEnCours.aPioche()) {
+			if(this.jeu.getJoueurEnCours().aPioche()) {
 			  	ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
 			  	Image newImage = image.getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT); 
 				lblPlaceCartePiocheeNumero1.setIcon((Icon)newImage);
 			}
 			 //à completer, c'est un premier essai, je ne sais pas encore comment afficher l'image du bouton de depart à celui d'arrivée
-			if(joueurEnCours.aDeplace()) {
+			if(this.jeu.getJoueurEnCours().aDeplace()) {
 				if(getFirstCaractereCaseDArrivee()=='A') {
 					switch(getSecondCaractereCaseDArrivee()) {
 				       case 1 : btnA1.setIcon(null); //dans setIcon() il faudrait récuperer l'image de la case de part pour que la méthode l'ajoute ensuite à la case d'arrivée
