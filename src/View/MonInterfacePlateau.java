@@ -2,6 +2,7 @@ package View;
 
 import java.awt.EventQueue;
 
+
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -36,7 +37,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
 @SuppressWarnings("deprecation")
-public class MonInterfacePlateau implements Observer, ActionListener{
+public class MonInterfacePlateau implements Observer{
 
 	private JFrame frameMenu;
 	private JTextPane textPane;
@@ -52,7 +53,6 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	private JRadioButton rdbtnModeAvance;
 	private JRadioButton rdbtnModePerso;
 	private JButton btnLancerPartie;
-	
 	private JFrame framePlateau;
 	private JButton btnPiocher;
 	private JButton btnDeplacer;
@@ -137,12 +137,10 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	public MonInterfacePlateau() {
 		initialize();
 		jeu = new Jeu(this);
-		
-				//joueurEnCours.addObserver(this);
-		
+				
 		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau, this.lblNomDuJoueur);
 	    new ControleurPiocher(this.jeu, this.btnPiocher);
-	    new ControleurPlacer(this.jeu, this.hand, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3);
+	    new ControleurPlacer(this.jeu, this.hand, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3);
 	    new ControleurFinTour(this.jeu, this.btnFinTour, this.lblNomDuJoueur);
 	    new ControleurDeplacer(this.jeu, this.btnDeplacer, this);
 	    	  
@@ -302,71 +300,63 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 		
 		btnA3 = new JButton("A3");
 		panel.add(btnA3);
-		btnA3.addActionListener(this);
 		cardPlateauButtons.add(btnA3);
 		
 		btnB3 = new JButton("B3");
 		panel.add(btnB3);
-		btnB3.addActionListener(this);
 		cardPlateauButtons.add(btnB3);
 		
 		btnC3 = new JButton("C3");
 		panel.add(btnC3);
-		btnC3.addActionListener(this);
 		cardPlateauButtons.add(btnC3);
 		
 		btnD3 = new JButton("D3");
 		panel.add(btnD3);
-		btnD3.addActionListener(this);
 		cardPlateauButtons.add(btnD3);
 		
 		btnE2 = new JButton("E2");
 		panel.add(btnE2);
-		btnE2.addActionListener(this);
+		cardPlateauButtons.add(btnE2);
 		
 		btnA2 = new JButton("A2");
 		panel.add(btnA2);
-		btnA2.addActionListener(this);
 		cardPlateauButtons.add(btnA2);
 		
 		btnB2 = new JButton("B2");
 		panel.add(btnB2);
-		btnB2.addActionListener(this);
 		cardPlateauButtons.add(btnB2);
 		
 		btnC2 = new JButton("C2");
 		panel.add(btnC2);
-		btnC2.addActionListener(this);
 		cardPlateauButtons.add(btnC2);
 		
 		btnD2 = new JButton("D2");
 		panel.add(btnD2);
-		btnD2.addActionListener(this);
 		cardPlateauButtons.add(btnD2);
 		
 		btnE3 = new JButton("E3");
 		panel.add(btnE3);
-		btnE3.addActionListener(this);
+		cardPlateauButtons.add(btnE3);
 		
 		btnA1 = new JButton("A1");
 		panel.add(btnA1);
-		btnA1.addActionListener(this);
+		cardPlateauButtons.add(btnA1);
 		
 		btnB1 = new JButton("B1");
 		panel.add(btnB1);
-		btnB1.addActionListener(this);
+		cardPlateauButtons.add(btnB1);
 		
 		btnC1 = new JButton("C1");
 		panel.add(btnC1);
-		btnC1.addActionListener(this);
+		cardPlateauButtons.add(btnC1);
 		
 		btnD1 = new JButton("D1");
 		panel.add(btnD1);
-		btnD1.addActionListener(this);
+		cardPlateauButtons.add(btnD1);
 		
 		btnE1 = new JButton("E1");
 		panel.add(btnE1);
-		btnE1.addActionListener(this);
+		cardPlateauButtons.add(btnD2);
 		
 		lblNomDuJoueur = new JLabel("");
 		lblNomDuJoueur.setBounds(750, 0, 127, 34);
@@ -379,15 +369,7 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 		lblPlaceVictoryCard = new JLabel("Victory Card");
 		lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
 		framePlateau.getContentPane().add(lblPlaceVictoryCard);
-		
-		cardPlateauButtons.add(btnA1);
-	  	cardPlateauButtons.add(btnB1);
-	  	cardPlateauButtons.add(btnC1);
-	  	cardPlateauButtons.add(btnD1);
-	  	cardPlateauButtons.add(btnE1);
-	  	cardPlateauButtons.add(btnE2);	
-	  	cardPlateauButtons.add(btnE3);	
-	  	
+	
 	  	  	
 	}
 	
@@ -426,13 +408,15 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 			this.jeu = (Jeu) o;
 		}
 		
-		if(o instanceof Joueur) {
+		if(o instanceof Jeu) {
 			
 			if(this.jeu.getJoueurEnCours().aPioche()) {
 			  	ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
 			  	Image newImage = image.getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT); 
 				lblPlaceCartePiocheeNumero1.setIcon((Icon)newImage);
 			}
+			
+			
 			 //à completer, c'est un premier essai, je ne sais pas encore comment afficher l'image du bouton de depart à celui d'arrivée
 			if(this.jeu.getJoueurEnCours().aDeplace()) {
 				if(getFirstCaractereCaseDArrivee()=='A') {
@@ -491,100 +475,4 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 		
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) { 
-		if(e.getSource() == btnA1) { //La méthode getSource() renvoie l'objet qui a généré l'événement
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_SOLID_BLUE.PNG"));//essai avec le carré bleu plein
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
-			btnA1.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); //on réinitialise la pioche pour faire disparaitre la carte qui a été placée
-		}
-		if(e.getSource() == btnA2) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnA2.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnA3) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnA3.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnB1) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage =new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnB1.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnB2) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnB2.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnB3) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnB3.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnC1) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnC1.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnC2) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnC2.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnC3) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnC3.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnD1) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
-			btnD1.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnD2) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
-			btnD2.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnD3) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
-			btnD3.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnE1) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnE1.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnE2) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnE2.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		if(e.getSource() == btnE3) { 
-			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-		    ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT));
-			btnE3.setIcon(newImage); 
-			lblPlaceCartePiocheeNumero1.setText("Carte piochee numero 1"); 
-		}
-		
-		
-		
-	} 
 }
