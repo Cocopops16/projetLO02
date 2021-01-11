@@ -172,25 +172,43 @@ public class Jeu extends Observable implements Runnable {
 		sendMsg(this.plateau.toString());
 		Joueur joueurEnCours = (Joueur)this.playersQueue.peek();
 		sendMsg("C'est au tour de : " + joueurEnCours.getName());
-		this.playersQueue.add(this.playersQueue.poll());
-		if(this.mode != Mode.Avancé) {
-			joueurEnCours.piocher();
-		}
 		
 		if(!joueurEnCours.getIA()) {
-			joueurEnCours.placer(joueurEnCours.chooseCardToPlay());
-			if(joueurEnCours.choixSiDeplacer()) {
-				joueurEnCours.deplacer();
+//			joueurEnCours.placer(joueurEnCours.chooseCardToPlay());
+//			if(joueurEnCours.choixSiDeplacer()) {
+//				joueurEnCours.deplacer();
+//			}
+			while( (!joueurEnCours.aPioche()) || (!joueurEnCours.aDeplace()) || (!joueurEnCours.aPlace()) ) {
+				try {
+					this.wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		else if(joueurEnCours.getIA()) {
+			if(this.mode != Mode.Avancé) {
+				joueurEnCours.piocher();
+			}
 			IA IAEnCours = (IA)joueurEnCours;
 			IAEnCours.jouer();
+			if( (this.mode == Mode.Avancé) && (!this.deck.isDeckEmpty()) ) {
+				joueurEnCours.piocher();
+			}
 		}
 		else sendMsg("problème sur le joueur : "+joueurEnCours.getName()+", est-il une IA ?");
 		
-		if( (this.mode == Mode.Avancé) && (!this.deck.isDeckEmpty()) ) {
-			joueurEnCours.piocher();
+		this.playersQueue.add(this.playersQueue.poll());
+	}
+	
+	public void unlockJoueur() throws InvalidEndOfTurnException {
+		Joueur joueurEnCours = (Joueur)this.playersQueue.peek();
+		if(joueurEnCours.aPioche() && joueurEnCours.aDeplace() && joueurEnCours.aPlace()) {
+			this.notifyAll();
+		}
+		else {
+			throw new InvalidEndOfTurnException("Fin de tour impossible, le joueur n'a pas effectué toutes ses actions");
 		}
 	}
 	
@@ -267,6 +285,10 @@ public class Jeu extends Observable implements Runnable {
 			}
 		}
 		return name;
+	}
+	
+	public Joueur getJoueurEnCours() {
+		return (Joueur)this.playersQueue.peek();
 	}
 	
 	public void run() {

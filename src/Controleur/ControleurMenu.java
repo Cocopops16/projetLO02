@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 
-import View.MonInterfacePlateau;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
@@ -134,19 +133,22 @@ public class ControleurMenu implements Runnable {
 				frameMenu.setVisible(false);
 				String currentPlayer = jeu.getPlayerName(1); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
 				lblNomDuJoueur.setText(currentPlayer); 
-				try {
-					jeu.start();
-				} catch (InvalidModeException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (InvalidNbrOfPlayersException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				lancerPartie();
 			}
 		});
 	}
+	
+	private void lancerPartie() {
+		this.thread = new Thread(this);
+		this.thread.start();
+	}
 
 	public void run() {	
+		try {
+			jeu.start();
+		} catch (InvalidModeException | InvalidNbrOfPlayersException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

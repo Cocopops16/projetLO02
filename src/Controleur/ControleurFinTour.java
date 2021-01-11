@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import projetLO02.InvalidEndOfTurnException;
 import projetLO02.Jeu;
 
 public class ControleurFinTour {
@@ -28,9 +29,16 @@ public class ControleurFinTour {
 	 btnFinTour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!jeu.checkEndGame()) {
-					jeu.tourDeJeu();
+					try {
+						jeu.unlockJoueur();
+					} catch (InvalidEndOfTurnException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				} 
-				else { jeu.comptagePoints(); }
+				else { 
+					jeu.comptagePoints(); 
+				}
 				String currentPlayer = jeu.getPlayerName(1); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
 				lblNomDuJoueur.setText(currentPlayer); 
 			}
