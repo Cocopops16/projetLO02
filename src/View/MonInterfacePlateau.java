@@ -65,6 +65,9 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	private JLabel lblPlaceCartePiocheeNumero1;
 	private JLabel lblPlaceCartePiocheeNumero2;
 	private JLabel lblPlaceCartePiocheeNumero3;
+	private JRadioButton rdbtnCardNum1;
+	private JRadioButton rdbtnCardNum2;
+	private JRadioButton rdbtnCardNum3;
 	private JLabel lblPlaceVictoryCard;
 	private JButton btnC1;
 	private JButton btnB1;
@@ -142,9 +145,7 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 	    new ControleurPlacer(this.jeu, this.hand, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3);
 	    new ControleurFinTour(this.jeu, this.btnFinTour, this.lblNomDuJoueur);
 	    new ControleurDeplacer(this.jeu, this.btnDeplacer, this);
-	    
-	    
-	  
+	    	  
 	}
 
 	/**
@@ -256,6 +257,24 @@ public class MonInterfacePlateau implements Observer, ActionListener{
 		lblPlaceCartePiocheeNumero3 = new JLabel("Carte piochee numero 3");
 		lblPlaceCartePiocheeNumero3.setBounds(1029, 203, 142, 232);
 		framePlateau.getContentPane().add(lblPlaceCartePiocheeNumero3);
+		
+		ButtonGroup rdbnGroupe2 = new ButtonGroup();
+		
+		rdbtnCardNum1 = new JRadioButton("Carte n\u00B01");
+		rdbtnCardNum1.setSelected(true);
+	    rdbtnCardNum1.setBounds(721, 442, 79, 23);
+	    framePlateau.getContentPane().add(rdbtnCardNum1);
+	    rdbnGroupe2.add(rdbtnCardNum1);
+	    
+	    rdbtnCardNum2 = new JRadioButton("Carte n\u00B02");
+	    rdbtnCardNum2.setBounds(897, 442, 79, 23);
+	    framePlateau.getContentPane().add(rdbtnCardNum2);
+	    rdbnGroupe2.add(rdbtnCardNum2);
+	    
+	    rdbtnCardNum3 = new JRadioButton("Carte n\u00B03");
+	    rdbtnCardNum3.setBounds(1060, 442, 79, 23);
+	    framePlateau.getContentPane().add(rdbtnCardNum3);
+	    rdbnGroupe2.add(rdbtnCardNum3);
 		
 		lblVictoryCard = new JLabel("Votre Victory Card :");
 		lblVictoryCard.setBounds(693, 465, 153, 30);
