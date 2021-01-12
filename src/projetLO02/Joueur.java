@@ -90,39 +90,38 @@ public class Joueur extends Observable {
 	}
 	
 	public void placer(Card card, char colonne, int ligne) {
-		if(!aDejaPlace) {
-				
-		if(this.jeu.getPlateau().getFirstCard()) {
-			if(!this.jeu.getPlateau().isPosAlreadyTaken(colonne, ligne)) {
-				if( (!this.jeu.getPlateau().checkMaxXReached(colonne)) && (!this.jeu.getPlateau().checkMaxYReached(ligne)) ) {
-					if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
-						this.jeu.getPlateau().setCard(card, colonne, ligne);
-						this.aDejaPlace = true;
-						System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
-						this.myHand.removeCardFromHand(card);
+		if(!this.aDejaPlace) {
+			if(this.jeu.getPlateau().getFirstCard()) {
+				if(!this.jeu.getPlateau().isPosAlreadyTaken(colonne, ligne)) {
+					if( (!this.jeu.getPlateau().checkMaxXReached(colonne)) && (!this.jeu.getPlateau().checkMaxYReached(ligne)) ) {
+						if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
+							this.jeu.getPlateau().setCard(card, colonne, ligne);
+							this.aDejaPlace = true;
+							System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
+							this.myHand.removeCardFromHand(card);
+						}
+						else {
+							System.out.println("Pas de cartes autour ("+colonne+";"+ligne+")");
+							placer(card);
+						}
 					}
 					else {
-						System.out.println("Pas de cartes autour ("+colonne+";"+ligne+")");
+						System.out.println("maximum du plateau atteint pour cette position : ("+colonne+";"+ligne+")");
 						placer(card);
 					}
 				}
 				else {
-					System.out.println("maximum du plateau atteint pour cette position : ("+colonne+";"+ligne+")");
+					System.out.println("Position : ("+colonne+";"+ligne+") déjà occupé");
 					placer(card);
 				}
 			}
 			else {
-				System.out.println("Position : ("+colonne+";"+ligne+") déjà occupé");
-				placer(card);
+				this.jeu.getPlateau().setFirstCard();
+				this.jeu.getPlateau().setCard(card, colonne, ligne);
+				System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
+				this.myHand.removeCardFromHand(card);
 			}
 		}
-		else {
-			this.jeu.getPlateau().setFirstCard();
-			this.jeu.getPlateau().setCard(card, colonne, ligne);
-			System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
-			this.myHand.removeCardFromHand(card);
-		}
-	  }
 	}
 	
 	public void placer(Card card) {
@@ -140,21 +139,24 @@ public class Joueur extends Observable {
 	}
 	
 	public void deplacer(char colonne1, int ligne1, char colonne2, int ligne2) {
-	  if(!aDejaDeplace) {
-		System.out.println(this.jeu.getPlateau().toString());
-		if(this.jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
-			Card card1 = this.jeu.getPlateau().getCard(colonne1, ligne1);
-			Card card2 = this.jeu.getPlateau().getCard(colonne2, ligne2);
-			this.jeu.getPlateau().setCard(card2, colonne1, ligne1);
-			this.jeu.getPlateau().setCard(card1, colonne2, ligne2);
+		if(!aDejaDeplace) {
+			System.out.println(this.jeu.getPlateau().toString());
+			if(this.jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
+				Card card1 = this.jeu.getPlateau().getCard(colonne1, ligne1);
+				Card card2 = this.jeu.getPlateau().getCard(colonne2, ligne2);
+				this.jeu.getPlateau().setCard(card2, colonne1, ligne1);
+				this.jeu.getPlateau().setCard(card1, colonne2, ligne2);
+			}
+			else {
+				if(this.aDejaPlace) {
+					this.aDejaPlace = false;
+				}
+				placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
+				this.jeu.getPlateau().removeCard(colonne1, ligne1);
+			}
+			System.out.println("Carte déplacée de ("+colonne1+";"+ligne1+") à ("+colonne2+";"+ligne2+")");
+			this.aDejaDeplace = true;
 		}
-		else {
-			placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
-			this.jeu.getPlateau().removeCard(colonne1, ligne1);
-		}
-		System.out.println("Carte déplacée de ("+colonne1+";"+ligne1+") à ("+colonne2+";"+ligne2+")");
-		this.aDejaDeplace = true;
-	  }
 	}
 	
 	public void deplacer() {
@@ -205,6 +207,12 @@ public class Joueur extends Observable {
 	
 	public Hand getHand() {
 		return this.myHand;
+	}
+	
+	public void resetTurn() {
+		this.aDejaDeplace = false;
+		this.aDejaPioche = false;
+		this.aDejaPlace = false;
 	}
 	
 	public int accept(Visitor visitor, Map<String, Object> positions) {

@@ -78,12 +78,12 @@ public class MonInterfacePlateau implements Observer{
 	private JButton btnC1;
 	private JButton btnB1;
 	private JButton btnA1;
-	private JButton btnE2;
+	private JButton btnE3;
 	private JButton btnD2;
 	private JButton btnC2;
 	private JButton btnB2;
 	private JButton btnA2;
-	private JButton btnE3;
+	private JButton btnE2;
 	private JButton btnD3;
 	private JButton btnA3;
 	private JButton btnC3;
@@ -323,9 +323,9 @@ public class MonInterfacePlateau implements Observer{
 		panel.add(btnD3);
 		cardPlateauButtons.put("D3",btnD3);
 		
-		btnE2 = new JButton("E2");
-		panel.add(btnE2);
-		cardPlateauButtons.put("E2",btnE2);
+		btnE3 = new JButton("E3");
+		panel.add(btnE3);
+		cardPlateauButtons.put("E2",btnE3);
 		
 		btnA2 = new JButton("A2");
 		panel.add(btnA2);
@@ -343,9 +343,9 @@ public class MonInterfacePlateau implements Observer{
 		panel.add(btnD2);
 		cardPlateauButtons.put("D2",btnD2);
 		
-		btnE3 = new JButton("E3");
-		panel.add(btnE3);
-		cardPlateauButtons.put("E3",btnE3);
+		btnE2 = new JButton("E2");
+		panel.add(btnE2);
+		cardPlateauButtons.put("E3",btnE2);
 		
 		btnA1 = new JButton("A1");
 		panel.add(btnA1);

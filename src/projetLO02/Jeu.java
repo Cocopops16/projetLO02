@@ -172,6 +172,7 @@ public class Jeu extends Observable implements Runnable {
 	public void tourDeJeu() {
 		sendMsg(this.plateau.toString());
 		this.joueurEnCours = (Joueur)this.playersQueue.peek();
+		this.joueurEnCours.resetTurn();
 		this.setChanged();
 		this.notifyObservers(this.joueurEnCours);
 		sendMsg("C'est au tour de : " + joueurEnCours.getName());
@@ -181,7 +182,7 @@ public class Jeu extends Observable implements Runnable {
 //			if(joueurEnCours.choixSiDeplacer()) {
 //				joueurEnCours.deplacer();
 //			}
-			while( (!this.joueurEnCours.aPioche()) || (!this.joueurEnCours.aDeplace()) || (!this.joueurEnCours.aPlace()) ) {
+			while( (!this.joueurEnCours.aPioche()) || (!this.joueurEnCours.aPlace()) ) {
 				try {
 					this.wait();
 				} catch (InterruptedException e) {
