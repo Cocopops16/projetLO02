@@ -7,8 +7,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.TreeMap;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
@@ -26,11 +29,14 @@ import Controleur.ControleurFinTour;
 import Controleur.ControleurMenu;
 import Controleur.ControleurPiocher;
 import Controleur.ControleurPlacer;
+import projetLO02.Card;
 import projetLO02.Hand;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
 import projetLO02.Joueur;
+import projetLO02.Plateau;
+
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -109,7 +115,7 @@ public class MonInterfacePlateau implements Observer{
     ImageIcon TRIANGLE_HOLLOW_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/TRIANGLE_HOLLOW_GREEN.PNG"));
   
  
-	private ArrayList<JButton> cardPlateauButtons = new ArrayList<JButton>();
+	private Map<String,JButton> cardPlateauButtons;
 	private JTextField textCaseDeDepart;
 	private JTextField textCaseDArrivee;
 
@@ -135,13 +141,14 @@ public class MonInterfacePlateau implements Observer{
 	 * @throws InvalidModeException 
 	 */
 	public MonInterfacePlateau() {
+		cardPlateauButtons = new TreeMap<String, JButton>();
 		initialize();
 		jeu = new Jeu(this);
 				
-		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau, this.lblNomDuJoueur);
+		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau);
 	    new ControleurPiocher(this.jeu, this.btnPiocher);
 	    new ControleurPlacer(this.jeu, this.hand, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3);
-	    new ControleurFinTour(this.jeu, this.btnFinTour, this.lblNomDuJoueur);
+	    new ControleurFinTour(this.jeu, this.btnFinTour);
 	    new ControleurDeplacer(this.jeu, this.btnDeplacer, this);
 	    	  
 	}
@@ -300,63 +307,63 @@ public class MonInterfacePlateau implements Observer{
 		
 		btnA3 = new JButton("A3");
 		panel.add(btnA3);
-		cardPlateauButtons.add(btnA3);
+		cardPlateauButtons.put("A3",btnA3);
 		
 		btnB3 = new JButton("B3");
 		panel.add(btnB3);
-		cardPlateauButtons.add(btnB3);
+		cardPlateauButtons.put("B3",btnB3);
 		
 		btnC3 = new JButton("C3");
 		panel.add(btnC3);
-		cardPlateauButtons.add(btnC3);
+		cardPlateauButtons.put("C3",btnC3);
 		
 		btnD3 = new JButton("D3");
 		panel.add(btnD3);
-		cardPlateauButtons.add(btnD3);
+		cardPlateauButtons.put("D3",btnD3);
 		
 		btnE2 = new JButton("E2");
 		panel.add(btnE2);
-		cardPlateauButtons.add(btnE2);
+		cardPlateauButtons.put("E2",btnE2);
 		
 		btnA2 = new JButton("A2");
 		panel.add(btnA2);
-		cardPlateauButtons.add(btnA2);
+		cardPlateauButtons.put("A2",btnA2);
 		
 		btnB2 = new JButton("B2");
 		panel.add(btnB2);
-		cardPlateauButtons.add(btnB2);
+		cardPlateauButtons.put("B2",btnB2);
 		
 		btnC2 = new JButton("C2");
 		panel.add(btnC2);
-		cardPlateauButtons.add(btnC2);
+		cardPlateauButtons.put("C2",btnC2);
 		
 		btnD2 = new JButton("D2");
 		panel.add(btnD2);
-		cardPlateauButtons.add(btnD2);
+		cardPlateauButtons.put("D2",btnD2);
 		
 		btnE3 = new JButton("E3");
 		panel.add(btnE3);
-		cardPlateauButtons.add(btnE3);
+		cardPlateauButtons.put("E3",btnE3);
 		
 		btnA1 = new JButton("A1");
 		panel.add(btnA1);
-		cardPlateauButtons.add(btnA1);
+		cardPlateauButtons.put("A1",btnA1);
 		
 		btnB1 = new JButton("B1");
 		panel.add(btnB1);
-		cardPlateauButtons.add(btnB1);
+		cardPlateauButtons.put("B1",btnB1);
 		
 		btnC1 = new JButton("C1");
 		panel.add(btnC1);
-		cardPlateauButtons.add(btnC1);
+		cardPlateauButtons.put("C1",btnC1);
 		
 		btnD1 = new JButton("D1");
 		panel.add(btnD1);
-		cardPlateauButtons.add(btnD1);
+		cardPlateauButtons.put("D1",btnD1);
 		
 		btnE1 = new JButton("E1");
 		panel.add(btnE1);
-		cardPlateauButtons.add(btnD2);
+		cardPlateauButtons.put("E1",btnE1);
 		
 		lblNomDuJoueur = new JLabel("");
 		lblNomDuJoueur.setBounds(750, 0, 127, 34);
@@ -371,106 +378,21 @@ public class MonInterfacePlateau implements Observer{
 		framePlateau.getContentPane().add(lblPlaceVictoryCard);
 	
 	  	  	
-	}
-	
-	public char getFirstCaractereCaseDeDepart() {
-		String firstCaractereDeDepart = textCaseDeDepart.getText();
-		char premierCaractereDepart = firstCaractereDeDepart.charAt(0);
-		return premierCaractereDepart;
-	}
-	
-	public int getSecondCaractereCaseDeDepart() {
-		String secondCaractereDeDepart = textCaseDeDepart.getText();
-		int secondCaractereDepart = secondCaractereDeDepart.charAt(1);
-		return secondCaractereDepart;
-	}
-	
-	public char getFirstCaractereCaseDArrivee() {
-		String firstCaractereDArrivee = textCaseDArrivee.getText();
-		char premierCaractereArrivee = firstCaractereDArrivee.charAt(0);
-		return premierCaractereArrivee;
-	}
-	
-	public int getSecondCaractereCaseDArrivee() {
-		String secondCaractereDArrivee = textCaseDArrivee.getText();
-		char secondCaractereArrivee = secondCaractereDArrivee.charAt(1);
-		return secondCaractereArrivee;
-	}
-	
-	public void setPlayerName() {
-		String currentPlayer = this.jeu.getPlayerName(1); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
-		lblNomDuJoueur.setText(currentPlayer);            // je ne sais pas encore comment faire
-	}
-	 
+	}	 
 
 	public void update(Observable o, Object arg) {
-		if(o instanceof Jeu) {
-			this.jeu = (Jeu) o;
+		if((o instanceof Jeu)&&(arg instanceof Joueur)) {
+			String currentPlayer = ((Joueur) arg).getName(); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
+			lblNomDuJoueur.setText(currentPlayer);
 		}
 		
-		if(o instanceof Jeu) {
-			
-			if(this.jeu.getJoueurEnCours().aPioche()) {
-			  	ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+hand.getCard(0).getType1()+"_"+hand.getCard(0).getType2()+"_"+hand.getCard(0).getType3()+".PNG"));
-			  	Image newImage = image.getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT); 
-				lblPlaceCartePiocheeNumero1.setIcon((Icon)newImage);
+		if((o instanceof Plateau)&&(arg instanceof Map<?, ?>)) {
+			for(Iterator<?> it = ((Map<?, ?>) arg).keySet().iterator(); it.hasNext();) {
+				String key = (String) it.next();
+				ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+((Card) ((Map<?, ?>) arg).get(key)).getType1().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType2().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType3().toString()+".PNG"));//essai avec le carré bleu plein
+			  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			  	cardPlateauButtons.get(key).setIcon(newImage);
 			}
-			
-			
-			 //à completer, c'est un premier essai, je ne sais pas encore comment afficher l'image du bouton de depart à celui d'arrivée
-			if(this.jeu.getJoueurEnCours().aDeplace()) {
-				if(getFirstCaractereCaseDArrivee()=='A') {
-					switch(getSecondCaractereCaseDArrivee()) {
-				       case 1 : btnA1.setIcon(null); //dans setIcon() il faudrait récuperer l'image de la case de part pour que la méthode l'ajoute ensuite à la case d'arrivée
-				       break;
-				       case 2 : btnA2.setIcon(null);
-				       break;
-				       case 3 : btnA3.setIcon(null);
-				       break; 
-				   }
-				}
-				if(getFirstCaractereCaseDArrivee()=='B') {
-					switch(getSecondCaractereCaseDArrivee()) {
-				       case 1 : btnB1.setIcon(null);
-				       break;
-				       case 2 : btnB2.setIcon(null);
-				       break;
-				       case 3 : btnB3.setIcon(null);
-				       break; 
-					}
-				}
-				if(getFirstCaractereCaseDArrivee()=='C') {
-					switch(getSecondCaractereCaseDArrivee()) {
-				       case 1 : btnC1.setIcon(null);
-				       break;
-				       case 2 : btnC2.setIcon(null);
-				       break;
-				       case 3 : btnC3.setIcon(null);
-				       break; 
-					}
-				}
-				if(getFirstCaractereCaseDArrivee()=='D') {
-					switch(getSecondCaractereCaseDArrivee()) {
-				       case 1 : btnD1.setIcon(null);
-				       break;
-				       case 2 : btnD2.setIcon(null);
-				       break;
-				       case 3 : btnD3.setIcon(null);
-				       break; 
-					}
-				}
-				if(getFirstCaractereCaseDArrivee()=='E') {
-					switch(getSecondCaractereCaseDArrivee()) {
-				       case 1 : btnE1.setIcon(null);
-				       break;
-				       case 2 : btnE2.setIcon(null);
-				       break;
-				       case 3 : btnE3.setIcon(null);
-				       break; 
-					}
-				}	
-			}
-									
 		}
 		
 	}

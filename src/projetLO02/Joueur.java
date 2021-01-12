@@ -1,11 +1,9 @@
 package projetLO02;
 
 import java.util.Map;
-import java.util.Observable;
 import java.util.Scanner;
 
-@SuppressWarnings("deprecation")
-public class Joueur extends Observable{
+public class Joueur {
 	private boolean isIA;
 	protected String name;
 	protected Card victoryCard;
@@ -40,8 +38,6 @@ public class Joueur extends Observable{
 	public void piocher() {
 		if(!this.aDejaPioche) {
 			this.aDejaPioche = true;
-			this.setChanged();
-			this.notifyObservers();
 			Card card = jeu.getDeck().giveCard();
 			System.out.println("Vous piochez : " + card.toString());
 			this.myHand.addCardToHand(card);
@@ -95,8 +91,6 @@ public class Joueur extends Observable{
 					if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
 						this.jeu.getPlateau().setCard(card, colonne, ligne);
 						this.aDejaPlace = true;
-						this.setChanged();
-						this.notifyObservers();
 						System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
 						this.myHand.removeCardFromHand(card);
 					}
@@ -153,8 +147,6 @@ public class Joueur extends Observable{
 		}
 		System.out.println("Carte déplacée de ("+colonne1+";"+ligne1+") à ("+colonne2+";"+ligne2+")");
 		this.aDejaDeplace = true;
-		this.setChanged();
-		this.notifyObservers();
 	  }
 	}
 	

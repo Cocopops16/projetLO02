@@ -1,21 +1,25 @@
 package projetLO02;
 
 import java.util.Map;
+import java.util.Observable;
 import java.util.TreeMap;
 
-import javax.swing.JComponent;
+import View.MonInterfacePlateau;
 
-public class Plateau {
+
+@SuppressWarnings("deprecation")
+public class Plateau extends Observable {
 	private Map<String, Object> positions;
 	private int xMax, yMax;
 	private boolean isFull, firstCard;
 	
-	public Plateau(int xMax, int yMax) {
+	public Plateau(int xMax, int yMax, MonInterfacePlateau monInterface) {
 		this.xMax = xMax;
 		this.yMax = yMax;
 		this.isFull = false;
 		this.firstCard = false;
 		this.positions = new TreeMap<String, Object>();
+		addObserver(monInterface);
 	}
 	
 	public void setFirstCard() {
@@ -214,6 +218,8 @@ public class Plateau {
 			}
 			this.positions.put(key, card);
 		}
+		this.setChanged();
+		this.notifyObservers(this.positions);
 	}
 	
 	public Card getCard(char colonne, int ligne) {

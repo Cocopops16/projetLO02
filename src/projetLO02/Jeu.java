@@ -29,7 +29,7 @@ public class Jeu extends Observable implements Runnable {
 		this.mode = null;
 		this.nbrJoueurs = 0;
 		this.nbrIA = 0;
-		this.plateau = new Plateau(5, 3);
+		this.plateau = new Plateau(5, 3, monInterface);
 		this.deck = new Deck();
 		
 		addObserver(monInterface);
@@ -48,9 +48,6 @@ public class Jeu extends Observable implements Runnable {
 			this.playersQueue.add(joueur);
 			sendMsg("Bienvenue "+ name);
 			this.nbrJoueurs++;
-			
-			setChanged();
-			clearChanged();
 		}
 	}
 	
@@ -75,9 +72,6 @@ public class Jeu extends Observable implements Runnable {
 			joueurIA.setIA(true);
 			this.playersQueue.add(joueurIA);
 			this.nbrIA++;
-			
-			setChanged();
-			clearChanged();
 		}
 	}
 	
@@ -96,9 +90,6 @@ public class Jeu extends Observable implements Runnable {
 			default:
 				this.mode = Mode.Classique;
 		}
-		
-		setChanged();
-		clearChanged();
 	}
 	
 	
@@ -173,7 +164,7 @@ public class Jeu extends Observable implements Runnable {
 		sendMsg(this.plateau.toString());
 		this.joueurEnCours = (Joueur)this.playersQueue.peek();
 		this.setChanged();
-		this.clearChanged();
+		this.notifyObservers(this.joueurEnCours);
 		sendMsg("C'est au tour de : " + joueurEnCours.getName());
 		
 		if(!this.joueurEnCours.getIA()) {
