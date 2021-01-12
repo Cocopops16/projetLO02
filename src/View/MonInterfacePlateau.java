@@ -145,7 +145,7 @@ public class MonInterfacePlateau implements Observer{
 				
 		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau);
 	    new ControleurPiocher(this.jeu, this.btnPiocher);
-	    new ControleurPlacer(this.jeu, this.cardPlateauButtons, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3);
+	    new ControleurPlacer(this.jeu, this.cardPlateauButtons, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3, this.lblPlaceCartePiocheeNumero1, this.lblPlaceCartePiocheeNumero2, this.lblPlaceCartePiocheeNumero3);
 	    new ControleurFinTour(this.jeu, this.btnFinTour);
 	    new ControleurDeplacer(this.jeu, this.btnDeplacer, this);
 	    	  
@@ -379,10 +379,26 @@ public class MonInterfacePlateau implements Observer{
 	}	 
 	
 	private void givePlayerCards(Joueur player) {
+		if(player.getHand().checkNombreCartes()==0) {
+			lblPlaceCartePiocheeNumero1.setIcon(null);
+			lblPlaceCartePiocheeNumero2.setIcon(null);
+			lblPlaceCartePiocheeNumero3.setIcon(null);
+		}
 		for(int i=0; i<player.getHand().checkNombreCartes(); i++) {
 			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getHand().getCard(i).getType1().toString()+"_"+player.getHand().getCard(i).getType2().toString()+"_"+player.getHand().getCard(i).getType3().toString()+".PNG"));
 		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
-		  	lblPlaceCartePiocheeNumero1.setIcon(newImage);
+		  	switch(i) {
+		  		case(0):
+		  			lblPlaceCartePiocheeNumero1.setIcon(newImage);
+		  			break;
+		  		case(1):
+		  			lblPlaceCartePiocheeNumero2.setIcon(newImage);
+	  				break;
+		  		case(2):
+		  			lblPlaceCartePiocheeNumero3.setIcon(newImage);
+	  				break;
+		  	}
+		  		
 		}
 		ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getVictory().getType1().toString()+"_"+player.getVictory().getType2().toString()+"_"+player.getVictory().getType3().toString()+".PNG"));
 	  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
