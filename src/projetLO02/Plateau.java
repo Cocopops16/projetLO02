@@ -238,6 +238,8 @@ public class Plateau extends Observable {
 	public void removeCard(char colonne, int ligne) {
 		String key = colonne+Integer.toString(ligne);
 		this.positions.remove(key);
+		this.setChanged();
+		this.notifyObservers(this.positions);
 	}
 	
 	public Map<String, Object> getPositions() {

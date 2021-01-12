@@ -41,6 +41,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 
 @SuppressWarnings("deprecation")
 public class MonInterfacePlateau implements Observer{
@@ -61,7 +62,11 @@ public class MonInterfacePlateau implements Observer{
 	private JButton btnLancerPartie;
 	private JFrame framePlateau;
 	private JButton btnPiocher;
-	private JButton btnDeplacer;
+	private JToggleButton tglbtnPlacerDeplacer;
+	private JLabel lblDe;
+	private JLabel lblPositionOrigine;
+	private JLabel lblVers;
+	private JLabel lblPositionArrivee;
 	private JButton btnFinTour;
 	private JLabel lblCartePiochee;
 	private JLabel lblVictoryCard;
@@ -114,8 +119,6 @@ public class MonInterfacePlateau implements Observer{
   
  
 	private Map<String,JButton> cardPlateauButtons;
-	private JTextField textCaseDeDepart;
-	private JTextField textCaseDArrivee;
 
 	/**
 	 * Launch the application.
@@ -145,9 +148,9 @@ public class MonInterfacePlateau implements Observer{
 				
 		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau);
 	    new ControleurPiocher(this.jeu, this.btnPiocher);
-	    new ControleurPlacer(this.jeu, this.cardPlateauButtons, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3, this.lblPlaceCartePiocheeNumero1, this.lblPlaceCartePiocheeNumero2, this.lblPlaceCartePiocheeNumero3);
+	    new ControleurPlacer(this.jeu, this.tglbtnPlacerDeplacer , this.cardPlateauButtons, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3, this.lblPlaceCartePiocheeNumero1, this.lblPlaceCartePiocheeNumero2, this.lblPlaceCartePiocheeNumero3);
+	    new ControleurDeplacer(this.jeu, this.tglbtnPlacerDeplacer, this.cardPlateauButtons, this.lblDe, this.lblPositionOrigine, this.lblVers, this.lblPositionArrivee);
 	    new ControleurFinTour(this.jeu, this.btnFinTour);
-	    new ControleurDeplacer(this.jeu, this.btnDeplacer, this);
 	    	  
 	}
 
@@ -240,11 +243,31 @@ public class MonInterfacePlateau implements Observer{
 		btnPiocher.setBounds(773, 40, 127, 30);
 		framePlateau.getContentPane().add(btnPiocher);
 		
-		btnDeplacer = new JButton("deplacer vers");
-		btnDeplacer.setBounds(773, 82, 127, 30);
-		framePlateau.getContentPane().add(btnDeplacer);
-		
-		btnFinTour = new JButton("Passer la main");
+	    tglbtnPlacerDeplacer = new JToggleButton("Placer");
+	    tglbtnPlacerDeplacer.setBounds(773, 81, 127, 30);
+	    framePlateau.getContentPane().add(tglbtnPlacerDeplacer);
+	    
+	    lblDe = new JLabel("De : ");
+	    lblDe.setEnabled(false);
+	    lblDe.setBounds(910, 89, 23, 14);
+	    framePlateau.getContentPane().add(lblDe);
+	    
+	    lblPositionOrigine = new JLabel("");
+	    lblPositionOrigine.setEnabled(false);
+	    lblPositionOrigine.setBounds(942, 89, 35, 14);
+	    framePlateau.getContentPane().add(lblPositionOrigine);
+	    
+	    lblVers = new JLabel("Vers : ");
+	    lblVers.setEnabled(false);
+	    lblVers.setBounds(987, 89, 35, 14);
+	    framePlateau.getContentPane().add(lblVers);
+	    
+	    lblPositionArrivee = new JLabel("");
+	    lblPositionArrivee.setEnabled(false);
+	    lblPositionArrivee.setBounds(1029, 89, 35, 14);
+	    framePlateau.getContentPane().add(lblPositionArrivee);
+
+		btnFinTour = new JButton("Terminer tour");
 		btnFinTour.setBounds(773, 122, 127, 30);
 		framePlateau.getContentPane().add(btnFinTour);
 				
@@ -292,16 +315,6 @@ public class MonInterfacePlateau implements Observer{
 		lblJoueur.setBounds(683, 0, 74, 44);
 		framePlateau.getContentPane().add(lblJoueur);
 		lblJoueur.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
-		
-		textCaseDeDepart = new JTextField();
-	    textCaseDeDepart.setBounds(666, 83, 96, 30);
-	    framePlateau.getContentPane().add(textCaseDeDepart);
-	    textCaseDeDepart.setColumns(10);
-	    
-	    textCaseDArrivee = new JTextField();
-	    textCaseDArrivee.setBounds(910, 82, 96, 30);
-	    framePlateau.getContentPane().add(textCaseDArrivee);
-	    textCaseDArrivee.setColumns(10);
 		panel = new JPanel();
 		panel.setBounds(10, 10, 657, 697);
 		framePlateau.getContentPane().add(panel);
@@ -411,6 +424,14 @@ public class MonInterfacePlateau implements Observer{
 			String currentPlayer = player.getName(); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
 			lblNomDuJoueur.setText(currentPlayer);
 			givePlayerCards(player);
+			tglbtnPlacerDeplacer.setText("Placer");
+			tglbtnPlacerDeplacer.setSelected(false);
+			lblPositionOrigine.setText(null);
+			lblPositionArrivee.setText(null);
+			lblDe.setEnabled(false);
+			lblPositionOrigine.setEnabled(false);
+			lblVers.setEnabled(false);
+			lblPositionArrivee.setEnabled(false);
 		}
 		
 		if((o instanceof Joueur)&&(arg instanceof Joueur)) {
@@ -419,14 +440,18 @@ public class MonInterfacePlateau implements Observer{
 		}
 		
 		if((o instanceof Plateau)&&(arg instanceof Map<?, ?>)) {
-			for(Iterator<?> it = ((Map<?, ?>) arg).keySet().iterator(); it.hasNext();) {
+			for(Iterator<String> it = cardPlateauButtons.keySet().iterator(); it.hasNext();) {
 				String key = (String) it.next();
-				ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+((Card) ((Map<?, ?>) arg).get(key)).getType1().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType2().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType3().toString()+".PNG"));
-			  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
-			  	cardPlateauButtons.get(key).setIcon(newImage);
+				if(((Map<?, ?>)arg).containsKey(key)) {
+					ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+((Card) ((Map<?, ?>) arg).get(key)).getType1().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType2().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType3().toString()+".PNG"));
+				  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+				  	cardPlateauButtons.get(key).setIcon(newImage);
+				}
+				else {
+					cardPlateauButtons.get(key).setIcon(null);
+				}
 			}
 		}
 		
 	}
-
 }

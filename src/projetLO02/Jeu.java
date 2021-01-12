@@ -169,7 +169,7 @@ public class Jeu extends Observable implements Runnable {
 		}
 	}
 	
-	public void tourDeJeu() {
+	public synchronized void tourDeJeu() {
 		sendMsg(this.plateau.toString());
 		this.joueurEnCours = (Joueur)this.playersQueue.peek();
 		this.joueurEnCours.resetTurn();
@@ -206,9 +206,9 @@ public class Jeu extends Observable implements Runnable {
 		this.playersQueue.add(this.playersQueue.poll());
 	}
 	
-	public void unlockJoueur() throws InvalidEndOfTurnException {
+	public synchronized void unlockJoueur() throws InvalidEndOfTurnException {
 		Joueur joueurEnCours = (Joueur)this.playersQueue.peek();
-		if(joueurEnCours.aPioche() && joueurEnCours.aDeplace() && joueurEnCours.aPlace()) {
+		if(joueurEnCours.aPioche() && joueurEnCours.aPlace()) {
 			this.notifyAll();
 		}
 		else {
