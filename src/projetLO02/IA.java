@@ -1,16 +1,14 @@
 package projetLO02;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.TreeMap;
+import View.MonInterfacePlateau;
 
 public class IA extends Joueur{
 	private boolean isIA;
 	private String keyOuPlacer, keyOuDeplacer1, keyOuDeplacer2, Strategy;
 	Card cardToPlay;
 	
-	public IA(String name, Jeu jeuEnCours) {
-		super(name, jeuEnCours);
+	public IA(String name, Jeu jeuEnCours, MonInterfacePlateau monInterface) {
+		super(name, jeuEnCours, monInterface);
 		this.keyOuPlacer = new String();
 		this.keyOuDeplacer1 = new String();
 		this.keyOuDeplacer2 = new String();

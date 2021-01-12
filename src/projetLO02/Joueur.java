@@ -1,9 +1,13 @@
 package projetLO02;
 
 import java.util.Map;
+import java.util.Observable;
 import java.util.Scanner;
 
-public class Joueur {
+import View.MonInterfacePlateau;
+
+@SuppressWarnings("deprecation")
+public class Joueur extends Observable {
 	private boolean isIA;
 	protected String name;
 	protected Card victoryCard;
@@ -14,13 +18,15 @@ public class Joueur {
 	protected Jeu jeu;
 	private static final Scanner monClavier = new Scanner(System.in);
 	
-	public Joueur(String name, Jeu jeuEnCours){
+	public Joueur(String name, Jeu jeuEnCours, MonInterfacePlateau monInterface){
 		this.name = name;
 		this.jeu = jeuEnCours;
 		this.myHand = new Hand();
 		this.aDejaPioche = false;
 		this.aDejaPlace = false;
 		this.aDejaDeplace = false;
+		
+		addObserver(monInterface);
 	}
 	
 	public String getName() {
@@ -41,7 +47,8 @@ public class Joueur {
 			Card card = jeu.getDeck().giveCard();
 			System.out.println("Vous piochez : " + card.toString());
 			this.myHand.addCardToHand(card);
-			
+			setChanged();
+			notifyObservers(this);
 		}
 	}
 	
@@ -194,6 +201,10 @@ public class Joueur {
 	
 	public boolean aPlace() {
 		return aDejaPlace;
+	}
+	
+	public Hand getHand() {
+		return this.myHand;
 	}
 	
 	public int accept(Visitor visitor, Map<String, Object> positions) {

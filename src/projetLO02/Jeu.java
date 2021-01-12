@@ -20,6 +20,7 @@ public class Jeu extends Observable implements Runnable {
 	private String msgToSend;
 	private Thread thread;
 	private Joueur joueurEnCours;
+	private MonInterfacePlateau monInterface;
 	
 	public Jeu(MonInterfacePlateau monInterface) {
 		this.msgBox = new MsgBox();
@@ -33,6 +34,7 @@ public class Jeu extends Observable implements Runnable {
 		this.deck = new Deck();
 		
 		addObserver(monInterface);
+		this.monInterface = monInterface;
 	}
 	
 	public void sendMsg(String msg) {
@@ -43,7 +45,7 @@ public class Jeu extends Observable implements Runnable {
 	
 	public void addJoueur(String name) {
 		if((this.nbrIA+this.nbrJoueurs)<4) {
-			Joueur joueur = new Joueur(name, this);
+			Joueur joueur = new Joueur(name, this, this.monInterface);
 			joueur.setIA(false);
 			this.playersQueue.add(joueur);
 			sendMsg("Bienvenue "+ name);
@@ -68,7 +70,7 @@ public class Jeu extends Observable implements Runnable {
 					sendMsg("Price est dans les parrages, vous avez vraiment décidé de ne pas vous salir les mains aujourd'hui !");
 					break;
 			}
-			Joueur joueurIA = new IA(name, this);
+			Joueur joueurIA = new IA(name, this, this.monInterface);
 			joueurIA.setIA(true);
 			this.playersQueue.add(joueurIA);
 			this.nbrIA++;
@@ -96,15 +98,22 @@ public class Jeu extends Observable implements Runnable {
 	public void start() throws InvalidModeException,InvalidNbrOfPlayersException {
 		if( (this.mode!=null)&&((this.nbrIA+this.nbrJoueurs)>=2) ) {
 			for(int i=0; i<(this.nbrJoueurs+this.nbrIA); i++) {
-				if(i>=this.nbrJoueurs) {
-					((Joueur)this.playersQueue.peek()).setIA(true);
-					sendMsg( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme IA");
-					this.playersQueue.add(this.playersQueue.poll());
+//				if(i>=this.nbrJoueurs) {
+//					((Joueur)this.playersQueue.peek()).setIA(true);
+//					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme IA");
+//					this.playersQueue.add(this.playersQueue.poll());
+//				}
+//				else {
+//					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme Joueur");
+//					this.playersQueue.add(this.playersQueue.poll());
+//				}
+				if(((Joueur)this.playersQueue.peek()).getIA()) {
+					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme IA");
 				}
 				else {
-					sendMsg( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme Joueur");
-					this.playersQueue.add(this.playersQueue.poll());
+					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme Joueur");
 				}
+				this.playersQueue.add(this.playersQueue.poll());
 			}
 			
 			if(this.mode != Mode.Personnalisé) {

@@ -92,8 +92,6 @@ public class MonInterfacePlateau implements Observer{
 	private JButton btnE1;
 	
 	protected Jeu jeu;
-	protected Hand hand;
-	
 
   	ImageIcon SQUARE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_SOLID_BLUE.PNG"));
   	ImageIcon SQUARE_HOLLOW_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_HOLLOW_BLUE.PNG"));
@@ -147,7 +145,7 @@ public class MonInterfacePlateau implements Observer{
 				
 		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau);
 	    new ControleurPiocher(this.jeu, this.btnPiocher);
-	    new ControleurPlacer(this.jeu, this.hand, this.btnA1, this.btnA2, this.btnA3, this.btnB1, this.btnB2, this.btnB3, this.btnC1, this.btnC2, this.btnC3, this.btnD1, this.btnD2, this.btnD3, this.btnE1, this.btnE2, this.btnE3, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3);
+	    new ControleurPlacer(this.jeu, this.cardPlateauButtons, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3);
 	    new ControleurFinTour(this.jeu, this.btnFinTour);
 	    new ControleurDeplacer(this.jeu, this.btnDeplacer, this);
 	    	  
@@ -254,7 +252,11 @@ public class MonInterfacePlateau implements Observer{
 		lblCartePiochee.setBounds(683, 162, 176, 31);
 		framePlateau.getContentPane().add(lblCartePiochee);
 		lblCartePiochee.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
-				
+
+		lblPlaceCartePiocheeNumero1 = new JLabel("Carte piochee numero 1");
+		lblPlaceCartePiocheeNumero1.setBounds(693, 203, 142, 232);
+		framePlateau.getContentPane().add(lblPlaceCartePiocheeNumero1);		
+		
 		lblPlaceCartePiocheeNumero2 = new JLabel("Carte piochee numero 2");
 		lblPlaceCartePiocheeNumero2.setBounds(864, 203, 142, 232);
 		framePlateau.getContentPane().add(lblPlaceCartePiocheeNumero2);
@@ -369,27 +371,41 @@ public class MonInterfacePlateau implements Observer{
 		lblNomDuJoueur.setBounds(750, 0, 127, 34);
 		framePlateau.getContentPane().add(lblNomDuJoueur);
 		
-		lblPlaceCartePiocheeNumero1 = new JLabel("Carte piochee numero 1");
-		lblPlaceCartePiocheeNumero1.setBounds(693, 203, 142, 232);
-		framePlateau.getContentPane().add(lblPlaceCartePiocheeNumero1);
-		
 		lblPlaceVictoryCard = new JLabel("Victory Card");
 		lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
 		framePlateau.getContentPane().add(lblPlaceVictoryCard);
 	
 	  	  	
 	}	 
+	
+	private void givePlayerCards(Joueur player) {
+		for(int i=0; i<player.getHand().checkNombreCartes(); i++) {
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getHand().getCard(i).getType1().toString()+"_"+player.getHand().getCard(i).getType2().toString()+"_"+player.getHand().getCard(i).getType3().toString()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+		  	lblPlaceCartePiocheeNumero1.setIcon(newImage);
+		}
+		ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getVictory().getType1().toString()+"_"+player.getVictory().getType2().toString()+"_"+player.getVictory().getType3().toString()+".PNG"));
+	  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+	  	lblPlaceVictoryCard.setIcon(newImage);
+	}
 
 	public void update(Observable o, Object arg) {
 		if((o instanceof Jeu)&&(arg instanceof Joueur)) {
-			String currentPlayer = ((Joueur) arg).getName(); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
+			Joueur player = (Joueur) arg;
+			String currentPlayer = player.getName(); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
 			lblNomDuJoueur.setText(currentPlayer);
+			givePlayerCards(player);
+		}
+		
+		if((o instanceof Joueur)&&(arg instanceof Joueur)) {
+			Joueur player = (Joueur) arg;
+			givePlayerCards(player);
 		}
 		
 		if((o instanceof Plateau)&&(arg instanceof Map<?, ?>)) {
 			for(Iterator<?> it = ((Map<?, ?>) arg).keySet().iterator(); it.hasNext();) {
 				String key = (String) it.next();
-				ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+((Card) ((Map<?, ?>) arg).get(key)).getType1().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType2().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType3().toString()+".PNG"));//essai avec le carré bleu plein
+				ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+((Card) ((Map<?, ?>) arg).get(key)).getType1().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType2().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType3().toString()+".PNG"));
 			  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
 			  	cardPlateauButtons.get(key).setIcon(newImage);
 			}
