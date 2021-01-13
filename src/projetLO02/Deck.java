@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Deck {
 	private Queue<Object> shuffledCards = new LinkedList<Object>();
 	private List<Object> tabCards;
-	private static final Scanner monClavier = new Scanner(System.in);
 	
 	public Deck() {
 		this.tabCards = new LinkedList<Object>();

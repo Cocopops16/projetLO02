@@ -2,11 +2,9 @@ package View;
 
 import java.awt.EventQueue;
 
-
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Observable;
@@ -14,24 +12,22 @@ import java.util.Observer;
 import java.util.TreeMap;
 
 import javax.swing.ButtonGroup;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 
 import Controleur.ControleurDeplacer;
+import Controleur.ControleurFinPartie;
 import Controleur.ControleurFinTour;
 import Controleur.ControleurMenu;
 import Controleur.ControleurPiocher;
 import Controleur.ControleurPlacer;
 import Controleur.ControleurVictory;
 import projetLO02.Card;
-import projetLO02.Hand;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
@@ -40,9 +36,6 @@ import projetLO02.Mode;
 import projetLO02.Plateau;
 
 import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 
 @SuppressWarnings("deprecation")
@@ -102,6 +95,11 @@ public class MonInterfacePlateau implements Observer{
 	private JButton btnB3;
 	private JButton btnD1;
 	private JButton btnE1;
+	private JLabel lblFinPartie;
+	private JLabel lblAnnonceGagnant;
+	private JLabel lblAffichageGagnant;
+	private JButton btnFermer;
+	private JFrame frameFinPartie;
 	
 	protected Jeu jeu;
 
@@ -156,10 +154,10 @@ public class MonInterfacePlateau implements Observer{
 		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau, this.frameVictory, this.lblPlaceVictoryCard, this.lblNomDuJoueur);
 		new ControleurVictory(this.jeu, this.framePlateau, this.frameVictory, this.btnChangeVictory, this.btnSetVictory, this.lblPlaceVictoryCard, this.lblNomDuJoueur);
 	    new ControleurPiocher(this.jeu, this.btnPiocher);
-	    new ControleurPlacer(this.jeu, this.tglbtnPlacerDeplacer , this.cardPlateauButtons, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3, this.lblPlaceCartePiocheeNumero1, this.lblPlaceCartePiocheeNumero2, this.lblPlaceCartePiocheeNumero3);
+	    new ControleurPlacer(this.jeu, this.tglbtnPlacerDeplacer , this.cardPlateauButtons, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3);
 	    new ControleurDeplacer(this.jeu, this.tglbtnPlacerDeplacer, this.cardPlateauButtons, this.lblDe, this.lblPositionOrigine, this.lblVers, this.lblPositionArrivee);
-	    new ControleurFinTour(this.jeu, this.btnFinTour);
-	    	  
+	    new ControleurFinTour(this.jeu, this.btnFinTour, this.frameFinPartie, this.framePlateau, this.lblAffichageGagnant);
+	    new ControleurFinPartie(this.btnFermer, this.frameFinPartie);	  
 	}
 
 	/**
@@ -413,6 +411,34 @@ public class MonInterfacePlateau implements Observer{
 		btnE1 = new JButton("E1");
 		panel.add(btnE1);
 		cardPlateauButtons.put("E1",btnE1);  	
+
+		//interface fin de partie
+		frameFinPartie = new JFrame();
+		frameFinPartie.setVisible(false);
+		frameFinPartie.setBounds(100, 100, 891, 548);
+		frameFinPartie.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameFinPartie.getContentPane().setLayout(null);
+				
+		lblFinPartie = new JLabel("La partie est termin\u00E9e !");
+		lblFinPartie.setFont(new Font("Tahoma", Font.PLAIN, 30));
+		lblFinPartie.setBackground(Color.BLACK);
+		lblFinPartie.setBounds(271, 24, 338, 59);
+		frameFinPartie.getContentPane().add(lblFinPartie);
+				
+		lblAnnonceGagnant = new JLabel("a gagn\u00E9 !   Bravo");
+		lblAnnonceGagnant.setFont(new Font("Tahoma", Font.BOLD, 22));
+		lblAnnonceGagnant.setBounds(461, 156, 244, 59);
+		frameFinPartie.getContentPane().add(lblAnnonceGagnant);
+				
+		lblAffichageGagnant = new JLabel("");
+		lblAffichageGagnant.setBackground(new Color(0, 0, 0));
+		lblAffichageGagnant.setFont(new Font("Tahoma", Font.BOLD, 22));
+		lblAffichageGagnant.setBounds(317, 156, 134, 59);
+		frameFinPartie.getContentPane().add(lblAffichageGagnant);
+				
+		btnFermer = new JButton("FERMER");
+		btnFermer.setBounds(380, 381, 118, 51);
+		frameFinPartie.getContentPane().add(btnFermer);
 	}	 
 	
 	private void givePlayerCards(Joueur player) {

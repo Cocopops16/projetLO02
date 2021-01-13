@@ -189,10 +189,6 @@ public class Jeu extends Observable implements Runnable {
 		sendMsg("C'est au tour de : " + joueurEnCours.getName());
 		
 		if(!this.joueurEnCours.getIA()) {
-//			joueurEnCours.placer(joueurEnCours.chooseCardToPlay());
-//			if(joueurEnCours.choixSiDeplacer()) {
-//				joueurEnCours.deplacer();
-//			}
 			while( (!this.joueurEnCours.aPioche()) || (!this.joueurEnCours.aPlace()) ) {
 				try {
 					this.wait();
@@ -239,7 +235,7 @@ public class Jeu extends Observable implements Runnable {
 		else return false;
 	}
 	
-	public void comptagePoints() {
+	public String comptagePoints() {
 		Visitor visitor1 = new ScoreBodyVisitor();
 		Visitor visitor2 = new ScoreColorVisitor();
 		Visitor visitor3 = new ScoreShapeVisitor();
@@ -263,6 +259,7 @@ public class Jeu extends Observable implements Runnable {
 			scoreFinal = 0;
 		}
 		sendMsg("Félicitations "+premier+" ton plan s'est déroulé sans accros ;) , tu as gagné avec : "+scorePremier+" points");
+		return premier;
 	}
 	
 	public Mode getMode() {
