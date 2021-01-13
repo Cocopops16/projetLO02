@@ -149,7 +149,8 @@ public class MonInterfacePlateau implements Observer{
 	public MonInterfacePlateau() {
 		cardPlateauButtons = new TreeMap<String, JButton>();
 		initialize();
-		jeu = new Jeu(this);
+		this.jeu = new Jeu(this);
+		new VueTexte(this.jeu, this.jeu.getMsgBox()); 
 				
 		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau, this.frameVictory, this.lblPlaceVictoryCard, this.lblNomDuJoueur);
 		new ControleurVictory(this.jeu, this.framePlateau, this.frameVictory, this.btnChangeVictory, this.btnSetVictory, this.lblPlaceVictoryCard, this.lblNomDuJoueur);

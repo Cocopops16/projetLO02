@@ -290,6 +290,10 @@ public class Jeu extends Observable implements Runnable {
 		return this.nbrVictoryCardChoosen;
 	}
 	
+	public MsgBox getMsgBox() {
+		return this.msgBox;
+	}
+	
 	public String getPlayerName(int playerNum) {
 		for(int i=1; i<playerNum; i++) {
 			this.playersQueue.add(this.playersQueue.poll());
