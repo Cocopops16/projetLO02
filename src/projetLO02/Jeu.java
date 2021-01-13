@@ -129,9 +129,13 @@ public class Jeu extends Observable implements Runnable {
 					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.modePerso());
 				}
 				else if(this.mode == Mode.Avancé) {
-					( (Joueur)this.playersQueue.peek() ).piocher();
-					( (Joueur)this.playersQueue.peek() ).piocher();
-					( (Joueur)this.playersQueue.peek() ).piocher();
+					this.joueurEnCours = (Joueur)this.playersQueue.peek();
+					this.setChanged();
+					this.notifyObservers(this.joueurEnCours);
+					for(int j=0; j<3; j++) {
+						this.joueurEnCours.piocher();
+						this.joueurEnCours.resetTurn();
+					}
 				}
 				else if(this.mode == Mode.Classique) {
 					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.giveCard());

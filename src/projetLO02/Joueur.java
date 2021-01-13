@@ -55,6 +55,8 @@ public class Joueur extends Observable {
 	public void setVictory(Card card) {
 		System.out.println("Victory Card de "+this.name+ " : " + card.toString());
 		this.victoryCard = card;
+		setChanged();
+		notifyObservers(this);
 	}
 	
 	public void setVictory() {
@@ -99,6 +101,8 @@ public class Joueur extends Observable {
 							this.aDejaPlace = true;
 							System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
 							this.myHand.removeCardFromHand(card);
+							setChanged();
+							notifyObservers(this);
 						}
 						else {
 							System.out.println("Pas de cartes autour ("+colonne+";"+ligne+")");

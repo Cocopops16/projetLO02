@@ -35,6 +35,7 @@ import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
 import projetLO02.Joueur;
+import projetLO02.Mode;
 import projetLO02.Plateau;
 
 import java.awt.Color;
@@ -338,7 +339,7 @@ public class MonInterfacePlateau implements Observer{
 		
 		btnE3 = new JButton("E3");
 		panel.add(btnE3);
-		cardPlateauButtons.put("E2",btnE3);
+		cardPlateauButtons.put("E3",btnE3);
 		
 		btnA2 = new JButton("A2");
 		panel.add(btnA2);
@@ -358,7 +359,7 @@ public class MonInterfacePlateau implements Observer{
 		
 		btnE2 = new JButton("E2");
 		panel.add(btnE2);
-		cardPlateauButtons.put("E3",btnE2);
+		cardPlateauButtons.put("E2",btnE2);
 		
 		btnA1 = new JButton("A1");
 		panel.add(btnA1);
@@ -392,11 +393,9 @@ public class MonInterfacePlateau implements Observer{
 	}	 
 	
 	private void givePlayerCards(Joueur player) {
-		if(player.getHand().checkNombreCartes()==0) {
-			lblPlaceCartePiocheeNumero1.setIcon(null);
-			lblPlaceCartePiocheeNumero2.setIcon(null);
-			lblPlaceCartePiocheeNumero3.setIcon(null);
-		}
+		lblPlaceCartePiocheeNumero1.setIcon(null);
+		lblPlaceCartePiocheeNumero2.setIcon(null);
+		lblPlaceCartePiocheeNumero3.setIcon(null);
 		for(int i=0; i<player.getHand().checkNombreCartes(); i++) {
 			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getHand().getCard(i).getType1().toString()+"_"+player.getHand().getCard(i).getType2().toString()+"_"+player.getHand().getCard(i).getType3().toString()+".PNG"));
 		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
@@ -413,9 +412,11 @@ public class MonInterfacePlateau implements Observer{
 		  	}
 		  		
 		}
-		ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getVictory().getType1().toString()+"_"+player.getVictory().getType2().toString()+"_"+player.getVictory().getType3().toString()+".PNG"));
-	  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
-	  	lblPlaceVictoryCard.setIcon(newImage);
+		if(jeu.getMode()!=Mode.Avancé) {
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getVictory().getType1().toString()+"_"+player.getVictory().getType2().toString()+"_"+player.getVictory().getType3().toString()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+		  	lblPlaceVictoryCard.setIcon(newImage);
+		}
 	}
 
 	public void update(Observable o, Object arg) {
