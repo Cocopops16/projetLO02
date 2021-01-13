@@ -260,7 +260,7 @@ public class MonInterfacePlateau implements Observer{
 		frameVictory.getContentPane().add(lblPlaceVictoryCard);
 		
 		lblNomDuJoueur = new JLabel("");
-		lblNomDuJoueur.setBounds(191, 11, 150, 23);
+		lblNomDuJoueur.setBounds(300, 11, 150, 23);
 		frameVictory.getContentPane().add(lblNomDuJoueur);	
 		
 		
@@ -442,6 +442,8 @@ public class MonInterfacePlateau implements Observer{
 	}	 
 	
 	private void givePlayerCards(Joueur player) {
+		String currentPlayer = player.getName(); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
+		lblNomDuJoueur.setText(currentPlayer);
 		lblPlaceCartePiocheeNumero1.setIcon(null);
 		lblPlaceCartePiocheeNumero2.setIcon(null);
 		lblPlaceCartePiocheeNumero3.setIcon(null);
@@ -471,8 +473,6 @@ public class MonInterfacePlateau implements Observer{
 	public void update(Observable o, Object arg) {
 		if((o instanceof Jeu)&&(arg instanceof Joueur)) {
 			Joueur player = (Joueur) arg;
-			String currentPlayer = player.getName(); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
-			lblNomDuJoueur.setText(currentPlayer);
 			givePlayerCards(player);
 			tglbtnPlacerDeplacer.setText("Placer");
 			tglbtnPlacerDeplacer.setSelected(false);
