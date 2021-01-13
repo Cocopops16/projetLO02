@@ -10,7 +10,7 @@ import View.MonInterfacePlateau;
 
 @SuppressWarnings("deprecation")
 public class Jeu extends Observable implements Runnable {
-	private int nbrJoueurs, nbrIA;
+	private int nbrJoueurs, nbrIA, nbrVictoryCardChoosen;
 	private Mode mode;
 	private Card hiddenCard;
 	private Plateau plateau;
@@ -29,6 +29,7 @@ public class Jeu extends Observable implements Runnable {
 		
 		this.mode = null;
 		this.nbrJoueurs = 0;
+		this.nbrVictoryCardChoosen = 1;
 		this.nbrIA = 0;
 		this.plateau = new Plateau(5, 3, monInterface);
 		this.deck = new Deck();
@@ -94,65 +95,71 @@ public class Jeu extends Observable implements Runnable {
 		}
 	}
 	
+	public synchronized void setPlayersVictory() {
+		if(this.joueurEnCours.getVictory()!=null) {
+			this.nbrVictoryCardChoosen++;
+			this.notifyAll();
+		}
+	}
 	
-	public void start() throws InvalidModeException,InvalidNbrOfPlayersException {
+	public synchronized void start() throws InvalidModeException,InvalidNbrOfPlayersException {
 		if( (this.mode!=null)&&((this.nbrIA+this.nbrJoueurs)>=2) ) {
-			for(int i=0; i<(this.nbrJoueurs+this.nbrIA); i++) {
-//				if(i>=this.nbrJoueurs) {
-//					((Joueur)this.playersQueue.peek()).setIA(true);
-//					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme IA");
-//					this.playersQueue.add(this.playersQueue.poll());
-//				}
-//				else {
-//					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme Joueur");
-//					this.playersQueue.add(this.playersQueue.poll());
-//				}
-				if(((Joueur)this.playersQueue.peek()).getIA()) {
-					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme IA");
-				}
-				else {
-					System.out.println( ((Joueur)this.playersQueue.peek()).getName() +" a bien été reconnu comme Joueur");
-				}
-				this.playersQueue.add(this.playersQueue.poll());
-			}
 			
 			if(this.mode != Mode.Personnalisé) {
 				this.deck.shuffleCards();
 			}
 			
-			for(int i=0; i<(this.nbrIA+this.nbrJoueurs); i++) {
-				if((this.mode == Mode.Personnalisé)&&(this.nbrJoueurs>0)) {
-					if(i==this.nbrJoueurs-1) {
-						i=(this.nbrIA+this.nbrJoueurs);
+			for(int i=0; i<(this.nbrJoueurs+this.nbrIA); i++) {
+				this.joueurEnCours = (Joueur)this.playersQueue.peek();
+				
+				if(this.joueurEnCours.getIA()) {
+					System.out.println(this.joueurEnCours.getName() +" a bien été reconnu comme IA");
+				}
+				else {
+					System.out.println(this.joueurEnCours.getName() +" a bien été reconnu comme Joueur");
+					if(this.mode == Mode.Personnalisé) {
+						sendMsg(this.joueurEnCours.getName()+" vous allez choisir votre Victory Card, mettez vous à l'abri des regards");
+						while(this.joueurEnCours.getVictory()==null) {
+							this.joueurEnCours.setVictory();
+							try {
+								this.wait();
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						//( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.modePerso());
 					}
-					sendMsg( ((Joueur)this.playersQueue.peek()).getName()+" vous allez choisir votre Victory Card, mettez vous à l'abri des regards");
-					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.modePerso());
+				}
+				
+				if(this.mode == Mode.Classique) {
+					this.joueurEnCours.setVictory();
 				}
 				else if(this.mode == Mode.Avancé) {
-					this.joueurEnCours = (Joueur)this.playersQueue.peek();
-					this.setChanged();
-					this.notifyObservers(this.joueurEnCours);
 					for(int j=0; j<3; j++) {
 						this.joueurEnCours.piocher();
 						this.joueurEnCours.resetTurn();
 					}
 				}
-				else if(this.mode == Mode.Classique) {
-					( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.giveCard());
-					
-				}
+				
 				this.playersQueue.add(this.playersQueue.poll());
 			}
 			
 			if(this.mode == Mode.Personnalisé) {
 				this.deck.shuffleCards();
 				if(this.nbrIA>0) {
-					for(int i=0; i<this.nbrIA; i++) {
-						( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.giveCard());
+					for(int i=0; i<(this.nbrJoueurs+this.nbrIA); i++) {
+						this.joueurEnCours = (Joueur)this.playersQueue.peek();
+						
+						if(this.joueurEnCours.getIA()) {
+							System.out.println(this.joueurEnCours.getName() +" a bien été reconnu comme IA");
+							this.joueurEnCours.setVictory();
+						}
 						this.playersQueue.add(this.playersQueue.poll());
 					}
 				}
 			}
+			
 			this.hiddenCard = this.deck.giveCard();
 			
 			//début de la partie :
@@ -173,7 +180,7 @@ public class Jeu extends Observable implements Runnable {
 		}
 	}
 	
-	public synchronized void tourDeJeu() {
+	public void tourDeJeu() {
 		sendMsg(this.plateau.toString());
 		this.joueurEnCours = (Joueur)this.playersQueue.peek();
 		this.joueurEnCours.resetTurn();
@@ -280,6 +287,10 @@ public class Jeu extends Observable implements Runnable {
 	
 	public Card getHinddenCard() {
 		return this.hiddenCard;
+	}
+	
+	public int getNbrVictoryCardChoosen() {
+		return this.nbrVictoryCardChoosen;
 	}
 	
 	public String getPlayerName(int playerNum) {

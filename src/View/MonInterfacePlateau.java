@@ -29,6 +29,7 @@ import Controleur.ControleurFinTour;
 import Controleur.ControleurMenu;
 import Controleur.ControleurPiocher;
 import Controleur.ControleurPlacer;
+import Controleur.ControleurVictory;
 import projetLO02.Card;
 import projetLO02.Hand;
 import projetLO02.InvalidModeException;
@@ -61,6 +62,11 @@ public class MonInterfacePlateau implements Observer{
 	private JRadioButton rdbtnModeAvance;
 	private JRadioButton rdbtnModePerso;
 	private JButton btnLancerPartie;
+	
+	private JFrame frameVictory;
+	private JButton btnChangeVictory;
+	private JButton btnSetVictory;
+	
 	private JFrame framePlateau;
 	private JButton btnPiocher;
 	private JToggleButton tglbtnPlacerDeplacer;
@@ -147,7 +153,8 @@ public class MonInterfacePlateau implements Observer{
 		initialize();
 		jeu = new Jeu(this);
 				
-		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau);
+		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau, this.frameVictory, this.lblPlaceVictoryCard, this.lblNomDuJoueur);
+		new ControleurVictory(this.jeu, this.framePlateau, this.frameVictory, this.btnChangeVictory, this.btnSetVictory, this.lblPlaceVictoryCard, this.lblNomDuJoueur);
 	    new ControleurPiocher(this.jeu, this.btnPiocher);
 	    new ControleurPlacer(this.jeu, this.tglbtnPlacerDeplacer , this.cardPlateauButtons, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3, this.lblPlaceCartePiocheeNumero1, this.lblPlaceCartePiocheeNumero2, this.lblPlaceCartePiocheeNumero3);
 	    new ControleurDeplacer(this.jeu, this.tglbtnPlacerDeplacer, this.cardPlateauButtons, this.lblDe, this.lblPositionOrigine, this.lblVers, this.lblPositionArrivee);
@@ -233,7 +240,33 @@ public class MonInterfacePlateau implements Observer{
 		btnLancerPartie.setBounds(245, 414, 129, 56);
 		frameMenu.getContentPane().add(btnLancerPartie);	
 		
+		///////////////////////////////////////////
 		
+		frameVictory = new JFrame();
+		frameVictory.setVisible(false);
+		frameVictory.getContentPane().setFont(new Font("Tahoma", Font.PLAIN, 18));
+		frameVictory.setBounds(100, 100, 498, 304);
+		frameVictory.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frameVictory.getContentPane().setLayout(null);
+		
+		btnChangeVictory = new JButton("ChangeVictory");
+		btnChangeVictory.setBounds(287, 82, 103, 29);
+		frameVictory.getContentPane().add(btnChangeVictory);
+		
+		btnSetVictory = new JButton("SetVictory");
+		btnSetVictory.setBounds(287, 138, 103, 29);
+		frameVictory.getContentPane().add(btnSetVictory);
+		
+		lblPlaceVictoryCard = new JLabel("Victory Card");
+		lblPlaceVictoryCard.setBounds(75, 11, 142, 232);
+		frameVictory.getContentPane().add(lblPlaceVictoryCard);
+		
+		lblNomDuJoueur = new JLabel("");
+		lblNomDuJoueur.setBounds(191, 11, 150, 23);
+		frameVictory.getContentPane().add(lblNomDuJoueur);	
+		
+		
+		///////////////////////////////////////////
 		framePlateau = new JFrame();
 		framePlateau.setVisible(false);
 		framePlateau.setBounds(100, 100, 1234, 770);
@@ -379,17 +412,7 @@ public class MonInterfacePlateau implements Observer{
 		
 		btnE1 = new JButton("E1");
 		panel.add(btnE1);
-		cardPlateauButtons.put("E1",btnE1);
-		
-		lblNomDuJoueur = new JLabel("");
-		lblNomDuJoueur.setBounds(750, 0, 127, 34);
-		framePlateau.getContentPane().add(lblNomDuJoueur);
-		
-		lblPlaceVictoryCard = new JLabel("Victory Card");
-		lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
-		framePlateau.getContentPane().add(lblPlaceVictoryCard);
-	
-	  	  	
+		cardPlateauButtons.put("E1",btnE1);  	
 	}	 
 	
 	private void givePlayerCards(Joueur player) {

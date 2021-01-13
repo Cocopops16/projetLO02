@@ -25,6 +25,7 @@ public class Joueur extends Observable {
 		this.aDejaPioche = false;
 		this.aDejaPlace = false;
 		this.aDejaDeplace = false;
+		this.victoryCard = null;
 		
 		addObserver(monInterface);
 	}
@@ -52,18 +53,29 @@ public class Joueur extends Observable {
 		}
 	}
 	
-	public void setVictory(Card card) {
-		System.out.println("Victory Card de "+this.name+ " : " + card.toString());
-		this.victoryCard = card;
-		setChanged();
-		notifyObservers(this);
-	}
-	
 	public void setVictory() {
-		if(this.jeu.getMode() == Mode.Avancé) {
+		if(this.jeu.getMode() == Mode.Classique) {
+			this.victoryCard = this.jeu.getDeck().giveCard();
+			setChanged();
+			notifyObservers(this);
+		}
+		else if(this.jeu.getMode() == Mode.Avancé) {
 			this.victoryCard = this.myHand.getCard(0);
 			this.myHand.removeCardFromHand(this.victoryCard);
 			System.out.println("Victory Card de "+this.name+ " : " + this.victoryCard.toString());
+			setChanged();
+			notifyObservers(this);
+		}
+		else if((this.jeu.getMode() == Mode.Personnalisé)&&(!this.isIA)) {
+			this.victoryCard = this.jeu.getDeck().modePerso(this.victoryCard);
+			System.out.println("Victory Card de "+this.name+ " : " + this.victoryCard.toString());
+			setChanged();
+			notifyObservers(this);
+		}
+		else if((this.jeu.getMode() == Mode.Personnalisé)&&this.isIA) {
+			this.victoryCard = this.jeu.getDeck().giveCard();
+			setChanged();
+			notifyObservers(this);
 		}
 	}
 	

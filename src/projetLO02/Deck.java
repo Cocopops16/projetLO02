@@ -48,24 +48,13 @@ public class Deck {
 		}
 	}
 	
-	public Card modePerso() {
-		Card card;
-		int tailleTab = this.tabCards.size();
-		System.out.println("Choix de la victoryCard");
-		for(int i=0; i<tailleTab; i++) {
-			card = (Card)this.tabCards.get(i);
-			System.out.println(card.toString());
-			System.out.println("Prendre cette carte ? y/n");
-			char choix = monClavier.next().charAt(0);
-			if((choix=='y')||(choix=='Y')) {
-				this.tabCards.remove(i);
-				return card;
-			}
+	public Card modePerso(Card carteRendue) {
+		if(carteRendue!=null) {
+			this.tabCards.add(carteRendue);
 		}
-		System.out.println("Nous avons choisi une Victory Card pour vous");
-		int index = randomizer();
-		card = (Card)this.tabCards.get(index);
-		this.tabCards.remove(index);
+		Card card;
+		card = (Card)this.tabCards.get(0);
+		this.tabCards.remove(0);
 		return card;
 	}
 	

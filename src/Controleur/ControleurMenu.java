@@ -14,6 +14,7 @@ import javax.swing.JTextPane;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
+import projetLO02.Mode;
 
 public class ControleurMenu implements Runnable {
 
@@ -29,11 +30,14 @@ public class ControleurMenu implements Runnable {
 	private JButton btnLancerPartie;
 	private JFrame frameMenu;
 	private JFrame framePlateau;
+	private JFrame frameVictory;
+	private  JLabel lblPlaceVictoryCard;
+	private JLabel lblNomDuJoueur;
 	
 	private Jeu jeu;
 	private Thread thread;
 
-	public ControleurMenu(Jeu jeu, JTextPane textPane, JLabel lblJoueur1, JLabel lblJoueur2, JLabel lblJoueur3, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie, JFrame frameMenu, JFrame framePlateau) {
+	public ControleurMenu(Jeu jeu, JTextPane textPane, JLabel lblJoueur1, JLabel lblJoueur2, JLabel lblJoueur3, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie, JFrame frameMenu, JFrame framePlateau, JFrame frameVictory, JLabel lblPlaceVictoryCard, JLabel lblNomDuJoueur) {
 		this.textPane = textPane;
 		this.lblJoueur1 = lblJoueur1;
 		this.lblJoueur2 = lblJoueur2;
@@ -46,6 +50,9 @@ public class ControleurMenu implements Runnable {
 		this.btnLancerPartie = btnLancerPartie;
 		this.frameMenu = frameMenu;
 		this.framePlateau = framePlateau;
+		this.frameVictory = frameVictory;
+		this.lblPlaceVictoryCard = lblPlaceVictoryCard;
+		this.lblNomDuJoueur = lblNomDuJoueur;
 		
 		this.jeu = jeu;
 		
@@ -127,13 +134,24 @@ public class ControleurMenu implements Runnable {
 					message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					JOptionPane.showMessageDialog(null, message);
 				}
-				framePlateau.setVisible(true); //permet d'ouvrir l'interface graphique du Plateau
-				frameMenu.setVisible(false);
+				
+				if((jeu.getMode()==Mode.Personnalisé)&&(jeu.getNbrJoueurs()>0)) {
+					frameVictory.setVisible(true);
+					frameMenu.setVisible(false);
+				}
+				else {
+					lblNomDuJoueur.setBounds(750, 11, 150, 23);
+					framePlateau.getContentPane().add(lblNomDuJoueur);
+					lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
+					framePlateau.getContentPane().add(lblPlaceVictoryCard);
+					framePlateau.setVisible(true); //permet d'ouvrir l'interface graphique du Plateau
+					frameMenu.setVisible(false);
+				}
 				lancerPartie();
 			}
 		});
 	}
-	
+		
 	private void lancerPartie() {
 		this.thread = new Thread(this);
 		this.thread.start();
