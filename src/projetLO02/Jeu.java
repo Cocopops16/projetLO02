@@ -232,7 +232,7 @@ public class Jeu extends Observable implements Runnable {
 		else return false;
 	}
 	
-	public void comptagePoints() {
+	public String comptagePoints() {
 		Visitor visitor1 = new ScoreBodyVisitor();
 		Visitor visitor2 = new ScoreColorVisitor();
 		Visitor visitor3 = new ScoreShapeVisitor();
@@ -256,6 +256,7 @@ public class Jeu extends Observable implements Runnable {
 			scoreFinal = 0;
 		}
 		sendMsg("Félicitations "+premier+" ton plan s'est déroulé sans accros ;) , tu as gagné avec : "+scorePremier+" points");
+		return premier;
 	}
 	
 	public Mode getMode() {

@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 import projetLO02.InvalidEndOfTurnException;
 import projetLO02.Jeu;
@@ -12,11 +14,16 @@ public class ControleurFinTour {
 	
 	private JButton btnFinTour;
 	private Jeu jeu;
-
-	public ControleurFinTour( Jeu jeu, JButton bouton) {
+	private JFrame frameFinPartie;
+	private JFrame framePlateau;
+	private JLabel lblAffichageGagnant;	
+	
+	public ControleurFinTour( Jeu jeu, JButton bouton, JFrame framefinPartie, JFrame frameplateau, JLabel lblAffichageGagnant) {
 		this.btnFinTour = bouton;
 		this.jeu = jeu;
-		
+		this.frameFinPartie =framefinPartie;
+		this.framePlateau = frameplateau;
+		this.lblAffichageGagnant = lblAffichageGagnant;
 	    passerTourSuivant();
 	}
 	
@@ -34,7 +41,9 @@ public class ControleurFinTour {
 					}
 				} 
 				else { 
-					jeu.comptagePoints(); 
+					frameFinPartie.setVisible(true);
+					framePlateau.setVisible(false);
+					lblAffichageGagnant.setText(jeu.comptagePoints());
 				}
 			}
 	 });
