@@ -448,6 +448,7 @@ public class MonInterfacePlateau implements Observer{
 		lblPlaceCartePiocheeNumero1.setIcon(null);
 		lblPlaceCartePiocheeNumero2.setIcon(null);
 		lblPlaceCartePiocheeNumero3.setIcon(null);
+		if(jeu.getMode()== Mode.Personnalisé || jeu.getMode() == Mode.Classique){
 		for(int i=0; i<player.getHand().checkNombreCartes(); i++) {
 			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getHand().getCard(i).getType1().toString()+"_"+player.getHand().getCard(i).getType2().toString()+"_"+player.getHand().getCard(i).getType3().toString()+".PNG"));
 		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
@@ -462,7 +463,24 @@ public class MonInterfacePlateau implements Observer{
 		  			lblPlaceCartePiocheeNumero3.setIcon(newImage);
 	  				break;
 		  	}
-		  		
+		}	
+		}
+		if(jeu.getMode()== Mode.Avancé) {
+			for(int i=0; i<player.getHand().checkNombreCartes()-1; i++) {
+				ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getHand().getCard(i).getType1().toString()+"_"+player.getHand().getCard(i).getType2().toString()+"_"+player.getHand().getCard(i).getType3().toString()+".PNG"));
+			  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+			  	switch(i) {
+			  		case(0):
+			  			lblPlaceCartePiocheeNumero1.setIcon(newImage);
+			  			break;
+			  		case(1):
+			  			lblPlaceCartePiocheeNumero2.setIcon(newImage);
+		  				break;
+			  		case(2):
+			  			lblPlaceCartePiocheeNumero3.setIcon(newImage);
+		  				break;
+			  	}
+			}	
 		}
 		if(jeu.getMode()!=Mode.Avancé) {
 			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getVictory().getType1().toString()+"_"+player.getVictory().getType2().toString()+"_"+player.getVictory().getType3().toString()+".PNG"));

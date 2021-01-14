@@ -9,6 +9,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import Controleur.MsgBox;
+import projetLO02.InvalidEndOfTurnException;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
@@ -41,7 +42,6 @@ public class VueTexte implements Observer, Runnable {
 		this.jeu = jeu;
 		input = System.in;
 		output = System.out;
-		this.jeu = jeu;
 		Thread t = new Thread(this);
 		t.start();
 		this.threadMsgBox = new ThreadMsgBox(msgBox, this);
@@ -169,14 +169,24 @@ public class VueTexte implements Observer, Runnable {
 					quitter = true;
 				} 
 				else if(saisie.equals(VueTexte.PIOCHER) == true) {
+					jeu.getJoueurEnCours().piocher();
 				}
 				else if(saisie.equals(VueTexte.SELECTCARD) == true) {
+					jeu.getJoueurEnCours().chooseCardToPlay();
 				}
 				else if(saisie.equals(VueTexte.PLACER) == true) {
+					jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(0));
 				}
 				else if(saisie.equals(VueTexte.DEPLACER) == true) {
+					jeu.getJoueurEnCours().deplacer();
 				}
 				else if(saisie.equals(VueTexte.FINTOUR) == true) {
+					try {
+						jeu.unlockJoueur();
+					} catch (InvalidEndOfTurnException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				else { output.println("Commande non reconnue ...");}
 			}

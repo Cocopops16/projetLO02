@@ -1,12 +1,15 @@
 package Controleur;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import View.MonInterfacePlateau;
 import projetLO02.Jeu;
 
 public class ControleurVictory implements Runnable {
@@ -45,6 +48,8 @@ public class ControleurVictory implements Runnable {
 		btnSetVictory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVictory();
+				framePlateau.setVisible(true);
+				frameVictory.setVisible(false);
 			}
 		});
 	}
