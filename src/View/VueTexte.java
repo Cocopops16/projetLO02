@@ -12,7 +12,6 @@ import Controleur.MsgBox;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
-import projetLO02.Joueur;
 import projetLO02.Mode;
 
 @SuppressWarnings("deprecation")
@@ -31,6 +30,7 @@ public class VueTexte implements Observer, Runnable {
 	public static String PLACER = "Placer";
 	public static String DEPLACER = "Deplacer";
 	public static String FINTOUR = "FinTour";
+
 	private InputStream input;
 	private PrintStream output;
 	
@@ -38,6 +38,7 @@ public class VueTexte implements Observer, Runnable {
 	private ThreadMsgBox threadMsgBox;
 	
 	public VueTexte(Jeu jeu, MsgBox msgBox) {
+		this.jeu = jeu;
 		input = System.in;
 		output = System.out;
 		this.jeu = jeu;
@@ -105,7 +106,6 @@ public class VueTexte implements Observer, Runnable {
 			saisie = lireChaine();
 			
 			if(saisie != null) {
-								
 				if(saisie.equals(VueTexte.QUITTER) == true) {
 					quitter = true;
 				} 
@@ -123,9 +123,9 @@ public class VueTexte implements Observer, Runnable {
 				else if(saisie.equals(VueTexte.START) == true) {
 					new ThreadStart(this.jeu);
 				}
-				else { output.println("Commande non reconnue ...");}
-			}
-			
+				else { 
+					output.println("Commande non reconnue ...");}
+				}
 		} while ((quitter == false)&&(!this.jeu.getHasStarted()));
 		
 		if(this.jeu.getMode()==Mode.Personnalisé) {
@@ -223,6 +223,18 @@ public class VueTexte implements Observer, Runnable {
 	public void update(Observable o, Object arg) {
 		if((o instanceof ThreadMsgBox)&&(arg instanceof String)) {
 			afficher((String) arg);
+		}
+		if(o  instanceof Jeu) {
+			Jeu jeu = (Jeu) o;
+			output.println("Le joueur " +jeu.getJoueurEnCours()+ " a ");
+			if(jeu.getJoueurEnCours().aPioche()) {
+				output.println("pioché !");
+			} else if(jeu.getJoueurEnCours().aPlace()) {
+				output.println("placé !");
+		    } else if(jeu.getJoueurEnCours().aDeplace()) {
+		    	output.println("déplacé !");
+		    }
+			
 		}
 		
 	}
