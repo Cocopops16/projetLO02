@@ -44,14 +44,6 @@ public class ControleurVictory implements Runnable {
 		
 		btnSetVictory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(jeu.getNbrVictoryCardChoosen()==jeu.getNbrJoueurs()) {
-					lblNomDuJoueur.setBounds(750, 11, 150, 23);
-					framePlateau.getContentPane().add(lblNomDuJoueur);
-					lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
-					framePlateau.getContentPane().add(lblPlaceVictoryCard);
-					framePlateau.setVisible(true);
-					frameVictory.setVisible(false);
-				}
 				setVictory();
 			}
 		});

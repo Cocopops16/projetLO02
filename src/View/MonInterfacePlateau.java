@@ -485,6 +485,48 @@ public class MonInterfacePlateau implements Observer{
 			lblPositionArrivee.setEnabled(false);
 		}
 		
+		if((o instanceof Jeu)&&(arg instanceof Integer)) {
+			switch((int)arg) {
+	  		case(1):
+	  			lblJoueur1.setText(jeu.getPlayerName(1));
+	  			break;
+	  		case(2):
+	  			lblJoueur2.setText(jeu.getPlayerName(2));
+  				break;
+	  		case(3):
+	  			lblJoueur3.setText(jeu.getPlayerName(3));
+  				break;
+			}
+		}
+		
+		if((o instanceof Jeu)&&(arg instanceof Boolean)) {
+			if(this.jeu.getHasStarted()) {
+				if((jeu.getMode()==Mode.Personnalisé)&&(jeu.getNbrJoueurs()>0)) {
+					frameVictory.setVisible(true);
+					frameMenu.setVisible(false);
+				}
+				else {
+					lblNomDuJoueur.setBounds(750, 11, 150, 23);
+					framePlateau.getContentPane().add(lblNomDuJoueur);
+					lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
+					framePlateau.getContentPane().add(lblPlaceVictoryCard);
+					framePlateau.setVisible(true); //permet d'ouvrir l'interface graphique du Plateau
+					frameMenu.setVisible(false);
+				}
+			}
+			else {
+				if(jeu.getNbrVictoryCardChoosen()==jeu.getNbrJoueurs()) {
+					lblNomDuJoueur.setBounds(750, 11, 150, 23);
+					framePlateau.getContentPane().add(lblNomDuJoueur);
+					lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
+					framePlateau.getContentPane().add(lblPlaceVictoryCard);
+					framePlateau.setVisible(true);
+					frameVictory.setVisible(false);
+				}
+			}
+		}
+		
+		
 		if((o instanceof Joueur)&&(arg instanceof Joueur)) {
 			Joueur player = (Joueur) arg;
 			givePlayerCards(player);

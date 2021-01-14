@@ -71,18 +71,6 @@ public class ControleurMenu implements Runnable {
 					String name = textPane.getText().trim(); //copie le texte présent dans le Jtext
 					jeu.addJoueur(name);
 				
-					if((jeu.getNbrJoueurs()+jeu.getNbrIA()) == 1) { 
-						lblJoueur1.setText(jeu.getPlayerName(1));
-					}
-					else if ((jeu.getNbrJoueurs()+jeu.getNbrIA()) == 2) {
-						lblJoueur1.setText(jeu.getPlayerName(1));
-						lblJoueur2.setText(jeu.getPlayerName(2));
-					}
-					else if ((jeu.getNbrJoueurs()+jeu.getNbrIA()) == 3) {
-						lblJoueur1.setText(jeu.getPlayerName(1));
-						lblJoueur2.setText(jeu.getPlayerName(2));
-						lblJoueur3.setText(jeu.getPlayerName(3));
-					}
 					if( ( (jeu.getNbrJoueurs()+jeu.getNbrIA())>0 ) && ( (jeu.getNbrJoueurs()+jeu.getNbrIA())<4 ) ) {
 						JLabel message = new JLabel("Le nom a été enregistré avec succès !");
 						message.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -96,18 +84,7 @@ public class ControleurMenu implements Runnable {
 		btnAddIA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				jeu.addIA();
-				if((jeu.getNbrJoueurs()+jeu.getNbrIA()) == 1) { 
-					lblJoueur1.setText(jeu.getPlayerName(1));
-				}
-				else if ((jeu.getNbrJoueurs()+jeu.getNbrIA()) == 2) {
-					lblJoueur1.setText(jeu.getPlayerName(1));
-					lblJoueur2.setText(jeu.getPlayerName(2));
-				}
-				else if ((jeu.getNbrJoueurs()+jeu.getNbrIA()) == 3) {
-					lblJoueur1.setText(jeu.getPlayerName(1));
-					lblJoueur2.setText(jeu.getPlayerName(2));
-					lblJoueur3.setText(jeu.getPlayerName(3));
-				}
+				
 				if( ( (jeu.getNbrJoueurs()+jeu.getNbrIA())>0 ) && ( (jeu.getNbrJoueurs()+jeu.getNbrIA())<4 ) ) {
 					JLabel message = new JLabel("IA ajoutée avec succès !");
 					message.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -133,19 +110,6 @@ public class ControleurMenu implements Runnable {
 					JLabel message = new JLabel("Mode déjà paramétré via la console!");
 					message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					JOptionPane.showMessageDialog(null, message);
-				}
-				
-				if((jeu.getMode()==Mode.Personnalisé)&&(jeu.getNbrJoueurs()>0)) {
-					frameVictory.setVisible(true);
-					frameMenu.setVisible(false);
-				}
-				else {
-					lblNomDuJoueur.setBounds(750, 11, 150, 23);
-					framePlateau.getContentPane().add(lblNomDuJoueur);
-					lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
-					framePlateau.getContentPane().add(lblPlaceVictoryCard);
-					framePlateau.setVisible(true); //permet d'ouvrir l'interface graphique du Plateau
-					frameMenu.setVisible(false);
 				}
 				lancerPartie();
 			}

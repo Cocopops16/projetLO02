@@ -21,6 +21,7 @@ public class Jeu extends Observable implements Runnable {
 	private Thread thread;
 	private Joueur joueurEnCours;
 	private MonInterfacePlateau monInterface;
+	private boolean hasStarted;
 	
 	public Jeu(MonInterfacePlateau monInterface) {
 		this.msgBox = new MsgBox();
@@ -33,6 +34,7 @@ public class Jeu extends Observable implements Runnable {
 		this.nbrIA = 0;
 		this.plateau = new Plateau(5, 3, monInterface);
 		this.deck = new Deck();
+		this.hasStarted = false;
 		
 		addObserver(monInterface);
 		this.monInterface = monInterface;
@@ -51,6 +53,8 @@ public class Jeu extends Observable implements Runnable {
 			this.playersQueue.add(joueur);
 			sendMsg("Bienvenue "+ name);
 			this.nbrJoueurs++;
+			this.setChanged();
+			this.notifyObservers(this.nbrIA+this.nbrJoueurs);
 		}
 	}
 	
@@ -75,11 +79,12 @@ public class Jeu extends Observable implements Runnable {
 			joueurIA.setIA(true);
 			this.playersQueue.add(joueurIA);
 			this.nbrIA++;
+			this.setChanged();
+			this.notifyObservers(this.nbrIA+this.nbrJoueurs);
 		}
 	}
 	
 	public void setMode(int mode) {	
- 		//sendMsg("Entrez le mode de jeu : \n- 1= Classique\n-2= Avancé (main de 3 cartes)\n- 3= personnalisé (choix de la VictoryCard)");
 		switch(mode) {
 			case 1: 
 				this.mode = Mode.Classique;
@@ -92,7 +97,9 @@ public class Jeu extends Observable implements Runnable {
 				break;
 			default:
 				this.mode = Mode.Classique;
+				sendMsg("Choix non conforme, le mode par défaut a été choisi");
 		}
+		sendMsg("Vous avez choisi le mode de jeu "+this.mode.toString());
 	}
 	
 	public synchronized void setPlayersVictory() {
@@ -104,6 +111,9 @@ public class Jeu extends Observable implements Runnable {
 	
 	public synchronized void start() throws InvalidModeException,InvalidNbrOfPlayersException {
 		if( (this.mode!=null)&&((this.nbrIA+this.nbrJoueurs)>=2) ) {
+			this.hasStarted = true;
+			this.setChanged();
+			this.notifyObservers(this.hasStarted);
 			
 			if(this.mode != Mode.Personnalisé) {
 				this.deck.shuffleCards();
@@ -146,13 +156,15 @@ public class Jeu extends Observable implements Runnable {
 			}
 			
 			if(this.mode == Mode.Personnalisé) {
+				this.hasStarted = false;
+				this.setChanged();
+				this.notifyObservers(this.hasStarted);
 				this.deck.shuffleCards();
 				if(this.nbrIA>0) {
 					for(int i=0; i<(this.nbrJoueurs+this.nbrIA); i++) {
 						this.joueurEnCours = (Joueur)this.playersQueue.peek();
 						
 						if(this.joueurEnCours.getIA()) {
-							System.out.println(this.joueurEnCours.getName() +" a bien été reconnu comme IA");
 							this.joueurEnCours.setVictory();
 						}
 						this.playersQueue.add(this.playersQueue.poll());
@@ -292,6 +304,10 @@ public class Jeu extends Observable implements Runnable {
 	
 	public MsgBox getMsgBox() {
 		return this.msgBox;
+	}
+	
+	public boolean getHasStarted() {
+		return this.hasStarted;
 	}
 	
 	public String getPlayerName(int playerNum) {
