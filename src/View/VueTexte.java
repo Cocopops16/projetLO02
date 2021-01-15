@@ -1,19 +1,26 @@
 package View;
 
+import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import Controleur.MsgBox;
+import javax.swing.ImageIcon;
+
+import projetLO02.Card;
 import projetLO02.InvalidEndOfTurnException;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
+import projetLO02.Joueur;
 import projetLO02.Mode;
+import projetLO02.Plateau;
 
 @SuppressWarnings("deprecation")
 public class VueTexte implements Observer, Runnable {
@@ -36,41 +43,14 @@ public class VueTexte implements Observer, Runnable {
 	private PrintStream output;
 	
 	private Jeu jeu;
-	private ThreadMsgBox threadMsgBox;
 	
-	public VueTexte(Jeu jeu, MsgBox msgBox) {
+	public VueTexte(Jeu jeu) {
 		this.jeu = jeu;
+		jeu.addVueTexteObserver(this);
 		input = System.in;
 		output = System.out;
 		Thread t = new Thread(this);
 		t.start();
-		this.threadMsgBox = new ThreadMsgBox(msgBox, this);
-	}
-	
-	private class ThreadMsgBox extends Observable implements Runnable {
-		private String msg;
-		private MsgBox msgBox;
-		private boolean continuerLire;
-		
-		public ThreadMsgBox(MsgBox msgBox, VueTexte observer) {
-			this.msgBox = msgBox;
-			this.addObserver(observer);
-			this.continuerLire = true;
-			Thread t = new Thread(this);
-			t.start();
-		}
-		
-		public void stopThread() {
-			this.continuerLire = false;
-		}
-
-		public void run() {
-			while(continuerLire) {
-				msg = this.msgBox.readMsg();
-				this.setChanged();
-				this.notifyObservers(this.msg);
-			}
-		}
 	}
 	
 	private class ThreadStart implements Runnable {
@@ -170,15 +150,24 @@ public class VueTexte implements Observer, Runnable {
 				} 
 				else if(saisie.equals(VueTexte.PIOCHER) == true) {
 					jeu.getJoueurEnCours().piocher();
+					if(jeu.getJoueurEnCours().aPioche()) {
+						output.println("pioché !");
+					}
 				}
 				else if(saisie.equals(VueTexte.SELECTCARD) == true) {
 					jeu.getJoueurEnCours().chooseCardToPlay();
 				}
 				else if(saisie.equals(VueTexte.PLACER) == true) {
 					jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(0));
+					if(jeu.getJoueurEnCours().aPlace()) {
+						output.println("placé !");
+				    }
 				}
 				else if(saisie.equals(VueTexte.DEPLACER) == true) {
 					jeu.getJoueurEnCours().deplacer();
+					if(jeu.getJoueurEnCours().aDeplace()) {
+				    	output.println("déplacé !");
+				    }
 				}
 				else if(saisie.equals(VueTexte.FINTOUR) == true) {
 					try {
@@ -193,7 +182,6 @@ public class VueTexte implements Observer, Runnable {
 			
 		} while ((quitter == false)&&(!this.jeu.checkEndGame()));
 		
-		this.threadMsgBox.stopThread();
 		System.exit(0);
 		
 	}
@@ -229,24 +217,52 @@ public class VueTexte implements Observer, Runnable {
 	public void afficher(String msg) {
 		this.output.println(msg);
 	}
+	
+	private void givePlayerCards(Joueur player) {
+		output.println("Victory Card :"+player.getVictory().toString());
+		output.println("Main du joueur : \n"+player.getHand().toString());
+	}
 
 	public void update(Observable o, Object arg) {
-		if((o instanceof ThreadMsgBox)&&(arg instanceof String)) {
-			afficher((String) arg);
-		}
-		if(o  instanceof Jeu) {
-			Jeu jeu = (Jeu) o;
-			output.println("Le joueur " +jeu.getJoueurEnCours()+ " a ");
-			if(jeu.getJoueurEnCours().aPioche()) {
-				output.println("pioché !");
-			} else if(jeu.getJoueurEnCours().aPlace()) {
-				output.println("placé !");
-		    } else if(jeu.getJoueurEnCours().aDeplace()) {
-		    	output.println("déplacé !");
-		    }
-			
+		if((o instanceof Jeu)&&(arg instanceof Joueur)) {
+			Joueur player = (Joueur) arg;
+			output.println("---------------------------------------------------------------");
+			output.println("\nDébut du tour de : "+player.getName());
+			if(!player.getIA()) {
+				givePlayerCards(player);
+			}
 		}
 		
+		if((o instanceof Jeu)&&(arg instanceof Integer)) {
+			output.println("Bienvenue "+this.jeu.getPlayerName((int) arg)+" !");
+		}
+		
+		if((o instanceof Jeu)&&(arg instanceof Boolean)) {
+			if(this.jeu.getHasStarted()) {
+				output.println("Partie démarrée");
+				output.println("Mode de jeu de la partie : "+this.jeu.getMode().toString());
+				if((jeu.getMode()==Mode.Personnalisé)&&(jeu.getNbrJoueurs()>0)) {
+					output.println("Choix des VictoryCards :");
+				}
+			}
+			else {
+				if(jeu.getNbrVictoryCardChoosen()==jeu.getNbrJoueurs()) {
+					output.println("Fin de la phase de choix des VictoryCards, place au jeu !");
+				}
+			}
+		}
+		
+		
+		if((o instanceof Joueur)&&(arg instanceof Joueur)) {
+			Joueur player = (Joueur) arg;
+			if(!player.getIA()) {
+				givePlayerCards(player);
+			}
+		}
+		
+		if((o instanceof Plateau)&&(arg instanceof Map<?, ?>)) {
+			output.println(this.jeu.getPlateau().toString());
+		}
 	}
 
 }

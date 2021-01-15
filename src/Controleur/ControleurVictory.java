@@ -48,8 +48,6 @@ public class ControleurVictory implements Runnable {
 		btnSetVictory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVictory();
-				framePlateau.setVisible(true);
-				frameVictory.setVisible(false);
 			}
 		});
 	}

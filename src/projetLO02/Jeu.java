@@ -5,32 +5,27 @@ import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Queue;
 
-import Controleur.MsgBox;
 import View.MonInterfacePlateau;
+import View.VueTexte;
 
 @SuppressWarnings("deprecation")
-public class Jeu extends Observable implements Runnable {
+public class Jeu extends Observable {
 	private int nbrJoueurs, nbrIA, nbrVictoryCardChoosen;
 	private Mode mode;
 	private Card hiddenCard;
 	private Plateau plateau;
 	private Deck deck;
 	private Queue<Object> playersQueue = new LinkedList<Object>();
-	protected MsgBox msgBox;
-	private String msgToSend;
-	private Thread thread;
 	private Joueur joueurEnCours;
 	private MonInterfacePlateau monInterface;
+	private VueTexte vueTexte;
 	private boolean hasStarted;
 	
 	public Jeu(MonInterfacePlateau monInterface) {
-		this.msgBox = new MsgBox();
-		
-		this.msgToSend = null;
 		
 		this.mode = null;
 		this.nbrJoueurs = 0;
-		this.nbrVictoryCardChoosen = 1;
+		this.nbrVictoryCardChoosen = 0;
 		this.nbrIA = 0;
 		this.plateau = new Plateau(5, 3, monInterface);
 		this.deck = new Deck();
@@ -40,18 +35,11 @@ public class Jeu extends Observable implements Runnable {
 		this.monInterface = monInterface;
 	}
 	
-	public void sendMsg(String msg) {
-		this.msgToSend = msg;
-		this.thread = new Thread(this);
-		this.thread.start();
-	}
-	
 	public void addJoueur(String name) {
 		if((this.nbrIA+this.nbrJoueurs)<4) {
-			Joueur joueur = new Joueur(name, this, this.monInterface);
+			Joueur joueur = new Joueur(name, this, this.monInterface, this.vueTexte);
 			joueur.setIA(false);
 			this.playersQueue.add(joueur);
-			sendMsg("Bienvenue "+ name);
 			this.nbrJoueurs++;
 			this.setChanged();
 			this.notifyObservers(this.nbrIA+this.nbrJoueurs);
@@ -64,18 +52,15 @@ public class Jeu extends Observable implements Runnable {
 			switch(this.nbrIA) {
 				case 0:
 					name = "[IA]Billy";
-					sendMsg( "Billy est dans la place !");
 					break;
 				case 1:
 					name = "[IA]Cratos";
-					sendMsg("Attention, Cratos est arrivé avec un air effrayant !");
 					break;
 				case 2:
 					name = "[IA]Price";
-					sendMsg("Price est dans les parrages, vous avez vraiment décidé de ne pas vous salir les mains aujourd'hui !");
 					break;
 			}
-			Joueur joueurIA = new IA(name, this, this.monInterface);
+			Joueur joueurIA = new IA(name, this, this.monInterface, this.vueTexte);
 			joueurIA.setIA(true);
 			this.playersQueue.add(joueurIA);
 			this.nbrIA++;
@@ -97,9 +82,7 @@ public class Jeu extends Observable implements Runnable {
 				break;
 			default:
 				this.mode = Mode.Classique;
-				sendMsg("Choix non conforme, le mode par défaut a été choisi");
 		}
-		sendMsg("Vous avez choisi le mode de jeu "+this.mode.toString());
 	}
 	
 	public synchronized void setPlayersVictory() {
@@ -122,27 +105,18 @@ public class Jeu extends Observable implements Runnable {
 			for(int i=0; i<(this.nbrJoueurs+this.nbrIA); i++) {
 				this.joueurEnCours = (Joueur)this.playersQueue.peek();
 				
-				if(this.joueurEnCours.getIA()) {
-					System.out.println(this.joueurEnCours.getName() +" a bien été reconnu comme IA");
-				}
-				else {
-					System.out.println(this.joueurEnCours.getName() +" a bien été reconnu comme Joueur");
-					if(this.mode == Mode.Personnalisé) {
-						sendMsg(this.joueurEnCours.getName()+" vous allez choisir votre Victory Card, mettez vous à l'abri des regards");
-						while(this.joueurEnCours.getVictory()==null) {
-							this.joueurEnCours.setVictory();
-							try {
-								this.wait();
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+				if((this.mode == Mode.Personnalisé)&&(!this.joueurEnCours.getIA())) {
+					while(this.joueurEnCours.getVictory()==null) {
+						this.joueurEnCours.setVictory();
+						try {
+							this.wait();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-						//( (Joueur)this.playersQueue.peek() ).setVictory(this.deck.modePerso());
 					}
 				}
-				
-				if(this.mode == Mode.Classique) {
+				else if(this.mode == Mode.Classique) {
 					this.joueurEnCours.setVictory();
 				}
 				else if(this.mode == Mode.Avancé) {
@@ -180,9 +154,8 @@ public class Jeu extends Observable implements Runnable {
 			}
 			if(checkEndGame()) {
 				comptagePoints();
-				sendMsg("End of the game");
 			}
-			else sendMsg("Problème critique dans le déroulement de la partie");
+			else System.out.println("Problème critique dans le déroulement de la partie");
 		}
 		else if(this.mode==null){
 			throw new InvalidModeException("Mode non choisi");
@@ -193,12 +166,10 @@ public class Jeu extends Observable implements Runnable {
 	}
 	
 	public void tourDeJeu() {
-		sendMsg(this.plateau.toString());
 		this.joueurEnCours = (Joueur)this.playersQueue.peek();
 		this.joueurEnCours.resetTurn();
 		this.setChanged();
 		this.notifyObservers(this.joueurEnCours);
-		sendMsg("C'est au tour de : " + joueurEnCours.getName());
 		
 		if(!this.joueurEnCours.getIA()) {
 			while( (!this.joueurEnCours.aPioche()) || (!this.joueurEnCours.aPlace()) ) {
@@ -220,7 +191,6 @@ public class Jeu extends Observable implements Runnable {
 				joueurEnCours.piocher();
 			}
 		}
-		else sendMsg("problème sur le joueur : "+joueurEnCours.getName()+", est-il une IA ?");
 		
 		this.playersQueue.add(this.playersQueue.poll());
 	}
@@ -262,7 +232,6 @@ public class Jeu extends Observable implements Runnable {
 			scoreFinal = scoreFinal + joueur.accept(visitor1, this.plateau.accept(visitor1));
 			scoreFinal = scoreFinal + joueur.accept(visitor2, this.plateau.accept(visitor1));
 			scoreFinal = scoreFinal + joueur.accept(visitor3, this.plateau.accept(visitor1));
-			sendMsg("Le joueur : "+joueur.getName()+" a accumulé : "+scoreFinal+" points");
 			if(scoreFinal>scorePremier) {
 				scorePremier = scoreFinal;
 				premier = joueur.getName();
@@ -270,7 +239,6 @@ public class Jeu extends Observable implements Runnable {
 			this.playersQueue.poll();
 			scoreFinal = 0;
 		}
-		sendMsg("Félicitations "+premier+" ton plan s'est déroulé sans accros ;) , tu as gagné avec : "+scorePremier+" points");
 		return premier;
 	}
 	
@@ -302,12 +270,14 @@ public class Jeu extends Observable implements Runnable {
 		return this.nbrVictoryCardChoosen;
 	}
 	
-	public MsgBox getMsgBox() {
-		return this.msgBox;
-	}
-	
 	public boolean getHasStarted() {
 		return this.hasStarted;
+	}
+	
+	public void addVueTexteObserver(VueTexte vueTexte) {
+		this.vueTexte = vueTexte;
+		this.addObserver(vueTexte);
+		this.plateau.addObserver(vueTexte);
 	}
 	
 	public String getPlayerName(int playerNum) {
@@ -325,12 +295,5 @@ public class Jeu extends Observable implements Runnable {
 	
 	public Joueur getJoueurEnCours() {
 		return this.joueurEnCours;
-	}
-	
-	public void run() {
-		if(this.msgToSend != null) {
-			this.msgBox.addMsg(this.msgToSend);	
-			this.msgToSend = null;
-		}
 	}
 }

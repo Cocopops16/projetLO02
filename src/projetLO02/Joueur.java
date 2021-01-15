@@ -5,6 +5,7 @@ import java.util.Observable;
 import java.util.Scanner;
 
 import View.MonInterfacePlateau;
+import View.VueTexte;
 
 @SuppressWarnings("deprecation")
 public class Joueur extends Observable {
@@ -18,7 +19,7 @@ public class Joueur extends Observable {
 	protected Jeu jeu;
 	private static final Scanner monClavier = new Scanner(System.in);
 	
-	public Joueur(String name, Jeu jeuEnCours, MonInterfacePlateau monInterface){
+	public Joueur(String name, Jeu jeuEnCours, MonInterfacePlateau monInterface, VueTexte vueTexte){
 		this.name = name;
 		this.jeu = jeuEnCours;
 		this.myHand = new Hand();
@@ -28,6 +29,7 @@ public class Joueur extends Observable {
 		this.victoryCard = null;
 		
 		addObserver(monInterface);
+		addObserver(vueTexte);
 	}
 	
 	public String getName() {
@@ -68,7 +70,6 @@ public class Joueur extends Observable {
 		}
 		else if((this.jeu.getMode() == Mode.Personnalisé)&&(!this.isIA)) {
 			this.victoryCard = this.jeu.getDeck().modePerso(this.victoryCard);
-			System.out.println("Victory Card de "+this.name+ " : " + this.victoryCard.toString());
 			setChanged();
 			notifyObservers(this);
 		}
@@ -83,18 +84,6 @@ public class Joueur extends Observable {
 		return this.victoryCard;
 	}
 	
-	public boolean choixSiDeplacer() {
-		System.out.println("Voulez-vous deplacer une carte ? : y/n");
-		char bool = monClavier.next().charAt(0);
-		if((bool=='y') || (bool=='Y')) {
-			return true;
-		}
-		else if((bool=='n') || (bool=='N')) {
-			return false;
-		}
-		else return choixSiDeplacer();
-	}
-	
 	public Card chooseCardToPlay() {
 		System.out.println("Veuillez choisir le numéro d'une carte :");
 		System.out.println(myHand.toString());
@@ -105,30 +94,30 @@ public class Joueur extends Observable {
 	
 	public void placer(Card card, char colonne, int ligne) {
 		if(!this.aDejaPlace) {
+			this.aDejaPlace = true;
 			if(this.jeu.getPlateau().getFirstCard()) {
 				if(!this.jeu.getPlateau().isPosAlreadyTaken(colonne, ligne)) {
 					if( (!this.jeu.getPlateau().checkMaxXReached(colonne)) && (!this.jeu.getPlateau().checkMaxYReached(ligne)) ) {
 						if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
 							this.jeu.getPlateau().setCard(card, colonne, ligne);
-							this.aDejaPlace = true;
 							System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
 							this.myHand.removeCardFromHand(card);
 							setChanged();
 							notifyObservers(this);
 						}
 						else {
-							System.out.println("Pas de cartes autour ("+colonne+";"+ligne+")");
-							placer(card);
+							this.aDejaPlace = false;
+							//System.out.println("Pas de cartes autour ("+colonne+";"+ligne+")");
 						}
 					}
 					else {
-						System.out.println("maximum du plateau atteint pour cette position : ("+colonne+";"+ligne+")");
-						placer(card);
+						this.aDejaPlace = false;
+						//System.out.println("maximum du plateau atteint pour cette position : ("+colonne+";"+ligne+")");
 					}
 				}
 				else {
-					System.out.println("Position : ("+colonne+";"+ligne+") déjà occupé");
-					placer(card);
+					this.aDejaPlace = false;
+					//System.out.println("Position : ("+colonne+";"+ligne+") déjà occupé");
 				}
 			}
 			else {
@@ -141,22 +130,25 @@ public class Joueur extends Observable {
 	}
 	
 	public void placer(Card card) {
-		System.out.println("Entrez la colonne où placer la carte");
-		char colonne = monClavier.next().charAt(0);
-		System.out.println("Entrez la ligne où placer la carte");
-		int ligne = monClavier.nextInt();
-		
-		if(('a'<=colonne)&&('z'>=colonne)) {
-			colonne = (char)((int)colonne-32); //mise en majuscule
+		if(!this.aDejaPlace) {
+			this.aDejaPlace = true;
+			System.out.println("Entrez la colonne où placer la carte");
+			char colonne = monClavier.next().charAt(0);
+			System.out.println("Entrez la ligne où placer la carte");
+			int ligne = monClavier.nextInt();
+			
+			if(('a'<=colonne)&&('z'>=colonne)) {
+				colonne = (char)((int)colonne-32); //mise en majuscule
+			}
+			
+			this.aDejaPlace = false;
+			placer(card, colonne, ligne);
+			this.myHand.removeCardFromHand(card);
 		}
-		
-		placer(card, colonne, ligne);
-		this.myHand.removeCardFromHand(card);
 	}
 	
 	public void deplacer(char colonne1, int ligne1, char colonne2, int ligne2) {
-		if(!aDejaDeplace) {
-			System.out.println(this.jeu.getPlateau().toString());
+		if(!this.aDejaDeplace) {
 			if(this.jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
 				Card card1 = this.jeu.getPlateau().getCard(colonne1, ligne1);
 				Card card2 = this.jeu.getPlateau().getCard(colonne2, ligne2);
@@ -170,7 +162,6 @@ public class Joueur extends Observable {
 				placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
 				this.jeu.getPlateau().removeCard(colonne1, ligne1);
 			}
-			System.out.println("Carte déplacée de ("+colonne1+";"+ligne1+") à ("+colonne2+";"+ligne2+")");
 			this.aDejaDeplace = true;
 		}
 	}

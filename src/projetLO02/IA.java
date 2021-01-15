@@ -1,14 +1,15 @@
 package projetLO02;
 
 import View.MonInterfacePlateau;
+import View.VueTexte;
 
 public class IA extends Joueur{
 	private boolean isIA;
 	private String keyOuPlacer, keyOuDeplacer1, keyOuDeplacer2, Strategy;
 	Card cardToPlay;
 	
-	public IA(String name, Jeu jeuEnCours, MonInterfacePlateau monInterface) {
-		super(name, jeuEnCours, monInterface);
+	public IA(String name, Jeu jeuEnCours, MonInterfacePlateau monInterface, VueTexte vueTexte) {
+		super(name, jeuEnCours, monInterface, vueTexte);
 		this.keyOuPlacer = new String();
 		this.keyOuDeplacer1 = new String();
 		this.keyOuDeplacer2 = new String();
