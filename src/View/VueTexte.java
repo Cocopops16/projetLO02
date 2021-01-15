@@ -219,7 +219,9 @@ public class VueTexte implements Observer, Runnable {
 	}
 	
 	private void givePlayerCards(Joueur player) {
-		output.println("Victory Card :"+player.getVictory().toString());
+		if(this.jeu.getMode()!=Mode.Avancé) {
+			output.println("Victory Card :"+player.getVictory().toString());
+		}
 		output.println("Main du joueur : \n"+player.getHand().toString());
 	}
 

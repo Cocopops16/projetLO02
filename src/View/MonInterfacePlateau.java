@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Observable;
@@ -95,6 +97,27 @@ public class MonInterfacePlateau implements Observer{
 	private JButton btnB3;
 	private JButton btnD1;
 	private JButton btnE1;
+	private JButton btnF2;
+	private JButton btnF3;
+	private JButton btnA0;
+	private JButton btnC0;
+	private JButton btnD0;
+	private JButton btnE0;
+	private JButton btnF1;
+	private JButton btnB0;
+	private JButton btnZ3;
+	private JButton btnZ2;
+	private JButton btnZ1;
+	private JButton btnA4;
+	private JButton btnB4;
+	private JButton btnC4;
+	private JButton btnD4;
+	private JButton btnE4;
+    private JPanel panel_1;
+    private JPanel panel_2;
+    private JPanel panel_3;
+    private JPanel panel_4;
+	
 	private JLabel lblFinPartie;
 	private JLabel lblAnnonceGagnant;
 	private JLabel lblAffichageGagnant;
@@ -124,7 +147,8 @@ public class MonInterfacePlateau implements Observer{
   
  
 	private Map<String,JButton> cardPlateauButtons;
-
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -145,6 +169,7 @@ public class MonInterfacePlateau implements Observer{
 	 * Create the application.
 	 * @throws InvalidNbrOfPlayersException 
 	 * @throws InvalidModeException 
+	 * @wbp.parser.entryPoint
 	 */
 	public MonInterfacePlateau() {
 		cardPlateauButtons = new TreeMap<String, JButton>();
@@ -159,6 +184,8 @@ public class MonInterfacePlateau implements Observer{
 	    new ControleurDeplacer(this.jeu, this.tglbtnPlacerDeplacer, this.cardPlateauButtons, this.lblDe, this.lblPositionOrigine, this.lblVers, this.lblPositionArrivee);
 	    new ControleurFinTour(this.jeu, this.btnFinTour, this.frameFinPartie, this.framePlateau, this.lblAffichageGagnant);
 	    new ControleurFinPartie(this.btnFermer, this.frameFinPartie);	  
+
+	  
 	}
 
 	/**
@@ -268,21 +295,21 @@ public class MonInterfacePlateau implements Observer{
 		///////////////////////////////////////////
 		framePlateau = new JFrame();
 		framePlateau.setVisible(false);
-		framePlateau.setBounds(100, 100, 1234, 770);
+		framePlateau.setBounds(100, 100, 1484, 770);
 		framePlateau.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		framePlateau.getContentPane().setLayout(null);
 		
 		btnPiocher = new JButton("Piocher");
-		btnPiocher.setBounds(773, 40, 127, 30);
+		btnPiocher.setBounds(1000, 61, 127, 30);
 		framePlateau.getContentPane().add(btnPiocher);
 		
 	    tglbtnPlacerDeplacer = new JToggleButton("Placer");
-	    tglbtnPlacerDeplacer.setBounds(773, 81, 127, 30);
+	    tglbtnPlacerDeplacer.setBounds(1000, 98, 127, 30);
 	    framePlateau.getContentPane().add(tglbtnPlacerDeplacer);
 	    
 	    lblDe = new JLabel("De : ");
 	    lblDe.setEnabled(false);
-	    lblDe.setBounds(910, 89, 23, 14);
+	    lblDe.setBounds(1137, 106, 23, 14);
 	    framePlateau.getContentPane().add(lblDe);
 	    
 	    lblPositionOrigine = new JLabel("");
@@ -292,7 +319,7 @@ public class MonInterfacePlateau implements Observer{
 	    
 	    lblVers = new JLabel("Vers : ");
 	    lblVers.setEnabled(false);
-	    lblVers.setBounds(987, 89, 35, 14);
+	    lblVers.setBounds(1213, 106, 35, 14);
 	    framePlateau.getContentPane().add(lblVers);
 	    
 	    lblPositionArrivee = new JLabel("");
@@ -301,59 +328,63 @@ public class MonInterfacePlateau implements Observer{
 	    framePlateau.getContentPane().add(lblPositionArrivee);
 
 		btnFinTour = new JButton("Terminer tour");
-		btnFinTour.setBounds(773, 122, 127, 30);
+		btnFinTour.setBounds(1000, 138, 127, 30);
 		framePlateau.getContentPane().add(btnFinTour);
 				
 		lblCartePiochee = new JLabel("Votre carte piochee :");
-		lblCartePiochee.setBounds(683, 162, 176, 31);
+		lblCartePiochee.setBounds(961, 194, 176, 31);
 		framePlateau.getContentPane().add(lblCartePiochee);
 		lblCartePiochee.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 
 		lblPlaceCartePiocheeNumero1 = new JLabel("Carte piochee numero 1");
-		lblPlaceCartePiocheeNumero1.setBounds(693, 203, 142, 232);
+		lblPlaceCartePiocheeNumero1.setBounds(961, 229, 128, 144);
 		framePlateau.getContentPane().add(lblPlaceCartePiocheeNumero1);		
 		
 		lblPlaceCartePiocheeNumero2 = new JLabel("Carte piochee numero 2");
-		lblPlaceCartePiocheeNumero2.setBounds(864, 203, 142, 232);
+		lblPlaceCartePiocheeNumero2.setBounds(961, 383, 128, 144);
 		framePlateau.getContentPane().add(lblPlaceCartePiocheeNumero2);
 		    
 		lblPlaceCartePiocheeNumero3 = new JLabel("Carte piochee numero 3");
-		lblPlaceCartePiocheeNumero3.setBounds(1029, 203, 142, 232);
+		lblPlaceCartePiocheeNumero3.setBounds(961, 547, 128, 144);
 		framePlateau.getContentPane().add(lblPlaceCartePiocheeNumero3);
 		
 		ButtonGroup rdbnGroupe2 = new ButtonGroup();
 		
 		rdbtnCardNum1 = new JRadioButton("Carte n\u00B01");
 		rdbtnCardNum1.setSelected(true);
-	    rdbtnCardNum1.setBounds(721, 442, 79, 23);
+	    rdbtnCardNum1.setBounds(1109, 290, 79, 23);
 	    framePlateau.getContentPane().add(rdbtnCardNum1);
 	    rdbnGroupe2.add(rdbtnCardNum1);
 	    
 	    rdbtnCardNum2 = new JRadioButton("Carte n\u00B02");
-	    rdbtnCardNum2.setBounds(897, 442, 79, 23);
+	    rdbtnCardNum2.setBounds(1109, 444, 79, 23);
 	    framePlateau.getContentPane().add(rdbtnCardNum2);
 	    rdbnGroupe2.add(rdbtnCardNum2);
 	    
 	    rdbtnCardNum3 = new JRadioButton("Carte n\u00B03");
-	    rdbtnCardNum3.setBounds(1060, 442, 79, 23);
+	    rdbtnCardNum3.setBounds(1109, 608, 79, 23);
 	    framePlateau.getContentPane().add(rdbtnCardNum3);
 	    rdbnGroupe2.add(rdbtnCardNum3);
 		
 		lblVictoryCard = new JLabel("Votre Victory Card :");
-		lblVictoryCard.setBounds(693, 465, 153, 30);
+		lblVictoryCard.setBounds(1253, 194, 153, 30);
 		framePlateau.getContentPane().add(lblVictoryCard);
 		lblVictoryCard.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		
 		lblJoueur = new JLabel("Joueur : ");
-		lblJoueur.setBounds(683, 0, 74, 44);
+		lblJoueur.setBounds(961, 7, 74, 44);
 		framePlateau.getContentPane().add(lblJoueur);
 		lblJoueur.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 		panel = new JPanel();
-		panel.setBounds(10, 10, 657, 697);
+		panel.setBounds(141, 148, 642, 433);
 		framePlateau.getContentPane().add(panel);
 		panel.setLayout(new GridLayout(3, 5, 0, 0));
 		
 		btnA3 = new JButton("A3");
+		btnA3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		panel.add(btnA3);
 		cardPlateauButtons.put("A3",btnA3);
 		
@@ -411,8 +442,92 @@ public class MonInterfacePlateau implements Observer{
 		
 		btnE1 = new JButton("E1");
 		panel.add(btnE1);
-		cardPlateauButtons.put("E1",btnE1);  	
-
+		cardPlateauButtons.put("E1",btnE1);
+					
+		panel_1 = new JPanel();
+		panel_1.setBounds(782, 148, 128, 433);
+		framePlateau.getContentPane().add(panel_1);
+		panel_1.setLayout(new GridLayout(3, 0, 0, 0));
+		
+		btnF3 = new JButton(">3");
+		panel_1.add(btnF3);
+		cardPlateauButtons.put(">3",btnF3);
+		    
+		btnF2 = new JButton(">2");
+		panel_1.add(btnF2);
+		cardPlateauButtons.put(">2",btnF2);
+		
+		btnF1 = new JButton(">1");
+		panel_1.add(btnF1);
+		cardPlateauButtons.put(">1",btnF1);
+		   
+		panel_2 = new JPanel();
+		panel_2.setBounds(141, 579, 642, 144);
+		framePlateau.getContentPane().add(panel_2);
+		panel_2.setLayout(new GridLayout(0, 5, 0, 0));
+		    
+		btnA0 = new JButton("A0");
+		panel_2.add(btnA0);
+		cardPlateauButtons.put("A0",btnA0);
+		   
+		btnB0 = new JButton("B0");
+		panel_2.add(btnB0);
+		cardPlateauButtons.put("B0",btnB0);
+		    
+		btnC0 = new JButton("C0");
+		panel_2.add(btnC0);
+		cardPlateauButtons.put("C0",btnC0);
+		   
+		btnD0 = new JButton("D0");
+		panel_2.add(btnD0);
+		cardPlateauButtons.put("D0",btnD0);
+		  
+		btnE0 = new JButton("E0");
+		panel_2.add(btnE0);
+		cardPlateauButtons.put("E0",btnE0);
+		
+		panel_3 = new JPanel();
+		panel_3.setBounds(10, 148, 128, 433);
+		framePlateau.getContentPane().add(panel_3);
+		panel_3.setLayout(new GridLayout(3, 0, 0, 0));
+		    
+		btnZ3 = new JButton("<3");
+		panel_3.add(btnZ3);
+		cardPlateauButtons.put("<3",btnZ3);
+		    
+		btnZ2 = new JButton("<2");
+		panel_3.add(btnZ2);
+		cardPlateauButtons.put("<2",btnZ2);
+		    
+		btnZ1 = new JButton("<1");
+		panel_3.add(btnZ1);
+		cardPlateauButtons.put("<1",btnZ1);
+		    
+		panel_4 = new JPanel();
+		panel_4.setBounds(141, 7, 642, 144);
+		framePlateau.getContentPane().add(panel_4);
+		panel_4.setLayout(new GridLayout(0, 5, 0, 0));
+		    
+		btnA4 = new JButton("A4");
+		panel_4.add(btnA4);
+		cardPlateauButtons.put("A4",btnA4);
+		   
+		btnB4 = new JButton("B4");
+		panel_4.add(btnB4);
+		cardPlateauButtons.put("B4",btnB4);
+		    
+		btnC4 = new JButton("C4");
+		panel_4.add(btnC4);
+		cardPlateauButtons.put("C4",btnC4);
+		  
+		btnD4 = new JButton("D4");
+		panel_4.add(btnD4);
+		cardPlateauButtons.put("D4",btnD4);
+		    
+		btnE4 = new JButton("E4");
+		panel_4.add(btnE4);
+		cardPlateauButtons.put("E4",btnE4);
+		   
 		//interface fin de partie
 		frameFinPartie = new JFrame();
 		frameFinPartie.setVisible(false);
@@ -450,7 +565,7 @@ public class MonInterfacePlateau implements Observer{
 		lblPlaceCartePiocheeNumero3.setIcon(null);
 		for(int i=0; i<player.getHand().checkNombreCartes(); i++) {
 			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getHand().getCard(i).getType1().toString()+"_"+player.getHand().getCard(i).getType2().toString()+"_"+player.getHand().getCard(i).getType3().toString()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(135, 144, Image.SCALE_DEFAULT)); 
 		  	switch(i) {
 		  		case(0):
 		  			lblPlaceCartePiocheeNumero1.setIcon(newImage);
@@ -463,9 +578,11 @@ public class MonInterfacePlateau implements Observer{
 	  				break;
 		  	}
 		}
-		ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getVictory().getType1().toString()+"_"+player.getVictory().getType2().toString()+"_"+player.getVictory().getType3().toString()+".PNG"));
-	  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
-	  	lblPlaceVictoryCard.setIcon(newImage);
+		if(this.jeu.getMode()!=Mode.Avancé) {
+			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getVictory().getType1().toString()+"_"+player.getVictory().getType2().toString()+"_"+player.getVictory().getType3().toString()+".PNG"));
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+		  	lblPlaceVictoryCard.setIcon(newImage);
+		}
 	}
 
 	public void update(Observable o, Object arg) {
@@ -531,10 +648,10 @@ public class MonInterfacePlateau implements Observer{
 		
 		if((o instanceof Plateau)&&(arg instanceof Map<?, ?>)) {
 			for(Iterator<String> it = cardPlateauButtons.keySet().iterator(); it.hasNext();) {
-				String key = (String) it.next();
+				String key = it.next();
 				if(((Map<?, ?>)arg).containsKey(key)) {
 					ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+((Card) ((Map<?, ?>) arg).get(key)).getType1().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType2().toString()+"_"+((Card) ((Map<?, ?>) arg).get(key)).getType3().toString()+".PNG"));
-				  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+				  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(135,144, Image.SCALE_DEFAULT)); 
 				  	cardPlateauButtons.get(key).setIcon(newImage);
 				}
 				else {

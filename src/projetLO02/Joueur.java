@@ -125,6 +125,8 @@ public class Joueur extends Observable {
 				this.jeu.getPlateau().setCard(card, colonne, ligne);
 				System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
 				this.myHand.removeCardFromHand(card);
+				setChanged();
+				notifyObservers(this);
 			}
 		}
 	}
