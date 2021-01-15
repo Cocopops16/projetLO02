@@ -1,14 +1,18 @@
 package Controleur;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
+import projetLO02.InvalidPlayerActionException;
 import projetLO02.Jeu;
 
 public class ControleurPlacer {
@@ -39,13 +43,40 @@ public class ControleurPlacer {
 			this.cardPlateauButtons.get(key).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(rdbtnCardNum1.isSelected()&&(!tglbtnPlacerDeplacer.isSelected())) {
-						jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(0), key.charAt(0), Integer.parseInt(key.substring(1, 2)) );
+						try {
+							jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(0), key.charAt(0), Integer.parseInt(key.substring(1, 2)) );
+						} catch (NumberFormatException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (InvalidPlayerActionException e1) {
+							JLabel message = new JLabel(e1.getMessage());
+							message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+							JOptionPane.showMessageDialog(null, message);
+						}
 					}
 					else if(rdbtnCardNum2.isSelected()&&(!tglbtnPlacerDeplacer.isSelected())) {
-						jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(1), key.charAt(0), Integer.parseInt(key.substring(1, 2))) ;
+						try {
+							jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(1), key.charAt(0), Integer.parseInt(key.substring(1, 2))) ;
+						} catch (NumberFormatException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (InvalidPlayerActionException e1) {
+							JLabel message = new JLabel(e1.getMessage());
+							message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+							JOptionPane.showMessageDialog(null, message);
+						}
 					}
 					else if(rdbtnCardNum3.isSelected()&&(!tglbtnPlacerDeplacer.isSelected())) {
-						jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(2), key.charAt(0), Integer.parseInt(key.substring(1, 2)) );
+						try {
+							jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(2), key.charAt(0), Integer.parseInt(key.substring(1, 2)) );
+						} catch (NumberFormatException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (InvalidPlayerActionException e1) {
+							JLabel message = new JLabel(e1.getMessage());
+							message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+							JOptionPane.showMessageDialog(null, message);
+						}
 					}
 				}     	
 			});

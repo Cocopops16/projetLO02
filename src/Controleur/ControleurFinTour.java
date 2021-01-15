@@ -1,11 +1,13 @@
 package Controleur;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import projetLO02.InvalidEndOfTurnException;
 import projetLO02.Jeu;
@@ -39,8 +41,9 @@ public class ControleurFinTour implements Runnable {
 					try {
 						jeu.unlockJoueur();
 					} catch (InvalidEndOfTurnException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						JLabel message = new JLabel(e1.getMessage());
+						message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+						JOptionPane.showMessageDialog(null, message);
 					}
 				} 
 				else if((jeu.checkEndGame())&&(jeu.getNbrRounds()<4)) {

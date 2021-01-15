@@ -1,5 +1,6 @@
 package Controleur;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 
 import java.awt.event.ActionListener;
@@ -8,8 +9,10 @@ import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 
+import projetLO02.InvalidPlayerActionException;
 import projetLO02.Jeu;
 
 
@@ -69,7 +72,16 @@ public class ControleurDeplacer {
 						lblPositionArrivee.setText(key);
 					}
 					if((lblPositionOrigine.getText()!=null)&&(lblPositionArrivee.getText()!=null)&&tglbtnPlacerDeplacer.isSelected()) {
-						jeu.getJoueurEnCours().deplacer(lblPositionOrigine.getText().charAt(0), Integer.parseInt(lblPositionOrigine.getText().substring(1, 2)), lblPositionArrivee.getText().charAt(0), Integer.parseInt(lblPositionArrivee.getText().substring(1, 2)));
+						try {
+							jeu.getJoueurEnCours().deplacer(lblPositionOrigine.getText().charAt(0), Integer.parseInt(lblPositionOrigine.getText().substring(1, 2)), lblPositionArrivee.getText().charAt(0), Integer.parseInt(lblPositionArrivee.getText().substring(1, 2)));
+						} catch (NumberFormatException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (InvalidPlayerActionException e1) {
+							JLabel message = new JLabel(e1.getMessage());
+							message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+							JOptionPane.showMessageDialog(null, message);
+						}
 					}
 				}     	
 			});

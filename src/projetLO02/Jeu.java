@@ -28,6 +28,7 @@ public class Jeu extends Observable {
 		this.nbrJoueurs = 0;
 		this.nbrVictoryCardChoosen = 0;
 		this.nbrIA = 0;
+		this.nbrJoueurs = 0;
 		this.plateau = new Plateau(5, 3, monInterface);
 		this.deck = new Deck();
 		this.hasStarted = false;
@@ -38,8 +39,8 @@ public class Jeu extends Observable {
 		this.monInterface = monInterface;
 	}
 	
-	public void addJoueur(String name) {
-		if((this.nbrIA+this.nbrJoueurs)<4) {
+	public void addJoueur(String name) throws InvalidNbrOfPlayersException {
+		if((this.nbrIA+this.nbrJoueurs)<3) {
 			Joueur joueur = new Joueur(name, this, this.monInterface, this.vueTexte);
 			joueur.setIA(false);
 			this.playersQueue.add(joueur);
@@ -47,10 +48,14 @@ public class Jeu extends Observable {
 			this.setChanged();
 			this.notifyObservers(this.nbrIA+this.nbrJoueurs);
 		}
+		else {
+			int nbrPlayers = this.nbrIA+this.nbrJoueurs;
+			throw new InvalidNbrOfPlayersException("Nbr joueurs actuels : "+nbrPlayers+" ; nombre maximum : 3");
+		}
 	}
 	
-	public void addIA() {
-		if((this.nbrIA+this.nbrJoueurs)<4) {
+	public void addIA() throws InvalidNbrOfPlayersException {
+		if((this.nbrIA+this.nbrJoueurs)<3) {
 			String name = "IA";
 			switch(this.nbrIA) {
 				case 0:
@@ -69,6 +74,10 @@ public class Jeu extends Observable {
 			this.nbrIA++;
 			this.setChanged();
 			this.notifyObservers(this.nbrIA+this.nbrJoueurs);
+		}
+		else {
+			int nbrPlayers = this.nbrIA+this.nbrJoueurs;
+			throw new InvalidNbrOfPlayersException("Nbr joueurs actuels : "+nbrPlayers+" ; nombre maximum : 3");
 		}
 	}
 	
@@ -158,7 +167,12 @@ public class Jeu extends Observable {
 				}
 				else if(this.mode == Mode.Avancé) {
 					for(int j=0; j<3; j++) {
-						this.joueurEnCours.piocher();
+						try {
+							this.joueurEnCours.piocher();
+						} catch (InvalidPlayerActionException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						this.joueurEnCours.resetTurn();
 					}
 				}
@@ -192,7 +206,6 @@ public class Jeu extends Observable {
 			if(checkEndGame()) {
 				comptagePoints();
 			}
-			else System.out.println("Problème critique dans le déroulement de la partie");
 		}
 		else if(this.mode==null){
 			throw new InvalidModeException("Mode non choisi");
@@ -220,12 +233,22 @@ public class Jeu extends Observable {
 		}
 		else if(this.joueurEnCours.getIA()) {
 			if(this.mode != Mode.Avancé) {
-				this.joueurEnCours.piocher();
+				try {
+					this.joueurEnCours.piocher();
+				} catch (InvalidPlayerActionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			IA IAEnCours = (IA)joueurEnCours;
 			IAEnCours.jouer();
 			if( (this.mode == Mode.Avancé) && (!this.deck.isDeckEmpty()) ) {
-				joueurEnCours.piocher();
+				try {
+					joueurEnCours.piocher();
+				} catch (InvalidPlayerActionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		

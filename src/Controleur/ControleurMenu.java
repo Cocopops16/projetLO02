@@ -36,7 +36,9 @@ public class ControleurMenu implements Runnable {
 	
 	private Jeu jeu;
 	private Thread thread;
-
+	
+	private int nbrPlayers;
+	
 	public ControleurMenu(Jeu jeu, JTextPane textPane, JLabel lblJoueur1, JLabel lblJoueur2, JLabel lblJoueur3, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie, JFrame frameMenu, JFrame framePlateau, JFrame frameVictory, JLabel lblPlaceVictoryCard, JLabel lblNomDuJoueur) {
 		this.textPane = textPane;
 		this.lblJoueur1 = lblJoueur1;
@@ -56,6 +58,8 @@ public class ControleurMenu implements Runnable {
 		
 		this.jeu = jeu;
 		
+		this.nbrPlayers = 0;
+		
 		listenButtons();
 	}
 	
@@ -69,9 +73,17 @@ public class ControleurMenu implements Runnable {
 				}
 				else { 
 					String name = textPane.getText().trim(); //copie le texte présent dans le Jtext
-					jeu.addJoueur(name);
+					try {
+						jeu.addJoueur(name);
+						nbrPlayers++;
+					} catch (InvalidNbrOfPlayersException e1) {
+						JLabel message = new JLabel(e1.getMessage());
+						message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+						JOptionPane.showMessageDialog(null, message);
+						nbrPlayers--;
+					}
 				
-					if( ( (jeu.getNbrJoueurs()+jeu.getNbrIA())>0 ) && ( (jeu.getNbrJoueurs()+jeu.getNbrIA())<4 ) ) {
+					if(jeu.getPlayerName(nbrPlayers).equals(name)) {
 						JLabel message = new JLabel("Le nom a été enregistré avec succès !");
 						message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 						JOptionPane.showMessageDialog(null, message);
@@ -83,12 +95,14 @@ public class ControleurMenu implements Runnable {
 		
 		btnAddIA.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				jeu.addIA();
-				
-				if( ( (jeu.getNbrJoueurs()+jeu.getNbrIA())>0 ) && ( (jeu.getNbrJoueurs()+jeu.getNbrIA())<4 ) ) {
-					JLabel message = new JLabel("IA ajoutée avec succès !");
+				try {
+					jeu.addIA();
+					nbrPlayers++;
+				} catch (InvalidNbrOfPlayersException e1) {
+					JLabel message = new JLabel(e1.getMessage());
 					message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					JOptionPane.showMessageDialog(null, message);
+					nbrPlayers--;
 				}
 			}
 		});
@@ -123,10 +137,15 @@ public class ControleurMenu implements Runnable {
 
 	public void run() {	
 		try {
-			jeu.start();
-		} catch (InvalidModeException | InvalidNbrOfPlayersException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.jeu.start();
+		} catch (InvalidModeException e) {
+			JLabel message = new JLabel(e.getMessage());
+			message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			JOptionPane.showMessageDialog(null, message);
+		} catch (InvalidNbrOfPlayersException e) {
+			JLabel message = new JLabel(e.getMessage());
+			message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			JOptionPane.showMessageDialog(null, message);
 		}
 	}
 }

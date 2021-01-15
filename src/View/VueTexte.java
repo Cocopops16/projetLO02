@@ -17,6 +17,7 @@ import projetLO02.Card;
 import projetLO02.InvalidEndOfTurnException;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
+import projetLO02.InvalidPlayerActionException;
 import projetLO02.Jeu;
 import projetLO02.Joueur;
 import projetLO02.Mode;
@@ -39,8 +40,8 @@ public class VueTexte implements Observer, Runnable {
 	public static String DEPLACER = "Deplacer";
 	public static String FINTOUR = "FinTour";
 
-	private InputStream input;
-	private PrintStream output;
+	protected InputStream input;
+	protected PrintStream output;
 	
 	private boolean menu;
 	private boolean victory;
@@ -74,9 +75,10 @@ public class VueTexte implements Observer, Runnable {
 		public void run() {
 			try {
 				this.jeu.start();
-			} catch (InvalidModeException | InvalidNbrOfPlayersException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (InvalidModeException e) {
+				output.println(e.getMessage());
+			} catch (InvalidNbrOfPlayersException e) {
+				output.println(e.getMessage());
 			}
 		}
 	}
@@ -99,10 +101,18 @@ public class VueTexte implements Observer, Runnable {
 				} 
 				else if(saisie.equals(VueTexte.ADDPLAYER) == true) {
 					output.println("Choisissez le nom du joueur :");
-					this.jeu.addJoueur(lireChaine());
+					try {
+						this.jeu.addJoueur(lireChaine());
+					} catch (InvalidNbrOfPlayersException e) {
+						output.println(e.getMessage());
+					}
 				}
 				else if(saisie.equals(VueTexte.ADDIA) == true) {
-					this.jeu.addIA();
+					try {
+						this.jeu.addIA();
+					} catch (InvalidNbrOfPlayersException e) {
+						output.println(e.getMessage());
+					}
 				}
 				else if(saisie.equals(VueTexte.SETMODE) == true) {
 					output.println("Entrez le mode de jeu : \n- 1= Classique\n-2= Avancé (main de 3 cartes)\n- 3= personnalisé (choix de la VictoryCard) :");
@@ -172,7 +182,11 @@ public class VueTexte implements Observer, Runnable {
 					quitter = true;
 				} 
 				else if(saisie.equals(VueTexte.PIOCHER) == true) {
-					jeu.getJoueurEnCours().piocher();
+					try {
+						jeu.getJoueurEnCours().piocher();
+					} catch (InvalidPlayerActionException e) {
+						output.println(e.getMessage());
+					}
 					if(jeu.getJoueurEnCours().aPioche()) {
 						output.println("pioché !");
 					}
@@ -190,7 +204,11 @@ public class VueTexte implements Observer, Runnable {
 						colonne = (char)((int)colonne-32); //mise en majuscule
 					}
 					
-					jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(0), colonne, ligne);
+					try {
+						jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(0), colonne, ligne);
+					} catch (InvalidPlayerActionException e) {
+						output.println(e.getMessage());
+					}
 					
 					if(jeu.getJoueurEnCours().aPlace()) {
 						output.println("placé !");
@@ -213,7 +231,11 @@ public class VueTexte implements Observer, Runnable {
 						colonne2 = (char)((int)colonne2-32); //mise en majuscule
 					}
 					
-					jeu.getJoueurEnCours().deplacer(colonne1, ligne1, colonne2, ligne2);
+					try {
+						jeu.getJoueurEnCours().deplacer(colonne1, ligne1, colonne2, ligne2);
+					} catch (InvalidPlayerActionException e) {
+						output.println(e.getMessage());
+					}
 					
 					if(jeu.getJoueurEnCours().aDeplace()) {
 				    	output.println("déplacé !");
@@ -223,8 +245,7 @@ public class VueTexte implements Observer, Runnable {
 					try {
 						jeu.unlockJoueur();
 					} catch (InvalidEndOfTurnException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						output.println(e.getMessage());
 					}
 				}
 				else { output.println("Commande non reconnue ...");}

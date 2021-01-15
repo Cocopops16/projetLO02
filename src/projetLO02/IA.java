@@ -125,7 +125,12 @@ public class IA extends Joueur{
 				ligne1 = Character.getNumericValue(this.keyOuDeplacer1.charAt(1));
 				colonne2 = this.keyOuDeplacer2.charAt(0);
 				ligne2 = Character.getNumericValue(this.keyOuDeplacer2.charAt(1));
-				deplacer(colonne1, ligne1, colonne2, ligne2);
+				try {
+					deplacer(colonne1, ligne1, colonne2, ligne2);
+				} catch (InvalidPlayerActionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				deplacementEffectue = true;
 			}
 		}
@@ -143,7 +148,12 @@ public class IA extends Joueur{
 					ligne1 = Character.getNumericValue(this.keyOuDeplacer1.charAt(1));
 					colonne2 = this.keyOuDeplacer2.charAt(0);
 					ligne2 = Character.getNumericValue(this.keyOuDeplacer2.charAt(1));
-					deplacer(colonne1, ligne1, colonne2, ligne2);
+					try {
+						deplacer(colonne1, ligne1, colonne2, ligne2);
+					} catch (InvalidPlayerActionException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					deplacementEffectue = true;
 				}
 			}
@@ -161,7 +171,12 @@ public class IA extends Joueur{
 						ligne1 = Character.getNumericValue(this.keyOuDeplacer1.charAt(1));
 						colonne2 = this.keyOuDeplacer2.charAt(0);
 						ligne2 = Character.getNumericValue(this.keyOuDeplacer2.charAt(1));
-						deplacer(colonne1, ligne1, colonne2, ligne2);
+						try {
+							deplacer(colonne1, ligne1, colonne2, ligne2);
+						} catch (InvalidPlayerActionException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 						deplacementEffectue = true;
 					}
 				}
@@ -185,9 +200,19 @@ public class IA extends Joueur{
 				this.keyOuPlacer = randomStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard, "0");
 			}
 			System.out.println(this.name+" a utilisé la strategie : "+this.Strategy);
-			placer(this.cardToPlay, this.keyOuPlacer.charAt(0), Character.getNumericValue(this.keyOuPlacer.charAt(1)));
-		}
-		else placer(this.cardToPlay, 'C', 2);
+			try {
+				placer(this.cardToPlay, this.keyOuPlacer.charAt(0), Character.getNumericValue(this.keyOuPlacer.charAt(1)));
+			} catch (InvalidPlayerActionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else
+			try {
+				placer(this.cardToPlay, 'C', 2);
+			} catch (InvalidPlayerActionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
 		deplacer();
 		

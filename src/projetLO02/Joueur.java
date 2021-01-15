@@ -46,7 +46,7 @@ public class Joueur extends Observable {
 		return this.isIA;
 	}
 	
-	public void piocher() {
+	public void piocher() throws InvalidPlayerActionException {
 		if(!this.aDejaPioche) {
 			this.aDejaPioche = true;
 			Card card = jeu.getDeck().giveCard();
@@ -54,6 +54,9 @@ public class Joueur extends Observable {
 			this.myHand.addCardToHand(card);
 			setChanged();
 			notifyObservers(this);
+		}
+		else {
+			throw new InvalidPlayerActionException("Vous avez déjà pioché");
 		}
 	}
 	
@@ -93,7 +96,7 @@ public class Joueur extends Observable {
 		return this.myHand.getCard(numCard);
 	}
 	
-	public void placer(Card card, char colonne, int ligne) {
+	public void placer(Card card, char colonne, int ligne) throws InvalidPlayerActionException {
 		if(!this.aDejaPlace) {
 			this.aDejaPlace = true;
 			if(this.jeu.getPlateau().getFirstCard()) {
@@ -129,9 +132,12 @@ public class Joueur extends Observable {
 				notifyObservers(this);
 			}
 		}
+		else {
+			throw new InvalidPlayerActionException("Vous avez déjà placé une carte sur le plateau");
+		}
 	}
 	
-	public void deplacer(char colonne1, int ligne1, char colonne2, int ligne2) {
+	public void deplacer(char colonne1, int ligne1, char colonne2, int ligne2) throws InvalidPlayerActionException {
 		if(!this.aDejaDeplace) {
 			if(this.jeu.getPlateau().isPosAlreadyTaken(colonne1, ligne1)) {
 				if(this.jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
@@ -141,14 +147,21 @@ public class Joueur extends Observable {
 					this.jeu.getPlateau().setCard(card1, colonne2, ligne2);
 				}
 				else if(this.jeu.getPlateau().checkSiCartesAutour(colonne2, ligne2)){
-					if(this.aDejaPlace) {
+					try {
+						placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
 						this.aDejaPlace = false;
+					} catch (InvalidPlayerActionException e) {
+						this.aDejaPlace = false;
+						placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
+						this.aDejaPlace = true;
 					}
-					placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
 					this.jeu.getPlateau().removeCard(colonne1, ligne1);
 				}
 				this.aDejaDeplace = true;
 			}
+		}
+		else {
+			throw new InvalidPlayerActionException("Vous avez déjà déplacé une carte du plateau");
 		}
 	}
 	
