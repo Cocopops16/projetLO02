@@ -17,6 +17,7 @@ public class Joueur extends Observable {
 	private boolean aDejaDeplace;
 	protected Hand myHand;
 	protected Jeu jeu;
+	private int score;
 	private static final Scanner monClavier = new Scanner(System.in);
 	
 	public Joueur(String name, Jeu jeuEnCours, MonInterfacePlateau monInterface, VueTexte vueTexte){
@@ -27,6 +28,7 @@ public class Joueur extends Observable {
 		this.aDejaPlace = false;
 		this.aDejaDeplace = false;
 		this.victoryCard = null;
+		this.score = 0;
 		
 		addObserver(monInterface);
 		addObserver(vueTexte);
@@ -171,6 +173,10 @@ public class Joueur extends Observable {
 		this.aDejaDeplace = false;
 		this.aDejaPioche = false;
 		this.aDejaPlace = false;
+	}
+	
+	public int getScore() {
+		return this.score;
 	}
 	
 	public int accept(Visitor visitor, Map<String, Object> positions) {

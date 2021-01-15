@@ -10,7 +10,7 @@ import View.VueTexte;
 
 @SuppressWarnings("deprecation")
 public class Jeu extends Observable {
-	private int nbrJoueurs, nbrIA, nbrVictoryCardChoosen;
+	private int nbrJoueurs, nbrIA, nbrVictoryCardChoosen, nbrRounds;
 	private Mode mode;
 	private Card hiddenCard;
 	private Plateau plateau;
@@ -19,7 +19,7 @@ public class Jeu extends Observable {
 	private Joueur joueurEnCours;
 	private MonInterfacePlateau monInterface;
 	private VueTexte vueTexte;
-	private boolean hasStarted;
+	private boolean hasStarted, nextRound;
 	
 	public Jeu(MonInterfacePlateau monInterface) {
 		
@@ -30,6 +30,8 @@ public class Jeu extends Observable {
 		this.plateau = new Plateau(5, 3, monInterface);
 		this.deck = new Deck();
 		this.hasStarted = false;
+		this.nextRound = false;
+		this.nbrRounds = 4;
 		
 		addObserver(monInterface);
 		this.monInterface = monInterface;
@@ -92,7 +94,27 @@ public class Jeu extends Observable {
 		}
 	}
 	
-	public synchronized void start() throws InvalidModeException,InvalidNbrOfPlayersException {
+	public synchronized void start() throws InvalidModeException, InvalidNbrOfPlayersException {
+		for(int i=0; i<this.nbrRounds; i++) {
+			setup();
+			if(i!=(this.nbrRounds-1)) {
+				while(!this.nextRound) {
+					try {
+						this.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				this.plateau = new Plateau(5, 3, monInterface);
+			}
+			else {
+				
+			}
+		}
+	}
+	
+	public void setup() throws InvalidModeException,InvalidNbrOfPlayersException {
 		if( (this.mode!=null)&&((this.nbrIA+this.nbrJoueurs)>=2) ) {
 			this.hasStarted = true;
 			this.setChanged();
@@ -232,11 +254,12 @@ public class Jeu extends Observable {
 			scoreFinal = scoreFinal + joueur.accept(visitor1, this.plateau.accept(visitor1));
 			scoreFinal = scoreFinal + joueur.accept(visitor2, this.plateau.accept(visitor1));
 			scoreFinal = scoreFinal + joueur.accept(visitor3, this.plateau.accept(visitor1));
+			scoreFinal = scoreFinal + joueur.getScore();
 			if(scoreFinal>scorePremier) {
 				scorePremier = scoreFinal;
 				premier = joueur.getName();
 			}
-			this.playersQueue.poll();
+			this.playersQueue.add(this.playersQueue.poll());
 			scoreFinal = 0;
 		}
 		return premier;
