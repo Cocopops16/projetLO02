@@ -110,17 +110,17 @@ public class Joueur extends Observable {
 						}
 						else {
 							this.aDejaPlace = false;
-							//System.out.println("Pas de cartes autour ("+colonne+";"+ligne+")");
+							throw new InvalidPlayerActionException("Pas de cartes autour ("+colonne+";"+ligne+")");
 						}
 					}
 					else {
 						this.aDejaPlace = false;
-						//System.out.println("maximum du plateau atteint pour cette position : ("+colonne+";"+ligne+")");
+						throw new InvalidPlayerActionException("maximum du plateau atteint pour cette position : ("+colonne+";"+ligne+")");
 					}
 				}
 				else {
 					this.aDejaPlace = false;
-					//System.out.println("Position : ("+colonne+";"+ligne+") déjà occupé");
+					throw new InvalidPlayerActionException("Position : ("+colonne+";"+ligne+") déjà occupé");
 				}
 			}
 			else {
@@ -139,25 +139,54 @@ public class Joueur extends Observable {
 	
 	public void deplacer(char colonne1, int ligne1, char colonne2, int ligne2) throws InvalidPlayerActionException {
 		if(!this.aDejaDeplace) {
+			boolean removeCard = true;
 			if(this.jeu.getPlateau().isPosAlreadyTaken(colonne1, ligne1)) {
 				if(this.jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
 					Card card1 = this.jeu.getPlateau().getCard(colonne1, ligne1);
 					Card card2 = this.jeu.getPlateau().getCard(colonne2, ligne2);
 					this.jeu.getPlateau().setCard(card2, colonne1, ligne1);
 					this.jeu.getPlateau().setCard(card1, colonne2, ligne2);
+					this.aDejaDeplace = true;
 				}
 				else if(this.jeu.getPlateau().checkSiCartesAutour(colonne2, ligne2)){
 					try {
 						placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
 						this.aDejaPlace = false;
 					} catch (InvalidPlayerActionException e) {
-						this.aDejaPlace = false;
-						placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
-						this.aDejaPlace = true;
+						if(e.getMessage().equals("Vous avez déjà placé une carte sur le plateau")) {
+							this.aDejaPlace = false;
+							placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
+							this.aDejaPlace = true;
+						}
+						else {
+							removeCard = false;
+						}
 					}
-					this.jeu.getPlateau().removeCard(colonne1, ligne1);
+					
+					if(removeCard) {
+						if(colonne2=='<') {
+							colonne1 = (char) ((int)colonne1+1);
+							this.jeu.getPlateau().removeCard(colonne1, ligne1);
+						}
+						else if(colonne2=='>') {
+							colonne1 = (char) ((int)colonne1-1);
+							this.jeu.getPlateau().removeCard(colonne1, ligne1);
+						}
+						else if(ligne2==0) {
+							ligne1 = ligne1+1;
+							this.jeu.getPlateau().removeCard(colonne1, ligne1);
+						}
+						else if(ligne2==4) {
+							ligne1 = ligne1-1;
+							this.jeu.getPlateau().removeCard(colonne1, ligne1);
+						}
+						else {
+							this.jeu.getPlateau().removeCard(colonne1, ligne1);
+						}
+					}
+					
 				}
-				this.aDejaDeplace = true;
+				
 			}
 		}
 		else {
