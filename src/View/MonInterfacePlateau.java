@@ -284,11 +284,11 @@ public class MonInterfacePlateau implements Observer{
 		frameVictory.getContentPane().add(btnSetVictory);
 		
 		lblPlaceVictoryCard = new JLabel("Victory Card");
-		lblPlaceVictoryCard.setBounds(75, 11, 142, 232);
+		lblPlaceVictoryCard.setBounds(1253, 235, 135, 144);
 		frameVictory.getContentPane().add(lblPlaceVictoryCard);
 		
 		lblNomDuJoueur = new JLabel("");
-		lblNomDuJoueur.setBounds(300, 11, 150, 23);
+		lblNomDuJoueur.setBounds(1030, 8, 74, 44);
 		frameVictory.getContentPane().add(lblNomDuJoueur);	
 		
 		
@@ -309,12 +309,12 @@ public class MonInterfacePlateau implements Observer{
 	    
 	    lblDe = new JLabel("De : ");
 	    lblDe.setEnabled(false);
-	    lblDe.setBounds(1137, 106, 23, 14);
+	    lblDe.setBounds(1137, 106, 30, 14);
 	    framePlateau.getContentPane().add(lblDe);
 	    
 	    lblPositionOrigine = new JLabel("");
 	    lblPositionOrigine.setEnabled(false);
-	    lblPositionOrigine.setBounds(942, 89, 35, 14);
+	    lblPositionOrigine.setBounds(1170, 106, 35, 14);
 	    framePlateau.getContentPane().add(lblPositionOrigine);
 	    
 	    lblVers = new JLabel("Vers : ");
@@ -324,7 +324,7 @@ public class MonInterfacePlateau implements Observer{
 	    
 	    lblPositionArrivee = new JLabel("");
 	    lblPositionArrivee.setEnabled(false);
-	    lblPositionArrivee.setBounds(1029, 89, 35, 14);
+	    lblPositionArrivee.setBounds(1250, 106, 35, 14);
 	    framePlateau.getContentPane().add(lblPositionArrivee);
 
 		btnFinTour = new JButton("Terminer tour");
@@ -381,10 +381,6 @@ public class MonInterfacePlateau implements Observer{
 		panel.setLayout(new GridLayout(3, 5, 0, 0));
 		
 		btnA3 = new JButton("A3");
-		btnA3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		panel.add(btnA3);
 		cardPlateauButtons.put("A3",btnA3);
 		
@@ -580,7 +576,7 @@ public class MonInterfacePlateau implements Observer{
 		}
 		if(this.jeu.getMode()!=Mode.Avancé) {
 			ImageIcon image = new ImageIcon(MonInterfacePlateau.class.getResource("/image/"+player.getVictory().getType1().toString()+"_"+player.getVictory().getType2().toString()+"_"+player.getVictory().getType3().toString()+".PNG"));
-		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(142,232, Image.SCALE_DEFAULT)); 
+		  	ImageIcon newImage = new ImageIcon((image).getImage().getScaledInstance(135,144, Image.SCALE_DEFAULT)); 
 		  	lblPlaceVictoryCard.setIcon(newImage);
 		}
 	}
@@ -620,9 +616,9 @@ public class MonInterfacePlateau implements Observer{
 					frameMenu.setVisible(false);
 				}
 				else {
-					lblNomDuJoueur.setBounds(750, 11, 150, 23);
+					lblNomDuJoueur.setBounds(1030, 8, 74, 44);
 					framePlateau.getContentPane().add(lblNomDuJoueur);
-					lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
+					lblPlaceVictoryCard.setBounds(1253, 235, 135, 144);
 					framePlateau.getContentPane().add(lblPlaceVictoryCard);
 					framePlateau.setVisible(true); //permet d'ouvrir l'interface graphique du Plateau
 					frameMenu.setVisible(false);
@@ -630,9 +626,9 @@ public class MonInterfacePlateau implements Observer{
 			}
 			else {
 				if(jeu.getNbrVictoryCardChoosen()==jeu.getNbrJoueurs()) {
-					lblNomDuJoueur.setBounds(750, 11, 150, 23);
+					lblNomDuJoueur.setBounds(1030, 8, 74, 44);
 					framePlateau.getContentPane().add(lblNomDuJoueur);
-					lblPlaceVictoryCard.setBounds(683, 501, 142, 232);
+					lblPlaceVictoryCard.setBounds(1253, 235, 135, 144);
 					framePlateau.getContentPane().add(lblPlaceVictoryCard);
 					framePlateau.setVisible(true);
 					frameVictory.setVisible(false);
