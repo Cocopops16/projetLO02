@@ -20,6 +20,7 @@ public class Jeu extends Observable {
 	private MonInterfacePlateau monInterface;
 	private VueTexte vueTexte;
 	private boolean hasStarted, nextRound;
+	private String premier;
 	
 	public Jeu(MonInterfacePlateau monInterface) {
 		
@@ -31,7 +32,7 @@ public class Jeu extends Observable {
 		this.deck = new Deck();
 		this.hasStarted = false;
 		this.nextRound = false;
-		this.nbrRounds = 4;
+		this.nbrRounds = 0;
 		
 		addObserver(monInterface);
 		this.monInterface = monInterface;
@@ -94,10 +95,17 @@ public class Jeu extends Observable {
 		}
 	}
 	
+	public synchronized void setNextRound() {
+		if(!this.nextRound) {
+			this.nextRound = true;
+			this.notifyAll();
+		}
+	}
+	
 	public synchronized void start() throws InvalidModeException, InvalidNbrOfPlayersException {
-		for(int i=0; i<this.nbrRounds; i++) {
+		while(this.nbrRounds<4) {
 			setup();
-			if(i!=(this.nbrRounds-1)) {
+			if(this.nbrRounds<3) {
 				while(!this.nextRound) {
 					try {
 						this.wait();
@@ -106,11 +114,18 @@ public class Jeu extends Observable {
 						e.printStackTrace();
 					}
 				}
+				for(int i=0; i<(this.nbrJoueurs+this.nbrIA); i++) {
+					this.joueurEnCours = (Joueur)this.playersQueue.peek();
+					this.joueurEnCours.resetVictory();
+					this.playersQueue.add(this.playersQueue.poll());
+				}
+				this.nextRound = false;
 				this.plateau = new Plateau(5, 3, monInterface);
+				this.plateau.addObserver(vueTexte);
+				this.deck = new Deck();
+				this.nbrVictoryCardChoosen = 0;
 			}
-			else {
-				
-			}
+			this.nbrRounds++;
 		}
 	}
 	
@@ -239,13 +254,12 @@ public class Jeu extends Observable {
 		else return false;
 	}
 	
-	public String comptagePoints() {
+	public void comptagePoints() {
 		Visitor visitor1 = new ScoreBodyVisitor();
 		Visitor visitor2 = new ScoreColorVisitor();
 		Visitor visitor3 = new ScoreShapeVisitor();
 		int scoreFinal = 0;
 		int scorePremier = -1;
-		String premier = new String();
 		for(int i=0; i<(this.nbrIA+this.nbrJoueurs); i++) {
 			Joueur joueur = (Joueur)this.playersQueue.peek();
 			if(this.mode == Mode.Avancé) {
@@ -255,14 +269,14 @@ public class Jeu extends Observable {
 			scoreFinal = scoreFinal + joueur.accept(visitor2, this.plateau.accept(visitor1));
 			scoreFinal = scoreFinal + joueur.accept(visitor3, this.plateau.accept(visitor1));
 			scoreFinal = scoreFinal + joueur.getScore();
+			joueur.setScore(scoreFinal);
 			if(scoreFinal>scorePremier) {
 				scorePremier = scoreFinal;
-				premier = joueur.getName();
+				this.premier = joueur.getName();
 			}
 			this.playersQueue.add(this.playersQueue.poll());
 			scoreFinal = 0;
 		}
-		return premier;
 	}
 	
 	public Mode getMode() {
@@ -318,5 +332,19 @@ public class Jeu extends Observable {
 	
 	public Joueur getJoueurEnCours() {
 		return this.joueurEnCours;
+	}
+	
+	public int getNbrRounds() {
+		return this.nbrRounds;
+	}
+	
+	public synchronized String getPremier() {
+		try {
+			this.wait(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return this.premier;
 	}
 }

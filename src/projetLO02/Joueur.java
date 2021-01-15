@@ -66,7 +66,6 @@ public class Joueur extends Observable {
 		else if(this.jeu.getMode() == Mode.Avancé) {
 			this.victoryCard = this.myHand.getCard(0);
 			this.myHand.removeCardFromHand(this.victoryCard);
-			System.out.println("Victory Card de "+this.name+ " : " + this.victoryCard.toString());
 			setChanged();
 			notifyObservers(this);
 		}
@@ -177,6 +176,14 @@ public class Joueur extends Observable {
 	
 	public int getScore() {
 		return this.score;
+	}
+	
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public void resetVictory() {
+		this.victoryCard = null;
 	}
 	
 	public int accept(Visitor visitor, Map<String, Object> positions) {

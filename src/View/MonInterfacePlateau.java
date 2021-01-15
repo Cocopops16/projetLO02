@@ -284,12 +284,8 @@ public class MonInterfacePlateau implements Observer{
 		frameVictory.getContentPane().add(btnSetVictory);
 		
 		lblPlaceVictoryCard = new JLabel("Victory Card");
-		lblPlaceVictoryCard.setBounds(1253, 235, 135, 144);
-		frameVictory.getContentPane().add(lblPlaceVictoryCard);
 		
-		lblNomDuJoueur = new JLabel("");
-		lblNomDuJoueur.setBounds(1030, 8, 74, 44);
-		frameVictory.getContentPane().add(lblNomDuJoueur);	
+		lblNomDuJoueur = new JLabel("");	
 		
 		
 		///////////////////////////////////////////
@@ -612,6 +608,10 @@ public class MonInterfacePlateau implements Observer{
 		if((o instanceof Jeu)&&(arg instanceof Boolean)) {
 			if(this.jeu.getHasStarted()) {
 				if((jeu.getMode()==Mode.Personnalisé)&&(jeu.getNbrJoueurs()>0)) {
+					frameVictory.getContentPane().add(lblNomDuJoueur);
+					lblNomDuJoueur.setBounds(300, 11, 150, 23);
+					frameVictory.getContentPane().add(lblPlaceVictoryCard);
+					lblPlaceVictoryCard.setBounds(75, 11, 142, 232);
 					frameVictory.setVisible(true);
 					frameMenu.setVisible(false);
 				}

@@ -10,13 +10,16 @@ import javax.swing.JLabel;
 import projetLO02.InvalidEndOfTurnException;
 import projetLO02.Jeu;
 
-public class ControleurFinTour {
+public class ControleurFinTour implements Runnable {
 	
 	private JButton btnFinTour;
 	private Jeu jeu;
 	private JFrame frameFinPartie;
 	private JFrame framePlateau;
 	private JLabel lblAffichageGagnant;	
+	
+	private Thread thread;
+	private String premier;
 	
 	public ControleurFinTour( Jeu jeu, JButton bouton, JFrame framefinPartie, JFrame frameplateau, JLabel lblAffichageGagnant) {
 		this.btnFinTour = bouton;
@@ -29,8 +32,8 @@ public class ControleurFinTour {
 	
 
 
-    public void passerTourSuivant() {
-	 btnFinTour.addActionListener(new ActionListener() {
+    public synchronized void passerTourSuivant() {
+		btnFinTour.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!jeu.checkEndGame()) {
 					try {
@@ -40,14 +43,27 @@ public class ControleurFinTour {
 						e1.printStackTrace();
 					}
 				} 
+				else if((jeu.checkEndGame())&&(jeu.getNbrRounds()<4)) {
+					jeu.setNextRound();
+				}
 				else { 
 					frameFinPartie.setVisible(true);
 					framePlateau.setVisible(false);
-					lblAffichageGagnant.setText(jeu.comptagePoints());
+					checkPremier();	
 				}
 			}
-	 });
+		});
     }
+    
+    public void checkPremier() {
+    	this.thread = new Thread(this);
+		this.thread.start();
+    }
+
+	public void run() {
+		this.premier = jeu.getPremier();
+		lblAffichageGagnant.setText(premier);
+	}
 
 }	
 		
