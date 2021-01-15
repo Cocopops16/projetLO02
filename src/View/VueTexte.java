@@ -42,6 +42,11 @@ public class VueTexte implements Observer, Runnable {
 	private InputStream input;
 	private PrintStream output;
 	
+	private boolean menu;
+	private boolean victory;
+	private boolean partie;
+	private boolean quitter;
+	
 	private Jeu jeu;
 	
 	public VueTexte(Jeu jeu) {
@@ -49,6 +54,10 @@ public class VueTexte implements Observer, Runnable {
 		jeu.addVueTexteObserver(this);
 		input = System.in;
 		output = System.out;
+		this.menu = true;
+		this.victory = true;
+		this.partie = true;
+		this.quitter = false;
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -72,9 +81,8 @@ public class VueTexte implements Observer, Runnable {
 		}
 	}
 	
-	public void run() {
+	public String menu() {
 		String saisie = null;
-		boolean quitter = false;
 		
 		output.println( VueTexte.QUITTER + " pour quitter.");
 		output.println( VueTexte.ADDPLAYER + " pour ajouter un joueur.");
@@ -104,18 +112,24 @@ public class VueTexte implements Observer, Runnable {
 					new ThreadStart(this.jeu);
 				}
 				else { 
+					if(!this.menu) {
+						return saisie;
+					}
 					output.println("Commande non reconnue ...");}
 				}
-		} while ((quitter == false)&&(!this.jeu.getHasStarted()));
+		} while ((quitter == false)&&(this.menu));
 		
+		return null;
+	}
+	
+	public String victory(String saisie) {
 		if(this.jeu.getMode()==Mode.Personnalisé) {
+			
 			output.println( VueTexte.QUITTER + " pour quitter.");
 			output.println( VueTexte.CHANGEVICTORY + " pour changer de Victory Card.");
 			output.println( VueTexte.SELECTVICTORY + " pour accepter la Victory Card.");
 		
-			do {
-				saisie = lireChaine();
-				
+			while ((quitter == false)&&(this.victory)) {
 				if(saisie != null) {
 									
 					if(saisie.equals(VueTexte.QUITTER) == true) {
@@ -127,11 +141,22 @@ public class VueTexte implements Observer, Runnable {
 					else if(saisie.equals(VueTexte.SELECTVICTORY) == true) {
 						this.jeu.setPlayersVictory();
 					}
-					else { output.println("Commande non reconnue ...");}
+					else { 
+						if(!this.victory) {
+							return saisie;
+						}
+						output.println("Commande non reconnue ...");
+					}
 				}
 				
-			} while ((quitter == false)&&(this.jeu.getHasStarted()));
+				saisie = lireChaine();
+			}
+			return saisie;
 		}
+		return saisie;
+	}
+	
+	public void partie(String saisie) {
 		
 		output.println( VueTexte.QUITTER + " pour quitter.");
 		output.println( VueTexte.PIOCHER + " pour ajouter une carte a votre main.");
@@ -140,9 +165,7 @@ public class VueTexte implements Observer, Runnable {
 		output.println( VueTexte.DEPLACER + " pour déplacer une carte du plateau.");
 		output.println( VueTexte.FINTOUR + " pour finir votre tour.");
 		
-		do {
-			saisie = lireChaine();
-			
+		while ((quitter == false)&&(this.partie)) {			
 			if(saisie != null) {
 								
 				if(saisie.equals(VueTexte.QUITTER) == true) {
@@ -207,10 +230,16 @@ public class VueTexte implements Observer, Runnable {
 				else { output.println("Commande non reconnue ...");}
 			}
 			
-		} while ((quitter == false)&&(!this.jeu.checkEndGame()));
-		
+			saisie = lireChaine();
+		}
+	}
+	
+	public void run() {		
+		String commande;
+		commande = menu();
+		commande = victory(commande);
+		partie(commande);
 		System.exit(0);
-		
 	}
 	
 	private String lireChaine() {
@@ -271,6 +300,7 @@ public class VueTexte implements Observer, Runnable {
 			if(this.jeu.getHasStarted()) {
 				output.println("Partie démarrée");
 				output.println("Mode de jeu de la partie : "+this.jeu.getMode().toString());
+				this.menu = false;
 				if((jeu.getMode()==Mode.Personnalisé)&&(jeu.getNbrJoueurs()>0)) {
 					output.println("Choix des VictoryCards :");
 				}
@@ -278,6 +308,7 @@ public class VueTexte implements Observer, Runnable {
 			else {
 				if(jeu.getNbrVictoryCardChoosen()==jeu.getNbrJoueurs()) {
 					output.println("Fin de la phase de choix des VictoryCards, place au jeu !");
+					this.victory = false;
 				}
 			}
 		}
