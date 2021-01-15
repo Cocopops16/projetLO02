@@ -100,7 +100,6 @@ public class Joueur extends Observable {
 					if( (!this.jeu.getPlateau().checkMaxXReached(colonne)) && (!this.jeu.getPlateau().checkMaxYReached(ligne)) ) {
 						if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
 							this.jeu.getPlateau().setCard(card, colonne, ligne);
-							System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
 							this.myHand.removeCardFromHand(card);
 							setChanged();
 							notifyObservers(this);
@@ -131,74 +130,24 @@ public class Joueur extends Observable {
 		}
 	}
 	
-	public void placer(Card card) {
-		if(!this.aDejaPlace) {
-			this.aDejaPlace = true;
-			System.out.println("Entrez la colonne où placer la carte");
-			char colonne = monClavier.next().charAt(0);
-			System.out.println("Entrez la ligne où placer la carte");
-			int ligne = monClavier.nextInt();
-			
-			if(('a'<=colonne)&&('z'>=colonne)) {
-				colonne = (char)((int)colonne-32); //mise en majuscule
-			}
-			
-			this.aDejaPlace = false;
-			placer(card, colonne, ligne);
-			this.myHand.removeCardFromHand(card);
-		}
-	}
-	
 	public void deplacer(char colonne1, int ligne1, char colonne2, int ligne2) {
 		if(!this.aDejaDeplace) {
-			if(this.jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
-				Card card1 = this.jeu.getPlateau().getCard(colonne1, ligne1);
-				Card card2 = this.jeu.getPlateau().getCard(colonne2, ligne2);
-				this.jeu.getPlateau().setCard(card2, colonne1, ligne1);
-				this.jeu.getPlateau().setCard(card1, colonne2, ligne2);
-			}
-			else {
-				if(this.aDejaPlace) {
-					this.aDejaPlace = false;
+			if(this.jeu.getPlateau().isPosAlreadyTaken(colonne1, ligne1)) {
+				if(this.jeu.getPlateau().isPosAlreadyTaken(colonne2, ligne2)) {
+					Card card1 = this.jeu.getPlateau().getCard(colonne1, ligne1);
+					Card card2 = this.jeu.getPlateau().getCard(colonne2, ligne2);
+					this.jeu.getPlateau().setCard(card2, colonne1, ligne1);
+					this.jeu.getPlateau().setCard(card1, colonne2, ligne2);
 				}
-				placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
-				this.jeu.getPlateau().removeCard(colonne1, ligne1);
+				else if(this.jeu.getPlateau().checkSiCartesAutour(colonne2, ligne2)){
+					if(this.aDejaPlace) {
+						this.aDejaPlace = false;
+					}
+					placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
+					this.jeu.getPlateau().removeCard(colonne1, ligne1);
+				}
+				this.aDejaDeplace = true;
 			}
-			this.aDejaDeplace = true;
-		}
-	}
-	
-	public void deplacer() {
-		System.out.println("Entrez la colonne de la carte à déplacer");
-		char colonne1 = monClavier.next().charAt(0);
-		System.out.println("Entrez la ligne de la carte à déplacer");
-		int ligne1 = monClavier.nextInt();
-		
-		if(('a'<=colonne1)&&('z'>=colonne1)) {
-			colonne1 = (char)((int)colonne1-32); //mise en majuscule
-		}
-		
-		if(this.jeu.getPlateau().isPosAlreadyTaken(colonne1, ligne1)) {
-			System.out.println("Entrez la colonne où placer la carte");
-			char colonne2 = monClavier.next().charAt(0);
-			System.out.println("Entrez la ligne où placer la carte");
-			int ligne2 = monClavier.nextInt();
-			
-			if(('a'<=colonne2)&&('z'>=colonne2)) {
-				colonne2 = (char)((int)colonne2-32); //mise en majuscule
-			}
-			
-			if(this.jeu.getPlateau().checkSiCartesAutour(colonne2, ligne2)) {
-				deplacer(colonne1, ligne1, colonne2, ligne2);
-			}
-			else {
-				System.out.println("Position sans carte autour");
-				deplacer();
-			}
-		}
-		else {
-			System.out.println("Position non occupée");
-			deplacer();
 		}
 	}
 	

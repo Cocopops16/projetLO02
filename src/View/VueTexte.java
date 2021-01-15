@@ -158,13 +158,40 @@ public class VueTexte implements Observer, Runnable {
 					jeu.getJoueurEnCours().chooseCardToPlay();
 				}
 				else if(saisie.equals(VueTexte.PLACER) == true) {
-					jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(0));
+					output.println("Entrez la colonne où placer la carte");
+					char colonne = lireChaine().charAt(0);
+					output.println("Entrez la ligne où placer la carte");
+					int ligne = lireInt();
+					
+					if(('a'<=colonne)&&('z'>=colonne)) {
+						colonne = (char)((int)colonne-32); //mise en majuscule
+					}
+					
+					jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(0), colonne, ligne);
+					
 					if(jeu.getJoueurEnCours().aPlace()) {
 						output.println("placé !");
 				    }
 				}
 				else if(saisie.equals(VueTexte.DEPLACER) == true) {
-					jeu.getJoueurEnCours().deplacer();
+					output.println("Entrez la colonne de la carte à déplacer");
+					char colonne1 = lireChaine().charAt(0);
+					output.println("Entrez la ligne de la carte à déplacer");
+					int ligne1 = lireInt();
+					if(('a'<=colonne1)&&('z'>=colonne1)) {
+						colonne1 = (char)((int)colonne1-32); //mise en majuscule
+					}
+					
+					output.println("Entrez la colonne où placer la carte");
+					char colonne2 = lireChaine().charAt(0);
+					output.println("Entrez la ligne où placer la carte");
+					int ligne2 = lireInt();
+					if(('a'<=colonne2)&&('z'>=colonne2)) {
+						colonne2 = (char)((int)colonne2-32); //mise en majuscule
+					}
+					
+					jeu.getJoueurEnCours().deplacer(colonne1, ligne1, colonne2, ligne2);
+					
 					if(jeu.getJoueurEnCours().aDeplace()) {
 				    	output.println("déplacé !");
 				    }
@@ -203,6 +230,7 @@ public class VueTexte implements Observer, Runnable {
 		BufferedReader br = new BufferedReader(inr);
 		int nbr = 0;
 		try {
+			output.print(VueTexte.PROMPT);
 			nbr = Integer.parseInt(br.readLine());
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
