@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
+import projetLO02.InvalidChosenCardException;
 import projetLO02.InvalidPlayerActionException;
 import projetLO02.Jeu;
 
@@ -52,6 +53,10 @@ public class ControleurPlacer {
 							JLabel message = new JLabel(e1.getMessage());
 							message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 							JOptionPane.showMessageDialog(null, message);
+						} catch (InvalidChosenCardException e1) {
+							JLabel message = new JLabel(e1.getMessage());
+							message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+							JOptionPane.showMessageDialog(null, message);
 						}
 					}
 					else if(rdbtnCardNum2.isSelected()&&(!tglbtnPlacerDeplacer.isSelected())) {
@@ -64,6 +69,10 @@ public class ControleurPlacer {
 							JLabel message = new JLabel(e1.getMessage());
 							message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 							JOptionPane.showMessageDialog(null, message);
+						} catch (InvalidChosenCardException e1) {
+							JLabel message = new JLabel(e1.getMessage());
+							message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+							JOptionPane.showMessageDialog(null, message);
 						}
 					}
 					else if(rdbtnCardNum3.isSelected()&&(!tglbtnPlacerDeplacer.isSelected())) {
@@ -73,6 +82,10 @@ public class ControleurPlacer {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						} catch (InvalidPlayerActionException e1) {
+							JLabel message = new JLabel(e1.getMessage());
+							message.setFont(new Font("Tahoma", Font.PLAIN, 15));
+							JOptionPane.showMessageDialog(null, message);
+						} catch (InvalidChosenCardException e1) {
 							JLabel message = new JLabel(e1.getMessage());
 							message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 							JOptionPane.showMessageDialog(null, message);

@@ -202,14 +202,14 @@ public class IA extends Joueur{
 			System.out.println(this.name+" a utilisé la strategie : "+this.Strategy);
 			try {
 				placer(this.cardToPlay, this.keyOuPlacer.charAt(0), Character.getNumericValue(this.keyOuPlacer.charAt(1)));
-			} catch (InvalidPlayerActionException e) {
+			} catch (InvalidPlayerActionException | InvalidChosenCardException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else
 			try {
 				placer(this.cardToPlay, 'C', 2);
-			} catch (InvalidPlayerActionException e) {
+			} catch (InvalidPlayerActionException | InvalidChosenCardException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

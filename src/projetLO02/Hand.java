@@ -29,7 +29,12 @@ public class Hand{
 	}
 	
 	public Card getCard(int numCard) {
-		return (Card)(this.hand.get(numCard));
+		if(numCard<=(this.hand.size()-1)) {
+			return (Card)(this.hand.get(numCard));
+		}
+		else {
+			return null;
+		}
 	}
 	
 	public void removeCardFromHand(Card card) {

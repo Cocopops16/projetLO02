@@ -96,40 +96,45 @@ public class Joueur extends Observable {
 		return this.myHand.getCard(numCard);
 	}
 	
-	public void placer(Card card, char colonne, int ligne) throws InvalidPlayerActionException {
+	public void placer(Card card, char colonne, int ligne) throws InvalidPlayerActionException, InvalidChosenCardException {
 		if(!this.aDejaPlace) {
-			this.aDejaPlace = true;
-			if(this.jeu.getPlateau().getFirstCard()) {
-				if(!this.jeu.getPlateau().isPosAlreadyTaken(colonne, ligne)) {
-					if( (!this.jeu.getPlateau().checkMaxXReached(colonne)) && (!this.jeu.getPlateau().checkMaxYReached(ligne)) ) {
-						if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
-							this.jeu.getPlateau().setCard(card, colonne, ligne);
-							this.myHand.removeCardFromHand(card);
-							setChanged();
-							notifyObservers(this);
+			if(card!=null) {
+				this.aDejaPlace = true;
+				if(this.jeu.getPlateau().getFirstCard()) {
+					if(!this.jeu.getPlateau().isPosAlreadyTaken(colonne, ligne)) {
+						if( (!this.jeu.getPlateau().checkMaxXReached(colonne)) && (!this.jeu.getPlateau().checkMaxYReached(ligne)) ) {
+							if(this.jeu.getPlateau().checkSiCartesAutour(colonne, ligne)) {
+								this.jeu.getPlateau().setCard(card, colonne, ligne);
+								this.myHand.removeCardFromHand(card);
+								setChanged();
+								notifyObservers(this);
+							}
+							else {
+								this.aDejaPlace = false;
+								throw new InvalidPlayerActionException("Pas de cartes autour ("+colonne+";"+ligne+")");
+							}
 						}
 						else {
 							this.aDejaPlace = false;
-							throw new InvalidPlayerActionException("Pas de cartes autour ("+colonne+";"+ligne+")");
+							throw new InvalidPlayerActionException("maximum du plateau atteint pour cette position : ("+colonne+";"+ligne+")");
 						}
 					}
 					else {
 						this.aDejaPlace = false;
-						throw new InvalidPlayerActionException("maximum du plateau atteint pour cette position : ("+colonne+";"+ligne+")");
+						throw new InvalidPlayerActionException("Position : ("+colonne+";"+ligne+") déjà occupé");
 					}
 				}
 				else {
-					this.aDejaPlace = false;
-					throw new InvalidPlayerActionException("Position : ("+colonne+";"+ligne+") déjà occupé");
+					this.jeu.getPlateau().setFirstCard();
+					this.jeu.getPlateau().setCard(card, colonne, ligne);
+					System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
+					this.myHand.removeCardFromHand(card);
+					setChanged();
+					notifyObservers(this);
 				}
 			}
 			else {
-				this.jeu.getPlateau().setFirstCard();
-				this.jeu.getPlateau().setCard(card, colonne, ligne);
-				System.out.println("Carte placée en ("+colonne+";"+ligne+") par "+this.name);
-				this.myHand.removeCardFromHand(card);
-				setChanged();
-				notifyObservers(this);
+				throw new InvalidChosenCardException("Pas de carte choisie");
 			}
 		}
 		else {
@@ -155,12 +160,20 @@ public class Joueur extends Observable {
 					} catch (InvalidPlayerActionException e) {
 						if(e.getMessage().equals("Vous avez déjà placé une carte sur le plateau")) {
 							this.aDejaPlace = false;
-							placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
+							try {
+								placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
+							} catch (InvalidChosenCardException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							this.aDejaPlace = true;
 						}
 						else {
 							removeCard = false;
 						}
+					} catch (InvalidChosenCardException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 					
 					if(removeCard) {

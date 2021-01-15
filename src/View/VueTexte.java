@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
+import projetLO02.InvalidChosenCardException;
 import projetLO02.InvalidEndOfTurnException;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
@@ -202,6 +203,8 @@ public class VueTexte implements Observer, Runnable {
 					try {
 						jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(0), colonne, ligne);
 					} catch (InvalidPlayerActionException e) {
+						output.println(e.getMessage());
+					} catch (InvalidChosenCardException e) {
 						output.println(e.getMessage());
 					}
 					
