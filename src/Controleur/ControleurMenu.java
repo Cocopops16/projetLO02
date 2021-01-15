@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -14,47 +13,30 @@ import javax.swing.JTextPane;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
-import projetLO02.Mode;
 
 public class ControleurMenu implements Runnable {
 
 	private JTextPane textPane;
-	private JLabel lblJoueur1;
-	private JLabel lblJoueur2;
-	private JLabel lblJoueur3;
 	private JButton btnSaveJoueur;
 	private JButton btnAddIA;
 	private JRadioButton rdbtnModeClassique;
 	private JRadioButton rdbtnModeAvance;
 	private JRadioButton rdbtnModePerso;
 	private JButton btnLancerPartie;
-	private JFrame frameMenu;
-	private JFrame framePlateau;
-	private JFrame frameVictory;
-	private  JLabel lblPlaceVictoryCard;
-	private JLabel lblNomDuJoueur;
 	
 	private Jeu jeu;
 	private Thread thread;
 	
 	private int nbrPlayers;
 	
-	public ControleurMenu(Jeu jeu, JTextPane textPane, JLabel lblJoueur1, JLabel lblJoueur2, JLabel lblJoueur3, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie, JFrame frameMenu, JFrame framePlateau, JFrame frameVictory, JLabel lblPlaceVictoryCard, JLabel lblNomDuJoueur) {
+	public ControleurMenu(Jeu jeu, JTextPane textPane, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie) {
 		this.textPane = textPane;
-		this.lblJoueur1 = lblJoueur1;
-		this.lblJoueur2 = lblJoueur2;
-		this.lblJoueur3 = lblJoueur3;
 		this.btnSaveJoueur = btnSaveJoueur;
 		this.btnAddIA = btnAddIA;
 		this.rdbtnModeClassique = rdbtnModeClassique;
 		this.rdbtnModeAvance = rdbtnModeAvance;
 		this.rdbtnModePerso = rdbtnModePerso;
 		this.btnLancerPartie = btnLancerPartie;
-		this.frameMenu = frameMenu;
-		this.framePlateau = framePlateau;
-		this.frameVictory = frameVictory;
-		this.lblPlaceVictoryCard = lblPlaceVictoryCard;
-		this.lblNomDuJoueur = lblNomDuJoueur;
 		
 		this.jeu = jeu;
 		

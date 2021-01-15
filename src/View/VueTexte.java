@@ -1,19 +1,14 @@
 package View;
 
-import java.awt.Image;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.ImageIcon;
-
-import projetLO02.Card;
 import projetLO02.InvalidEndOfTurnException;
 import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;

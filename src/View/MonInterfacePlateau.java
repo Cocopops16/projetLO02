@@ -5,8 +5,6 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Observable;
@@ -177,8 +175,8 @@ public class MonInterfacePlateau implements Observer{
 		this.jeu = new Jeu(this);
 		new VueTexte(this.jeu); 
 				
-		new ControleurMenu(this.jeu, this.textPane, this.lblJoueur1, this.lblJoueur2, this.lblJoueur3, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie, this.frameMenu, this.framePlateau, this.frameVictory, this.lblPlaceVictoryCard, this.lblNomDuJoueur);
-		new ControleurVictory(this.jeu, this.framePlateau, this.frameVictory, this.btnChangeVictory, this.btnSetVictory, this.lblPlaceVictoryCard, this.lblNomDuJoueur);
+		new ControleurMenu(this.jeu, this.textPane, this.btnSaveJoueur, this.btnAddIA, this.rdbtnModeClassique, this.rdbtnModeAvance, this.rdbtnModePerso, this.btnLancerPartie);
+		new ControleurVictory(this.jeu, this.btnChangeVictory, this.btnSetVictory);
 	    new ControleurPiocher(this.jeu, this.btnPiocher);
 	    new ControleurPlacer(this.jeu, this.tglbtnPlacerDeplacer , this.cardPlateauButtons, this.rdbtnCardNum1, this.rdbtnCardNum2, this.rdbtnCardNum3);
 	    new ControleurDeplacer(this.jeu, this.tglbtnPlacerDeplacer, this.cardPlateauButtons, this.lblDe, this.lblPositionOrigine, this.lblVers, this.lblPositionArrivee);
