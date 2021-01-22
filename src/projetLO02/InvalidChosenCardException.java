@@ -1,7 +1,7 @@
 package projetLO02;
 
 /**
- * Exception levée en cas de choix de carte définie comme {@link null}
+ * Exception levée en cas de choix de carte définie comme {@code null}
  * 
  * @see Joueur
  * @see IA

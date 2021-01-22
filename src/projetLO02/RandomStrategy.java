@@ -1,7 +1,22 @@
 package projetLO02;
 
+/**
+ * Stratégie IA dont le but est de simplement placer une carte pour remplir la condition de passage de tour <br/>
+ *  
+ * @author Corentin Réault
+ * @version 1.0
+ */
 public class RandomStrategy implements Strategy {
-
+	
+	/**
+	 * Parcours le plateau en recherche de position occupée pour placer à côté
+	 * 
+	 * @param plateau		Plateau du jeu en cours
+	 * @param victoryCard 	victoryCard de l'IA
+	 * @param cardToIgnore	carte à ignorer lors de la recherche de la meilleure position d'arrivée pour un déplacement (dans le cas d'un placement simple on pourra fixer le paramètre à "0")
+	 * 
+	 * @return la première position permettant de placer une carte
+	 */
 	public String searchBestPosition(Plateau plateau, Card victoryCard, String cardToIgnore) {
 		String key = new String();
 		String key2 = new String();

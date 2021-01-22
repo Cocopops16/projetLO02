@@ -2,7 +2,6 @@ package projetLO02;
 
 import java.util.Map;
 import java.util.Observable;
-import java.util.Scanner;
 
 import View.MonInterfacePlateau;
 import View.VueTexte;
@@ -31,7 +30,6 @@ public class Joueur extends Observable {
 	protected Hand myHand;
 	protected Jeu jeu;
 	private int score;
-	private static final Scanner monClavier = new Scanner(System.in);
 	
 	public Joueur(String name, Jeu jeuEnCours, MonInterfacePlateau monInterface, VueTexte vueTexte){
 		this.name = name;
@@ -59,6 +57,14 @@ public class Joueur extends Observable {
 		return this.isIA;
 	}
 	
+	/**
+	 * Pioche une carte
+	 * @throws InvalidPlayerActionException si le joueur a déjà pioché durant son tour de jeu
+	 * @throws NoCardsAvailableException si il n'y a plus de cartes dans le {@link Deck}
+	 * 
+	 * @see Deck
+	 * @see Hand
+	 */
 	public void piocher() throws InvalidPlayerActionException, NoCardsAvailableException {
 		if(!this.aDejaPioche) {
 			this.aDejaPioche = true;
@@ -72,6 +78,13 @@ public class Joueur extends Observable {
 		}
 	}
 	
+	
+	/**
+	 * Fixe une carte à l'attribu {@link Joueur#victoryCard} selon le mode de jeu
+	 * 
+	 * @see Mode
+	 * @see Jeu#setup()
+	 */
 	public void setVictory() {
 		if(this.jeu.getMode() == Mode.Classique) {
 			try {
@@ -110,14 +123,20 @@ public class Joueur extends Observable {
 		return this.victoryCard;
 	}
 	
-	public Card chooseCardToPlay() {
-		System.out.println("Veuillez choisir le numéro d'une carte :");
-		System.out.println(myHand.toString());
-		int numCard = monClavier.nextInt();
-		numCard = numCard-1;
-		return this.myHand.getCard(numCard);
-	}
-	
+	/**
+	 * Placement d'une carte provenant de la main du {@link Joueur} vers une position du plateau donnée. <br/>
+	 * Pour que le placement aboutisse, il faudra obligatoirement que le joueur n'ait pas déjà posé durant son tour de jeu, que la position choisie ne soit pas déjà occupée, que le plateau n'ait pas atteint sa longueur ou largeur maximale en cas de déplacement de celui-ci, et qu'il y ait des cartes autour de la destination. <br/>
+	 * (Si le {@link Plateau} est vide, on peut exceptionnelement placer où l'on veut)
+	 * 
+	 * @param card 		La carte à jouer
+	 * @param colonne	La colonne où placer
+	 * @param ligne		La ligne où placer
+	 * @throws InvalidPlayerActionException si le joueur effectue une opération interdite
+	 * @throws InvalidChosenCardException si la carte choisie est définie comme {@code null}
+	 * 
+	 * @see Plateau
+	 * @see Jeu#tourDeJeu()
+	 */
 	public void placer(Card card, char colonne, int ligne) throws InvalidPlayerActionException, InvalidChosenCardException {
 		if(!this.aDejaPlace) {
 			if(card!=null) {
@@ -165,6 +184,22 @@ public class Joueur extends Observable {
 		}
 	}
 	
+	/**
+	 * Deplacement d'une carte provenant du {@link Plateau} vers une autre position du {@link Plateau}. <br/>
+	 * Pour déplacer il faut obligatoirement que le joueur n'ait pas déjà déplacé une carte durant son tour de jeu, que la première position indiquée soit occupée par une carte, et que la seconde position soit : <br/>
+	 * - occupée, dans ce cas on intervertit juste les deux cartes <br/>
+	 * - non occupée mais ayant au moins une position voisine occupée (utilisation de l'algorithme de placement) <br/>
+	 * 
+	 * @param colonne1	colonne de la carte à déplacer
+	 * @param ligne1	ligne de la carte à deplacer
+	 * @param colonne2	colonne de destination
+	 * @param ligne2	ligne de destination
+	 * @throws InvalidPlayerActionException si le joueur effectue une opération interdite
+	 * 
+	 * @see Plateau
+	 * @see Jeu#tourDeJeu()
+	 * @see Joueur#placer(Card, char, int)
+	 */
 	public void deplacer(char colonne1, int ligne1, char colonne2, int ligne2) throws InvalidPlayerActionException {
 		if(!this.aDejaDeplace) {
 			boolean removeCard = true;
@@ -258,6 +293,13 @@ public class Joueur extends Observable {
 		return this.myHand;
 	}
 	
+	/**
+	 * Remise à zero des actions du tour
+	 * 
+	 * @see Joueur#placer(Card, char, int)
+	 * @see Joueur#deplacer(char, int, char, int)
+	 * @see Joueur#piocher()
+	 */
 	public void resetTurn() {
 		this.aDejaDeplace = false;
 		this.aDejaPioche = false;

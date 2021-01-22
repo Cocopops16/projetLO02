@@ -2,6 +2,13 @@ package projetLO02;
 
 import java.util.Map;
 
+/**
+ * ConcreteVisitor du patron de conception Visitor <br/>
+ * Utilisé pour compter les points liés au remplissage des cartes
+ * 
+ * @author Corentin Réault
+ * @version 1.0
+ */
 public class ScoreBodyVisitor implements Visitor {
 	
 	public int visit(Map<String, Object> positions, Card card) {
@@ -12,6 +19,15 @@ public class ScoreBodyVisitor implements Visitor {
 		return positions;    
 	}
 	
+	/**
+	 * Compte les points liés au remplissage des cartes en fonction de la victoryCard donnée
+	 * @param positions		Collection de cartes (de type Map), liées aux positions du plateau
+	 * @param victoryCard	victoryCard d'un {@link Joueur}
+	 * @return le score du joueur concernant le remplissage des cartes
+	 * 
+	 * @see Jeu#comptagePoints()
+	 * @see IA#chooseVictory()
+	 */
 	private int ScoreBody(Map<String, Object> positions, Card victoryCard) {
 		int score = 0;
 		int scorePartiel = 0;

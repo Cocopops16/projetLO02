@@ -42,7 +42,6 @@ public class VueTexte implements Observer, Runnable {
 	public static String CHANGEVICTORY = "ChangeVictory";
 	public static String SELECTVICTORY = "SelectVictory";
 	public static String PIOCHER = "Piocher";
-	public static String SELECTCARD = "SelectCard";
 	public static String PLACER = "Placer";
 	public static String DEPLACER = "Deplacer";
 	public static String FINTOUR = "FinTour";
@@ -217,7 +216,6 @@ public class VueTexte implements Observer, Runnable {
 		
 		output.println( VueTexte.QUITTER + " pour quitter.");
 		output.println( VueTexte.PIOCHER + " pour ajouter une carte a votre main.");
-		output.println( VueTexte.SELECTCARD + " pour choisir la carte a jouer.");
 		output.println( VueTexte.PLACER + " pour placer une carte sur le plateau.");
 		output.println( VueTexte.DEPLACER + " pour déplacer une carte du plateau.");
 		output.println( VueTexte.FINTOUR + " pour finir votre tour.");
@@ -241,10 +239,12 @@ public class VueTexte implements Observer, Runnable {
 						output.println("pioché !");
 					}
 				}
-				else if(saisie.equals(VueTexte.SELECTCARD) == true) {
-					jeu.getJoueurEnCours().chooseCardToPlay();
-				}
 				else if(saisie.equals(VueTexte.PLACER) == true) {
+					output.println("Veuillez choisir le numéro d'une carte :");
+					output.println(jeu.getJoueurEnCours().getHand().toString());
+					int numCard = lireInt();
+					numCard = numCard-1;
+					
 					output.println("Entrez la colonne où placer la carte");
 					char colonne = lireChaine().charAt(0);
 					output.println("Entrez la ligne où placer la carte");
@@ -255,7 +255,7 @@ public class VueTexte implements Observer, Runnable {
 					}
 					
 					try {
-						jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(0), colonne, ligne);
+						jeu.getJoueurEnCours().placer(jeu.getJoueurEnCours().getHand().getCard(numCard), colonne, ligne);
 					} catch (InvalidPlayerActionException e) {
 						output.println(e.getMessage());
 					} catch (InvalidChosenCardException e) {

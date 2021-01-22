@@ -2,6 +2,13 @@ package projetLO02;
 
 import java.util.Map;
 
+/**
+ * ConcreteVisitor du patron de conception Visitor <br/>
+ * Utilisé pour compter les points liés à la couleur des cartes
+ * 
+ * @author Corentin Réault
+ * @version 1.0
+ */
 public class ScoreColorVisitor implements Visitor {
 	
 	public int visit(Map<String, Object> positions, Card card) {
@@ -12,6 +19,15 @@ public class ScoreColorVisitor implements Visitor {
 		return positions;    
 	}
 	
+	/**
+	 * Compte les points liés à la couleur des cartes en fonction de la victoryCard donnée
+	 * @param positions		Collection de cartes (de type Map), liées aux positions du plateau
+	 * @param victoryCard	victoryCard d'un {@link Joueur}
+	 * @return le score du joueur concernant la couleur des cartes
+	 * 
+	 * @see Jeu#comptagePoints()
+	 * @see IA#chooseVictory()
+	 */
 	private int ScoreColor(Map<String, Object> positions, Card victoryCard) {
 		int score = 0;
 		int scorePartiel = 0;

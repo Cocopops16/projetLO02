@@ -47,7 +47,7 @@ public class Hand{
 	/**
 	 * Recherche d'une carte en particulier dans la main du {@link Joueur}
 	 * @param numCard	numéro de la carte à atteindre
-	 * @return retourne la carte correspondant au numéro indiqué (si le numéro est hors de portée de la liste de carte, retorune {@link null})
+	 * @return retourne la carte correspondant au numéro indiqué (si le numéro est hors de portée de la liste de carte, retorune {@code null})
 	 * @see Card
 	 * @see Hand
 	 */

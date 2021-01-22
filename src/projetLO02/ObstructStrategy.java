@@ -1,7 +1,24 @@
 package projetLO02;
 
+/**
+ * Stratégie IA dont le but est de bloquer ses adversaires <br/>
+ * 
+ * Parcours le plateau en recherche d'occurences entre les cartes du plateau
+ * 
+ * @author Corentin Réault
+ * @version 1.0
+ */
 public class ObstructStrategy implements Strategy {
-
+	
+	/**
+	 * Recherche d'occurence entre les cartes du plateau qui ne partagent pas de caractéristiques avec la victoryCard, dans le but de bloquer une ligne adverse.
+	 * 
+	 * @param plateau		Plateau du jeu en cours
+	 * @param victoryCard 	victoryCard de l'IA
+	 * @param cardToIgnore	carte à ignorer lors de la recherche de la meilleure position d'arrivée pour un déplacement (dans le cas d'un placement simple on pourra fixer le paramètre à "0")
+	 * 
+	 * @return la première position permettant de bloquer une ligne n'ayant aucune caractéristique commune avec la victoryCard
+	 */
 	public String searchBestPosition(Plateau plateau, Card victoryCard, String cardToIgnore) {
 		String key = new String();
 		int carteABloquer = 0;
