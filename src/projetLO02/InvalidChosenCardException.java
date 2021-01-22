@@ -1,5 +1,14 @@
 package projetLO02;
 
+/**
+ * Exception levée en cas de choix de carte définie comme {@link null}
+ * 
+ * @see Joueur
+ * @see IA
+ * 
+ * @author Corentin Réault
+ * @version 1.0
+ */
 public class InvalidChosenCardException extends Exception {
 	private static final long serialVersionUID = 1L;
 	

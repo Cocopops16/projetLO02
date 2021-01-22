@@ -28,8 +28,12 @@ public class IA extends Joueur{
 	}
 	
 	/**
-	 * Choix de la carte à jouer (en mode avancé)
-	 * Compare les cartes de la main à la victoryCard pour définir 
+	 * Choix de la carte à jouer (en mode avancé) : <br/>
+	 * Compare les cartes de la main à la victoryCard pour définir la carte à jouer, et fixer la variable {@link IA#Strategy} en fonction des types communs entre la carte choisie et la victoryCard
+	 * @return la carte qui sera placée
+	 * 
+	 * @see IA#chooseStrategy()
+	 * @see Hand
 	 */
 	public Card chooseCardToPlay() {
 		int numCard = 0;
@@ -85,6 +89,17 @@ public class IA extends Joueur{
 		return this.myHand.getCard(numCard);
 	}
 	
+	/**
+	 * Choix de la stratégie à employer en fonction de l'état de la variable {@link IA#Strategy}
+	 * @return un objet de type {@link Strategy}
+	 * 
+	 * @see Strategy
+	 * @see BodyStrategy
+	 * @see ColorStrategy
+	 * @see ShapeStrategy
+	 * @see IA#chooseCardToPlay()
+	 * @see IA#placer()
+	 */
 	public Strategy chooseStrategy() {
 		this.cardToPlay = chooseCardToPlay();
 		
@@ -100,6 +115,18 @@ public class IA extends Joueur{
 		else return new ObstructStrategy();
 	}
 	
+	/**
+	 * Permet de choisir une victoryCard en mode avancé pour le tour de jeu (et ainsi définir une stratégie gobale pour le placement/déplacement) : <br/>
+	 * Choix en fonction de la carte de la main qui permettra d'obtenir un meilleur score lors du comptage des points <br/>
+	 * (Usage du patron de conception Visitor)
+	 * 
+	 * @see Visitor
+	 * @see ScoreBodyVisitor
+	 * @see ScoreColorVisitor
+	 * @see ScoreShapeVisitor
+	 * @see Hand
+	 * @see IA#jouer()
+	 */
 	public void chooseVictory() {
 		Visitor visitor1 = new ScoreBodyVisitor();
 		Visitor visitor2 = new ScoreColorVisitor();
@@ -122,6 +149,57 @@ public class IA extends Joueur{
 		this.myHand.removeCardFromHand(this.victoryCard);
 	}
 	
+	
+	/**
+	 * Essai de différentes stratégies pour placer la carte la plus rentable de notre main en fonction des possibilitées du plateau (grâce à {@link IA#chooseStrategy()} et {@link IA#chooseCardToPlay()}). <br/>
+	 * Première stratégie utilisée issue du choix de la carte à jouer (corespondance avec la victoryCard), deuxième stratégie, dite de blocage, pour empêcher le joueur adverse de marquer des points, et enfin une stratégie random pour placer tout de même une carte quand aucune solution ne fonctionne. <br/>
+	 * (Usage du patron de conception Strategy)
+	 * 
+	 * @see Plateau
+	 * @see IA#jouer()
+	 * @see IA#chooseStrategy()
+	 */
+	public void placer() {
+		Strategy strategy = chooseStrategy();
+		if(this.jeu.getPlateau().getFirstCard()) {
+			this.keyOuPlacer = strategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard, "0");
+			if(this.keyOuPlacer == "0") {
+				Strategy obstructStrategy = new ObstructStrategy();
+				this.keyOuPlacer = obstructStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard, "0");
+			}
+			if(this.keyOuPlacer == "1") {
+				Strategy randomStrategy = new RandomStrategy();
+				this.keyOuPlacer = randomStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard, "0");
+			}
+			System.out.println(this.name+" a utilisé la strategie : "+this.Strategy);
+			try {
+				placer(this.cardToPlay, this.keyOuPlacer.charAt(0), Character.getNumericValue(this.keyOuPlacer.charAt(1)));
+			} catch (InvalidPlayerActionException | InvalidChosenCardException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} 
+		else {
+			try {
+				placer(this.cardToPlay, 'C', 2);
+			} catch (InvalidPlayerActionException | InvalidChosenCardException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	/**
+	 * Deplacement uniquement si cela est bénéfique à l'{@link IA} : <br/>
+	 * Essai de plusieures stratégies successivement en fonction de la couleur, puis du remplissage et enfin de la forme de la carte.
+	 * (Usage du patron de conception Strategy)
+	 * 
+	 * @see Strategy
+	 * @see BodyStrategy
+	 * @see ColorStrategy
+	 * @see ShapeStrategy
+	 * @see Plateau
+	 */
 	public void deplacer() {
 		Strategy strategy = new ColorStrategy();
 		this.keyOuDeplacer1 = "1";
@@ -199,36 +277,22 @@ public class IA extends Joueur{
 		}
 	}
 	
+	/**
+	 * Méthode principale de l'IA permettant de la réveiller et de lui faire jouer son tour
+	 * (en mode avancé, l'IA choisira une victoryCard temporaire durant son tour pour définir une stratégie de jeu, et rendra la victoryCard à sa main en fin de tour)
+	 * 
+	 * @see Mode
+	 * @see Jeu#tourDeJeu()
+	 * @see IA#chooseVictory()
+	 * @see IA#placer()
+	 * @see IA#deplacer()
+	 */
 	public void jouer() {
 		if(this.jeu.getMode()==Mode.Avancé) {
 			chooseVictory();
 		}
-		Strategy strategy = chooseStrategy();
-		if(this.jeu.getPlateau().getFirstCard()) {
-			this.keyOuPlacer = strategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard, "0");
-			if(this.keyOuPlacer == "0") {
-				Strategy obstructStrategy = new ObstructStrategy();
-				this.keyOuPlacer = obstructStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard, "0");
-			}
-			if(this.keyOuPlacer == "1") {
-				Strategy randomStrategy = new RandomStrategy();
-				this.keyOuPlacer = randomStrategy.searchBestPosition(this.jeu.getPlateau(), this.victoryCard, "0");
-			}
-			System.out.println(this.name+" a utilisé la strategie : "+this.Strategy);
-			try {
-				placer(this.cardToPlay, this.keyOuPlacer.charAt(0), Character.getNumericValue(this.keyOuPlacer.charAt(1)));
-			} catch (InvalidPlayerActionException | InvalidChosenCardException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else
-			try {
-				placer(this.cardToPlay, 'C', 2);
-			} catch (InvalidPlayerActionException | InvalidChosenCardException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		
+		placer();
 		deplacer();
 		
 		if(this.jeu.getMode()==Mode.Avancé) {

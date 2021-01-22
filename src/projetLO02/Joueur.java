@@ -7,6 +7,19 @@ import java.util.Scanner;
 import View.MonInterfacePlateau;
 import View.VueTexte;
 
+/**
+ * Joueur appartenant à une classe jeu instanciée (composition) <br/>
+ * Cette classe est aussi une classe {@link Observable} (patron de conception {@link Observer}/{@link Observable}), permettant aux différentes vues de se mettre à jour.
+ * 
+ * @see Observable
+ * @see View.MonInterfacePlateau
+ * @see View.VueTexte
+ * @see Hand
+ * @see Jeu
+ * 
+ * @author Corentin Réault
+ * @version 1.0
+ */
 @SuppressWarnings("deprecation")
 public class Joueur extends Observable {
 	private boolean isIA;
