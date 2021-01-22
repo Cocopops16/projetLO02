@@ -154,9 +154,7 @@ public class ControleurMenu implements Runnable {
 	}
      
 	/**
-	 * Permet de contenir les traitements à exécuter 
-	 * @throws InvalidModeException
-	 * @throws InvalidNbrOfPlayersException
+	 * Permet de contenir les traitements à exécuter
 	 */
 	public void run() {	
 		try {

@@ -28,8 +28,6 @@ import Controleur.ControleurPiocher;
 import Controleur.ControleurPlacer;
 import Controleur.ControleurVictory;
 import fr.utt.LO02.projetLO02.Card;
-import fr.utt.LO02.projetLO02.InvalidModeException;
-import fr.utt.LO02.projetLO02.InvalidNbrOfPlayersException;
 import fr.utt.LO02.projetLO02.Jeu;
 import fr.utt.LO02.projetLO02.Joueur;
 import fr.utt.LO02.projetLO02.Mode;
@@ -186,8 +184,6 @@ public class MonInterfacePlateau implements Observer{
 
 	/**
 	 * Instancie une nouvelle interface.
-	 * @throws InvalidNbrOfPlayersException 
-	 * @throws InvalidModeException 
 	 * @wbp.parser.entryPoint
 	 */
 	public MonInterfacePlateau() {

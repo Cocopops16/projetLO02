@@ -3,6 +3,7 @@ package fr.utt.LO02.projetLO02;
 import java.util.LinkedList;
 
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Queue;
 
 import View.MonInterfacePlateau;

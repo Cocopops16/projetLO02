@@ -68,7 +68,6 @@ public class ObstructStrategy implements Strategy {
 		return "1";
 	}
 
-	@Override
 	public String searchPosDeplacement(Plateau plateau, Card victoryCard, int compteur) {
 		// TODO Auto-generated method stub
 		return null;

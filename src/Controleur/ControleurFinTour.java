@@ -60,7 +60,6 @@ public class ControleurFinTour implements Runnable {
 	 * Et permet d'appeler la méthode unlockJoueur() dans la classe jeu si la manche n'est pas terminée.
 	 * Dans le cas contraire, si la manche est terminée mais que le nombre de round est inférieur à 4 alors relance une manche.
 	 * Sinon, affiche l'interface finPartie avec le nom du gagnant.
-	 * @throws InvalidEndOfTurnException.
      */
     public synchronized void passerTourSuivant() {
 		btnFinTour.addActionListener(new ActionListener() {

@@ -68,7 +68,6 @@ public class RandomStrategy implements Strategy {
 		return null;
 	}
 
-	@Override
 	public String searchPosDeplacement(Plateau plateau, Card victoryCard, int compteur) {
 		// TODO Auto-generated method stub
 		return null;

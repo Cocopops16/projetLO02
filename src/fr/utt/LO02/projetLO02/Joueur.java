@@ -2,6 +2,7 @@ package fr.utt.LO02.projetLO02;
 
 import java.util.Map;
 import java.util.Observable;
+import java.util.Observer;
 
 import View.MonInterfacePlateau;
 import View.VueTexte;
