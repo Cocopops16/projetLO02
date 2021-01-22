@@ -18,6 +18,7 @@ import projetLO02.Jeu;
  * La classe ControleurMenu récupère les actions réalisées sur l'interface Menu.
  * La classe ControleurMenu gère l'interaction entre la Vue et le modèle.
  * @author Fabien Gallet
+ * @author Corentin Réault
  * @version 1.0
  *
  */

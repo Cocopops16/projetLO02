@@ -41,9 +41,8 @@ import javax.swing.JToggleButton;
 /**
 * La classe MonInterfacePlateau correspond à l'interface graphique.
 * 
-* 
-* 
 * @author Fabien Gallet
+* @author Corentin Réault
 * @version 1.0
 * 
 */

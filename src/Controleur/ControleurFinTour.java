@@ -15,6 +15,7 @@ import projetLO02.Jeu;
  * La classe ControleurFinTour récupère l'action d'un utilisateur pour passer la main à un autre joueur.
  * La classe ControleurFinTour gère l'interaction entre la Vue et le modèle.
  * @author Fabien Gallet
+ * @author Corentin Réault
  * @version 1.0
  *
  */

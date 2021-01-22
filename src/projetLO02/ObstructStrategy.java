@@ -7,6 +7,9 @@ package projetLO02;
  * 
  * @author Corentin Réault
  * @version 1.0
+ * 
+ * @see IA#chooseStrategy()
+ * @see IA#placer()
  */
 public class ObstructStrategy implements Strategy {
 	

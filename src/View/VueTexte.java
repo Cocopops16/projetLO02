@@ -23,6 +23,8 @@ import projetLO02.Plateau;
 /**
  * La classe VueTexte est une interface concurrente à l'interface graphique permettant une interaction clavier, durant le déroulement d'une partie.
  * Elle permet également l'affichage des messages sur l'avancée du jeu dans la console. 
+ * 
+ * @author Corentin Réault
  * @author Fabien Gallet
  * @version 1.0
  *
@@ -47,7 +49,7 @@ public class VueTexte implements Observer, Runnable {
 	public static String FINTOUR = "FinTour";
 
 	/**
-	 * 
+	 * Flux d'entrée / sortie
 	 */
 	protected InputStream input;
 	protected PrintStream output;
@@ -81,16 +83,11 @@ public class VueTexte implements Observer, Runnable {
 	}
 	
 	/**
-	 * 
-	 * 
-	 *
+	 * Classe interne permettant de démarrer le jeu sur un autre thread (si le jeu est démarré depuis la console)
 	 */
 	private class ThreadStart implements Runnable {
 		private Jeu jeu;
-		
-		/**
-		 * 
-		 */
+
 		public ThreadStart(Jeu jeu) {
 			this.jeu = jeu;
 			Thread t = new Thread(this);
@@ -98,7 +95,7 @@ public class VueTexte implements Observer, Runnable {
 		}
 		
 		/**
-		 * 
+		 * lancement de la partie sur un thread
 		 */
 		public void run() {
 			try {
@@ -353,14 +350,6 @@ public class VueTexte implements Observer, Runnable {
 			e.printStackTrace();
 		}
 		return nbr;
-	}
-	
-	/**
-	 *
-	 * @param msg
-	 */
-	public void afficher(String msg) {
-		this.output.println(msg);
 	}
 	
 	/**

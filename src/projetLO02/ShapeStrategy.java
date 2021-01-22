@@ -4,8 +4,30 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Stratégie IA en fonction du type Shape des cartes <br/>
+ * 
+ * Parcours le plateau en recherche d'occurences avec la victoryCard de l'IA
+ * 
+ * @author Corentin Réault
+ * @version 1.0
+ * 
+ * @see IA#chooseStrategy()
+ * @see IA#placer()
+ * @see IA#deplacer()
+ */
 public class ShapeStrategy implements Strategy {
 	
+	/**
+	 * Recherche d'occurences avec la victoryCard de l'IA dans les cartes présentes sur le plateau <br/>
+	 * Parcours le plateau en longueur et largeur en gardant en mémoire le nombre d'occurences sur les cartes vues précédemment avant d'arriver à une case vide ou à la fin de la ligne, permettant d'attibuer un potentiel à aux cases vides aux l'extrémités d'une suite de cartes possèdant un même attribut.
+	 * 
+	 * @param plateau		Plateau du jeu en cours
+	 * @param victoryCard 	victoryCard de l'IA
+	 * @param cardToIgnore	carte à ignorer lors de la recherche de la meilleure position d'arrivée pour un déplacement (dans le cas d'un placement simple on pourra fixer le paramètre à "0")
+	 * 
+	 * @return la position ayant le plus d'occurences avec la victoryCard autour d'elle (retourne 0 si pas d'occurences trouvées)
+	 */
 	public String searchBestPosition(Plateau plateau, Card victoryCard, String cardToIgnore) {
 		Map<String, Integer> Occurence = new TreeMap<String, Integer>();
 		int sameCards = 0;
@@ -93,6 +115,16 @@ public class ShapeStrategy implements Strategy {
 		else return "0";
 	}
 	
+	/**
+	 * Recherche d'occurences avec la victoryCard de l'IA dans les cartes présentes sur le plateau <br/>
+	 * Parcours le plateau en longueur et largeur en gardant en mémoire le nombre d'occurences sur les cartes vues précédemment avant d'arriver à une case vide ou à la fin de la ligne, permettant d'ajouter à chaque position occupée formant une ligne de cartes partageant un même attribut, un potentiel égal au nombre de cartes impliquées dans la ligne.
+	 * 
+	 * @param plateau		Plateau du jeu en cours
+	 * @param victoryCard 	victoryCard de l'IA
+	 * @param compteur		nombre de positions satisfaisantes à sauter dans le retour du résultat (positions déjà étudiées dans l'algo de l'IA, ne permettant pas de gagner de points en les déplaçants)
+	 * 
+	 * @return la Xième position trouvée (définie par le compteur), contenant une carte partageant un attribut avec la victoryCard et n'ayant pas de voisin partageant cet attribut
+	 */
 	public String searchPosDeplacement(Plateau plateau, Card victoryCard, int compteur) {
 		Map<String, Integer> Occurence = new TreeMap<String, Integer>();
 		int sameCards = 0;

@@ -18,6 +18,7 @@ import projetLO02.Jeu;
 /**
  * La classe ControleurDeplacer récupère les données utilisateurs lors du choix du déplacement de la carte.
  * La classe ControleurDeplacer gère l'interaction entre la Vue et le modèle.
+ * @author Corentin Réault
  * @author Fabien Gallet
  * @version 1.0
  *

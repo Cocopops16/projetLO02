@@ -9,7 +9,7 @@ import projetLO02.Jeu;
 /**
  * La classe ControleurVictory récupère les données utilisateurs quant au choix de la victoryCard pour le mode personnalisé.
  * La classe ControleurVictory gère l'interaction entre le modèle et la vue
- * @author Fabien Gallet
+ * @author Corentin Réault
  * @version 1.0
  *
  */

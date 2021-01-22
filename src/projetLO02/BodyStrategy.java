@@ -11,6 +11,10 @@ import java.util.TreeMap;
  * 
  * @author Corentin Réault
  * @version 1.0
+ * 
+ * @see IA#chooseStrategy()
+ * @see IA#placer()
+ * @see IA#deplacer()
  */
 
 public class BodyStrategy implements Strategy {

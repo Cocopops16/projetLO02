@@ -18,6 +18,7 @@ import projetLO02.Jeu;
 /**
  * La classe ControleurPlacer récupère les données utilisateurs lors du choix du placement de la carte.
  * La classe ControleurPlacer gère l'interaction entre la Vue et le modèle.
+ * @author Corentin Réault
  * @author Fabien Gallet
  * @version 1.0
  *

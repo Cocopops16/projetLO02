@@ -5,6 +5,8 @@ package projetLO02;
  *  
  * @author Corentin Réault
  * @version 1.0
+ * 
+ * @see IA#placer()
  */
 public class RandomStrategy implements Strategy {
 	

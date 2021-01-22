@@ -5,12 +5,16 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Stratégie IA en fonction du type Body des cartes <br/>
+ * Stratégie IA en fonction du type Color des cartes <br/>
  * 
  * Parcours le plateau en recherche d'occurences avec la victoryCard de l'IA
  * 
  * @author Corentin Réault
  * @version 1.0
+ * 
+ * @see IA#chooseStrategy()
+ * @see IA#placer()
+ * @see IA#deplacer()
  */
 
 public class ColorStrategy implements Strategy {

@@ -18,6 +18,7 @@ import projetLO02.NoCardsAvailableException;
  * La classe ControleurPiocher récupère l'action réalisée pour piocher une carte.
  * La classe ControleurPiocher gère l'interaction entre la Vue et le modèle.
  * @author Fabien Gallet
+ * @author Corentin Réault
  * @version 1.0
  *
  */
