@@ -1,5 +1,16 @@
 package projetLO02;
 
+/**
+ * Définition des caractéristiques d'une carte (carte non modfiable après sa création)
+ * @see CardType1
+ * @see CardType2
+ * @see CardType3
+ * 
+ * 
+ * @author Corentin Réault
+ * @version 1.0
+ */
+
 public class Card {
 	private CardType1 type1;
 	private CardType2 type2;
