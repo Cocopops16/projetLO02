@@ -20,9 +20,19 @@ import projetLO02.Mode;
 import projetLO02.NoCardsAvailableException;
 import projetLO02.Plateau;
 
+/**
+ * La classe VueTexte est une interface concurrente à l'interface graphique permettant une interaction clavier, durant le déroulement d'une partie.
+ * Elle permet également l'affichage des messages sur l'avancée du jeu dans la console. 
+ * @author Fabien Gallet
+ * @version 1.0
+ *
+ */
 @SuppressWarnings("deprecation")
 public class VueTexte implements Observer, Runnable {
 	
+	/**
+	 * Les attributs ci-dessous sont une liste de commandes pouvant être utilisé par l'utilisateur à l'aide de son clavier.
+	 */
 	public static String QUITTER = "Quit";
 	public static String PROMPT = ">";
 	public static String ADDPLAYER = "AddPlayer";
@@ -37,6 +47,9 @@ public class VueTexte implements Observer, Runnable {
 	public static String DEPLACER = "Deplacer";
 	public static String FINTOUR = "FinTour";
 
+	/**
+	 * 
+	 */
 	protected InputStream input;
 	protected PrintStream output;
 	
@@ -45,8 +58,16 @@ public class VueTexte implements Observer, Runnable {
 	private boolean partie;
 	private boolean quitter;
 	
+	/**
+	 * L'attribut jeu permet à la classe VueTexte d’atteindre les objets du Modèle à partir d'un jeu.
+	 */
 	private Jeu jeu;
 	
+	
+	/**
+	 * Instancie la VueTexte.
+	 * @param jeu pour jeu en cours.
+	 */
 	public VueTexte(Jeu jeu) {
 		this.jeu = jeu;
 		jeu.addVueTexteObserver(this);
@@ -60,15 +81,26 @@ public class VueTexte implements Observer, Runnable {
 		t.start();
 	}
 	
+	/**
+	 * 
+	 * 
+	 *
+	 */
 	private class ThreadStart implements Runnable {
 		private Jeu jeu;
 		
+		/**
+		 * 
+		 */
 		public ThreadStart(Jeu jeu) {
 			this.jeu = jeu;
 			Thread t = new Thread(this);
 			t.start();
 		}
 		
+		/**
+		 * 
+		 */
 		public void run() {
 			try {
 				this.jeu.start();
@@ -80,6 +112,11 @@ public class VueTexte implements Observer, Runnable {
 		}
 	}
 	
+	/**
+	 * Permet une interaction à l'aide du clavier pour l'interface Menu.
+	 * Permet d'ajouter un joueur, une IA, de choisir le mode de partie ou encore de quitter le jeu par l'utilisation de la liste de commande définie ci-dessus. 
+	 * @return la commande rentrée par l'utilisateur
+	 */
 	public String menu() {
 		String saisie = null;
 		
@@ -129,6 +166,13 @@ public class VueTexte implements Observer, Runnable {
 		return null;
 	}
 	
+	/**
+	 * Permet une interaction à l'aide du clavier pour l'interface Victory.
+	 * Permet de changer de VictoryCard, accepter la victoryCard à l'aide de commande prédéfini ci-dessus.
+	 * @return la commande rentrée par l'utilisateur.
+	 * @param saisie la commande rentrée par l'utilisateur.
+	 * 
+	 */
 	public String victory(String saisie) {
 		if(this.jeu.getMode()==Mode.Personnalisé) {
 			
@@ -163,6 +207,12 @@ public class VueTexte implements Observer, Runnable {
 		return saisie;
 	}
 	
+	/**
+	 * Permet une interaction à l'aide du clavier pour l'interface Plateau.
+	 * Permet de choisir la carte à jouer, de piocher une carte, placer ou déplacer une carte et de finir son tour à l'aide de commandes rentrées par l'utilisateur.
+	 * @return commande rentrée par l'utilisateur.
+	 * @param saisie commande rentrée par l'utilisateur. 
+	 */
 	public void partie(String saisie) {
 		
 		output.println( VueTexte.QUITTER + " pour quitter.");
@@ -257,6 +307,9 @@ public class VueTexte implements Observer, Runnable {
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void run() {		
 		String commande;
 		commande = menu();
@@ -265,6 +318,10 @@ public class VueTexte implements Observer, Runnable {
 		System.exit(0);
 	}
 	
+	/**
+	 * Permet de lire une chaine de caractère. 
+	 * @return la chaîne de caractère.
+	 */
 	private String lireChaine() {
 		BufferedReader br = new BufferedReader (new InputStreamReader(input));
 		String resultat = null;
@@ -277,6 +334,10 @@ public class VueTexte implements Observer, Runnable {
 		return resultat;	
 	}
 	
+	/**
+	 * Permet de lire un entier rentré par l'utilisateur.
+	 * @return un entier.
+	 */
 	public int lireInt() {
 		InputStreamReader inr = new InputStreamReader(input);
 		BufferedReader br = new BufferedReader(inr);
@@ -294,17 +355,28 @@ public class VueTexte implements Observer, Runnable {
 		return nbr;
 	}
 	
+	/**
+	 * 
+	 * @param msg
+	 */
 	public void afficher(String msg) {
 		this.output.println(msg);
 	}
 	
+	/**
+	 * Permet d'afficher un message contenant la victoryCard du joueur en cours en allant chercher la VictoryCard avec la méthode getVictory() dans la classe Joueur.
+	 * @param player joueur en cours
+	 */
 	private void givePlayerCards(Joueur player) {
 		if(this.jeu.getMode()!=Mode.Avancé) {
 			output.println("Victory Card :"+player.getVictory().toString());
 		}
 		output.println("Main du joueur : \n"+player.getHand().toString());
 	}
-
+    
+	/**
+	 * Permet de mettre à jour les messages apparaissant dans la console lors d'un changement sur le jeu, le joueur ou le plateau. 
+	 */
 	public void update(Observable o, Object arg) {
 		if((o instanceof Jeu)&&(arg instanceof Joueur)) {
 			Joueur player = (Joueur) arg;

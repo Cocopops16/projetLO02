@@ -14,8 +14,18 @@ import projetLO02.InvalidModeException;
 import projetLO02.InvalidNbrOfPlayersException;
 import projetLO02.Jeu;
 
+/**
+ * La classe ControleurMenu récupère les actions réalisées sur l'interface Menu.
+ * La classe ControleurMenu gère l'interaction entre la Vue et le modèle.
+ * @author Fabien Gallet
+ * @version 1.0
+ *
+ */
 public class ControleurMenu implements Runnable {
 
+	/**
+	 *  Les attributs ci dessous permettent à la classe ControleurMenu d'atteindre les objets graphiques de la Vue.
+	 */
 	private JTextPane textPane;
 	private JButton btnSaveJoueur;
 	private JButton btnAddIA;
@@ -24,11 +34,28 @@ public class ControleurMenu implements Runnable {
 	private JRadioButton rdbtnModePerso;
 	private JButton btnLancerPartie;
 	
+	/**
+	 * L'attribut jeu permet à la classe ControleurMenu d’atteindre les objets du Modèle à partir d'un jeu.
+	 */
 	private Jeu jeu;
-	private Thread thread;
 	
+	private Thread thread;
+	/**
+	 * L'attribut nbrPlayers permet de récupérer le nombre de joueur d'une partie.
+	 */
 	private int nbrPlayers;
 	
+	/**
+	 * Instancie un nouveau controleur menu.
+	 * @param jeu pour le jeu en cours.
+	 * @param textPane zone de texte pour entrer le nom des joueurs.
+	 * @param btnSaveJoueur bouton pour sauvergarder le nom du joueur rentré dans la zone de texte.
+	 * @param btnAddIA bouton pour ajouter un joueur IA.
+	 * @param rdbtnModeClassique bouton pour séléctionner le mode classique.
+	 * @param rdbtnModeAvance bouton pour séléctionner le mode avancé.
+	 * @param rdbtnModePerso bouton pour séléctionner le mode personalisé.
+	 * @param btnLancerPartie bouton pour lancer la partie.
+	 */
 	public ControleurMenu(Jeu jeu, JTextPane textPane, JButton btnSaveJoueur, JButton btnAddIA, JRadioButton rdbtnModeClassique, JRadioButton rdbtnModeAvance, JRadioButton rdbtnModePerso, JButton btnLancerPartie) {
 		this.textPane = textPane;
 		this.btnSaveJoueur = btnSaveJoueur;
@@ -45,6 +72,10 @@ public class ControleurMenu implements Runnable {
 		listenButtons();
 	}
 	
+	/**
+	 * Permet de récupérer les différentes actions réalisées sur l'interface Menu.
+	 * Et permet d'appeler les méthodes dans le modèle pour enregistrer les informations rentrées par l'utilisateur : le nom du joueur, l'ajout d'une IA dans la partie, le choix du mode de jeu.
+	 */
 	private void listenButtons() {		
 		btnSaveJoueur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -70,7 +101,7 @@ public class ControleurMenu implements Runnable {
 						message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 						JOptionPane.showMessageDialog(null, message);
 					}
-					textPane.setText(""); //réinitialise la zone de texte 
+					textPane.setText(""); 
 				}
 			}
 		});
@@ -111,12 +142,20 @@ public class ControleurMenu implements Runnable {
 			}
 		});
 	}
-		
+	
+	/**
+	 * Permet de lancer l'exécution du thread avec l'appelle de sa méthode start() 
+	 */
 	private void lancerPartie() {
 		this.thread = new Thread(this);
 		this.thread.start();
 	}
-
+     
+	/**
+	 * Permet de contenir les traitements à exécuter 
+	 * @throws InvalidModeException
+	 * @throws InvalidNbrOfPlayersException
+	 */
 	public void run() {	
 		try {
 			this.jeu.start();

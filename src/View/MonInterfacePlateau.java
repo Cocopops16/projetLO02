@@ -38,9 +38,23 @@ import projetLO02.Plateau;
 import java.awt.Color;
 import javax.swing.JToggleButton;
 
+/**
+* La classe MonInterfacePlateau correspond à l'interface graphique.
+* 
+* 
+* 
+* @author Fabien Gallet
+* @version 1.0
+* 
+*/
+
 @SuppressWarnings("deprecation")
 public class MonInterfacePlateau implements Observer{
 
+	/**
+	 * Les attributs ci-dessous correspondent aux objects graphiques manipulés dans les différentes interfaces.
+	 */
+	
 	private JFrame frameMenu;
 	private JTextPane textPane;
 	private JLabel lblMenu;
@@ -55,11 +69,9 @@ public class MonInterfacePlateau implements Observer{
 	private JRadioButton rdbtnModeAvance;
 	private JRadioButton rdbtnModePerso;
 	private JButton btnLancerPartie;
-	
 	private JFrame frameVictory;
 	private JButton btnChangeVictory;
 	private JButton btnSetVictory;
-	
 	private JFrame framePlateau;
 	private JButton btnPiocher;
 	private JToggleButton tglbtnPlacerDeplacer;
@@ -115,16 +127,22 @@ public class MonInterfacePlateau implements Observer{
     private JPanel panel_2;
     private JPanel panel_3;
     private JPanel panel_4;
-	
 	private JLabel lblFinPartie;
 	private JLabel lblAnnonceGagnant;
 	private JLabel lblAffichageGagnant;
 	private JButton btnFermer;
 	private JFrame frameFinPartie;
 	
+
+   /**
+   * L'attribut jeu permet à la classe MonInterfacPlateau d’atteindre les objets du Modèle à partir d'un jeu.
+   */
 	protected Jeu jeu;
 
-  	ImageIcon SQUARE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_SOLID_BLUE.PNG"));
+	/**
+	 * Les attributs ci-dessous permettent de stocker les images utilisées dans les différentes interfaces graphiques.  
+	 */
+	ImageIcon SQUARE_SOLID_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_SOLID_BLUE.PNG"));
   	ImageIcon SQUARE_HOLLOW_BLUE = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_HOLLOW_BLUE.PNG"));
   	ImageIcon SQUARE_SOLID_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_SOLID_RED.PNG"));
    	ImageIcon SQUARE_HOLLOW_RED = new ImageIcon(MonInterfacePlateau.class.getResource("/image/SQUARE_HOLLOW_RED.PNG"));
@@ -143,12 +161,16 @@ public class MonInterfacePlateau implements Observer{
    	ImageIcon TRIANGLE_SOLID_GREEN  = new ImageIcon(MonInterfacePlateau.class.getResource("/image/TRIANGLE_SOLID_GREEN.PNG"));
     ImageIcon TRIANGLE_HOLLOW_GREEN = new ImageIcon(MonInterfacePlateau.class.getResource("/image/TRIANGLE_HOLLOW_GREEN.PNG"));
   
- 
+
+  /**
+  * L'attribut cardPlateauButtons permet de stocker sous la forme key/valeur les boutons présents sur l'interface plateau.
+  */
 	private Map<String,JButton> cardPlateauButtons;
 	
 	
 	/**
-	 * Launch the application.
+	 * Lance l'application.
+	 * @param args the arguments
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -164,7 +186,7 @@ public class MonInterfacePlateau implements Observer{
 	}
 
 	/**
-	 * Create the application.
+	 * Instancie une nouvelle interface.
 	 * @throws InvalidNbrOfPlayersException 
 	 * @throws InvalidModeException 
 	 * @wbp.parser.entryPoint
@@ -518,7 +540,8 @@ public class MonInterfacePlateau implements Observer{
 		panel_4.add(btnE4);
 		cardPlateauButtons.put("E4",btnE4);
 		   
-		//interface fin de partie
+		//////////////////////////////////////////
+		
 		frameFinPartie = new JFrame();
 		frameFinPartie.setVisible(false);
 		frameFinPartie.setBounds(100, 100, 891, 548);
@@ -547,6 +570,10 @@ public class MonInterfacePlateau implements Observer{
 		frameFinPartie.getContentPane().add(btnFermer);
 	}	 
 	
+	/**
+	 * Permet d'afficher le nom du joueur en cours, la ou les cartes piochées en fonction du mode de jeu et la Victory Card sur l'interface plateau.
+	 * @param player le nom du joueur en cours. 
+	 */
 	private void givePlayerCards(Joueur player) {
 		String currentPlayer = player.getName(); //l'idee est d'afficher le nom du joueur et changer à chaque fois que c'est au joueur suivant de jouer. 
 		lblNomDuJoueur.setText(currentPlayer);
@@ -574,7 +601,11 @@ public class MonInterfacePlateau implements Observer{
 		  	lblPlaceVictoryCard.setIcon(newImage);
 		}
 	}
-
+     
+	/**
+	 * Permet de mettre à jour l'interface lors d'un changement sur le jeu, le joueur ou le plateau. 
+	 * Elle permet d'afficher l'image de la carte sur le bouton séléctionné, d'ouvrir l'interface Victory si le mode de jeu sélectionné est personnalisé ou l'interface Plateau le cas échéant.
+	 */
 	public void update(Observable o, Object arg) {
 		if((o instanceof Jeu)&&(arg instanceof Joueur)) {
 			Joueur player = (Joueur) arg;

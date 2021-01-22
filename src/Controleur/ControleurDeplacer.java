@@ -15,17 +15,40 @@ import javax.swing.JToggleButton;
 import projetLO02.InvalidPlayerActionException;
 import projetLO02.Jeu;
 
-
+/**
+ * La classe ControleurDeplacer récupère les données utilisateurs lors du choix du déplacement de la carte.
+ * La classe ControleurDeplacer gère l'interaction entre la Vue et le modèle.
+ * @author Fabien Gallet
+ * @version 1.0
+ *
+ */
 public class ControleurDeplacer {
 	
+	/**
+	 * Les attributs ci dessous permettent à la classe ControleurDeplacer d'atteindre les objets graphiques de la Vue.
+	 */
 	private JToggleButton tglbtnPlacerDeplacer;
 	private JLabel lblDe;
 	private JLabel lblPositionOrigine;
 	private JLabel lblVers;
 	private JLabel lblPositionArrivee;
 	private Map<String,JButton> cardPlateauButtons;
+	
+	/**
+	 * L'attribut jeu permet à la classe ControleurDeplacer d’atteindre les objets du Modèle à partir d'un jeu.
+   	 */
 	private Jeu jeu;
 		
+	/**
+	 * Instancie un nouveau ControleurDeplacer
+	 * @param jeu pour le jeu en cours.
+	 * @param tglbtnPlacerDeplacer bouton à deux états placer/déplacer
+	 * @param cardPlateauButtons  ensemble des boutons du plateau contenu dans la map.
+	 * @param lblDe label affichant le mot "De".
+	 * @param lblPositionOrigine label affichant la case d'origine.
+	 * @param lblVers label affichant le mot "Vers".
+	 * @param lblPositionArrivee label affichant la case d'arrivée.
+	 */
 	public ControleurDeplacer(Jeu jeu, JToggleButton tglbtnPlacerDeplacer, Map<String,JButton> cardPlateauButtons, JLabel lblDe, JLabel lblPositionOrigine, JLabel lblVers, JLabel lblPositionArrivee) {
 		
 		this.tglbtnPlacerDeplacer = tglbtnPlacerDeplacer;
@@ -39,6 +62,12 @@ public class ControleurDeplacer {
 		listenButtons();
 	}
 	
+	/**
+	 * Permet de récupérer l'action réalisée sur le bouton placer/déplacer.
+	 * Appelle la méthode déplacer() dans la classe Joueur en y incluant en parametre la carte séléctionnée par le joueur ainsi que les position d'origine et d'arrivée. 
+	 * @throws NumberFormatException
+	 * @throws InvalidPlayerActionException
+	 */
 	private void listenButtons() {
 		this.tglbtnPlacerDeplacer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
