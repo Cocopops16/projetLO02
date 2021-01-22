@@ -17,6 +17,7 @@ import projetLO02.InvalidPlayerActionException;
 import projetLO02.Jeu;
 import projetLO02.Joueur;
 import projetLO02.Mode;
+import projetLO02.NoCardsAvailableException;
 import projetLO02.Plateau;
 
 @SuppressWarnings("deprecation")
@@ -182,6 +183,9 @@ public class VueTexte implements Observer, Runnable {
 						jeu.getJoueurEnCours().piocher();
 					} catch (InvalidPlayerActionException e) {
 						output.println(e.getMessage());
+					} catch (NoCardsAvailableException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 					if(jeu.getJoueurEnCours().aPioche()) {
 						output.println("pioché !");

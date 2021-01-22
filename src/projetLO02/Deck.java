@@ -56,8 +56,12 @@ public class Deck {
 		return card;
 	}
 	
-	public Card giveCard() {
-		return (Card)this.shuffledCards.poll();
+	public Card giveCard() throws NoCardsAvailableException {
+		Card card = (Card)this.shuffledCards.poll();
+		if(card==null) {
+			throw new NoCardsAvailableException("plus de cartes dans le deck");
+		}
+		else return card;
 	}
 	
 	public boolean isDeckEmpty() {

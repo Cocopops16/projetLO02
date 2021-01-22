@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import projetLO02.InvalidPlayerActionException;
 import projetLO02.Jeu;
+import projetLO02.NoCardsAvailableException;
 
 
 
@@ -27,7 +28,7 @@ public class ControleurPiocher {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					jeu.getJoueurEnCours().piocher();
-				} catch (InvalidPlayerActionException e1) {
+				} catch (InvalidPlayerActionException | NoCardsAvailableException e1) {
 					JLabel message = new JLabel(e1.getMessage());
 					message.setFont(new Font("Tahoma", Font.PLAIN, 15));
 					JOptionPane.showMessageDialog(null, message);

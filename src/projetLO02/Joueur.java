@@ -46,11 +46,10 @@ public class Joueur extends Observable {
 		return this.isIA;
 	}
 	
-	public void piocher() throws InvalidPlayerActionException {
+	public void piocher() throws InvalidPlayerActionException, NoCardsAvailableException {
 		if(!this.aDejaPioche) {
 			this.aDejaPioche = true;
 			Card card = jeu.getDeck().giveCard();
-			System.out.println("Vous piochez : " + card.toString());
 			this.myHand.addCardToHand(card);
 			setChanged();
 			notifyObservers(this);
@@ -62,7 +61,12 @@ public class Joueur extends Observable {
 	
 	public void setVictory() {
 		if(this.jeu.getMode() == Mode.Classique) {
-			this.victoryCard = this.jeu.getDeck().giveCard();
+			try {
+				this.victoryCard = this.jeu.getDeck().giveCard();
+			} catch (NoCardsAvailableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			setChanged();
 			notifyObservers(this);
 		}
@@ -78,7 +82,12 @@ public class Joueur extends Observable {
 			notifyObservers(this);
 		}
 		else if((this.jeu.getMode() == Mode.Personnalisé)&&this.isIA) {
-			this.victoryCard = this.jeu.getDeck().giveCard();
+			try {
+				this.victoryCard = this.jeu.getDeck().giveCard();
+			} catch (NoCardsAvailableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			setChanged();
 			notifyObservers(this);
 		}
@@ -121,7 +130,7 @@ public class Joueur extends Observable {
 					}
 					else {
 						this.aDejaPlace = false;
-						throw new InvalidPlayerActionException("Position : ("+colonne+";"+ligne+") déjà occupé");
+						throw new InvalidPlayerActionException("Position : ("+colonne+";"+ligne+") déjà occupée");
 					}
 				}
 				else {
@@ -134,6 +143,7 @@ public class Joueur extends Observable {
 				}
 			}
 			else {
+				this.aDejaPlace = false;
 				throw new InvalidChosenCardException("Pas de carte choisie");
 			}
 		}
@@ -153,7 +163,8 @@ public class Joueur extends Observable {
 					this.jeu.getPlateau().setCard(card1, colonne2, ligne2);
 					this.aDejaDeplace = true;
 				}
-				else if(this.jeu.getPlateau().checkSiCartesAutour(colonne2, ligne2)){
+				else if(this.jeu.getPlateau().checkSiCartesAutour(colonne2, ligne2)) {
+					boolean saveADejaPlace = this.aDejaPlace;
 					try {
 						placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
 						this.aDejaPlace = false;
@@ -162,6 +173,10 @@ public class Joueur extends Observable {
 							this.aDejaPlace = false;
 							try {
 								placer(this.jeu.getPlateau().getCard(colonne1, ligne1), colonne2, ligne2);
+							} catch (InvalidPlayerActionException e1) {
+								this.aDejaPlace = saveADejaPlace;
+								removeCard = false;
+								throw new InvalidPlayerActionException(e1.getMessage());
 							} catch (InvalidChosenCardException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
@@ -169,7 +184,9 @@ public class Joueur extends Observable {
 							this.aDejaPlace = true;
 						}
 						else {
+							this.aDejaPlace = saveADejaPlace;
 							removeCard = false;
+							throw new InvalidPlayerActionException(e.getMessage());
 						}
 					} catch (InvalidChosenCardException e) {
 						// TODO Auto-generated catch block
@@ -199,7 +216,12 @@ public class Joueur extends Observable {
 					}
 					
 				}
-				
+				else {
+					throw new InvalidPlayerActionException("Pas de cartes autour ("+colonne2+";"+ligne2+")");
+				}
+			}
+			else {
+				throw new InvalidPlayerActionException("Position : ("+colonne1+";"+ligne1+") non occupée");
 			}
 		}
 		else {

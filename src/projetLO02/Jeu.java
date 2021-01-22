@@ -172,6 +172,9 @@ public class Jeu extends Observable {
 						} catch (InvalidPlayerActionException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
+						} catch (NoCardsAvailableException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
 						this.joueurEnCours.resetTurn();
 					}
@@ -197,7 +200,12 @@ public class Jeu extends Observable {
 				}
 			}
 			
-			this.hiddenCard = this.deck.giveCard();
+			try {
+				this.hiddenCard = this.deck.giveCard();
+			} catch (NoCardsAvailableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			//début de la partie :
 			while(!checkEndGame()) {
@@ -217,7 +225,6 @@ public class Jeu extends Observable {
 	
 	public void tourDeJeu() {
 		this.joueurEnCours = (Joueur)this.playersQueue.peek();
-		this.joueurEnCours.resetTurn();
 		this.setChanged();
 		this.notifyObservers(this.joueurEnCours);
 		
@@ -232,10 +239,13 @@ public class Jeu extends Observable {
 			}
 		}
 		else if(this.joueurEnCours.getIA()) {
-			if(this.mode != Mode.Avancé) {
+			if(this.mode != Mode.Avancé && (!this.deck.isDeckEmpty())) {
 				try {
 					this.joueurEnCours.piocher();
 				} catch (InvalidPlayerActionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoCardsAvailableException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -248,11 +258,15 @@ public class Jeu extends Observable {
 				} catch (InvalidPlayerActionException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				} catch (NoCardsAvailableException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			}
 		}
 		
 		this.playersQueue.add(this.playersQueue.poll());
+		this.joueurEnCours.resetTurn();
 	}
 	
 	public synchronized void unlockJoueur() throws InvalidEndOfTurnException {
