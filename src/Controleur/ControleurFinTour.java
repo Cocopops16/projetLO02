@@ -9,8 +9,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import projetLO02.InvalidEndOfTurnException;
-import projetLO02.Jeu;
+import fr.utt.LO02.projetLO02.InvalidEndOfTurnException;
+import fr.utt.LO02.projetLO02.Jeu;
 /**
  * La classe ControleurFinTour récupère l'action d'un utilisateur pour passer la main à un autre joueur.
  * La classe ControleurFinTour gère l'interaction entre la Vue et le modèle.

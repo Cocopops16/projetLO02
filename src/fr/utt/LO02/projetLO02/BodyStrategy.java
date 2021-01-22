@@ -1,11 +1,11 @@
-package projetLO02;
+package fr.utt.LO02.projetLO02;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Stratégie IA en fonction du type Shape des cartes <br/>
+ * Stratégie IA en fonction du type Body des cartes <br/>
  * 
  * Parcours le plateau en recherche d'occurences avec la victoryCard de l'IA
  * 
@@ -16,7 +16,8 @@ import java.util.TreeMap;
  * @see IA#placer()
  * @see IA#deplacer()
  */
-public class ShapeStrategy implements Strategy {
+
+public class BodyStrategy implements Strategy {
 	
 	/**
 	 * Recherche d'occurences avec la victoryCard de l'IA dans les cartes présentes sur le plateau <br/>
@@ -41,7 +42,7 @@ public class ShapeStrategy implements Strategy {
 				key = key.intern();
 				if((plateau.getPositions().containsKey(key))&&(key!=cardToIgnore)) {
 					Card card = (Card)plateau.getPositions().get(key);
-					if(card.getType1()==victoryCard.getType1()) {
+					if(card.getType2()==victoryCard.getType2()) {
 						sameCards = sameCards+1;
 						if(sameCards<j) {
 							String key2 =((char)(65+i))+Integer.toString(j-sameCards);
@@ -71,7 +72,7 @@ public class ShapeStrategy implements Strategy {
 				key = key.intern();
 				if((plateau.getPositions().containsKey(key))&&(key!=cardToIgnore)) {
 					Card card = (Card)plateau.getPositions().get(key);
-					if(card.getType1()==victoryCard.getType1()) {
+					if(card.getType2()==victoryCard.getType2()) {
 						sameCards = sameCards+1;
 						if(sameCards<i) {
 							String key2 =((char)(65+i-sameCards))+Integer.toString(j);
@@ -139,7 +140,7 @@ public class ShapeStrategy implements Strategy {
 				key2 =((char)(65+i))+Integer.toString(j-1);
 				if(plateau.getPositions().containsKey(key)) {
 					Card card = (Card)plateau.getPositions().get(key);
-					if(card.getType1()==victoryCard.getType1()) {
+					if(card.getType2()==victoryCard.getType2()) {
 						sameCards++;
 					}
 					else if(sameCards>=1) {
@@ -203,7 +204,7 @@ public class ShapeStrategy implements Strategy {
 				key2 =((char)(65+i-1))+Integer.toString(j);
 				if(plateau.getPositions().containsKey(key)) {
 					Card card = (Card)plateau.getPositions().get(key);
-					if(card.getType1()==victoryCard.getType1()) {
+					if(card.getType2()==victoryCard.getType2()) {
 						sameCards++;
 					}
 					else if(sameCards>=1) {

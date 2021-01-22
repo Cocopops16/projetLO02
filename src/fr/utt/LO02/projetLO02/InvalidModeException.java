@@ -1,4 +1,4 @@
-package projetLO02;
+package fr.utt.LO02.projetLO02;
 
 /**
  * Exception levée si aucun mode n'a été choisi lors du début de partie

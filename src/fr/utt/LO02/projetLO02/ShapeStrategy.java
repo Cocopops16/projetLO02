@@ -1,11 +1,11 @@
-package projetLO02;
+package fr.utt.LO02.projetLO02;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * Stratégie IA en fonction du type Color des cartes <br/>
+ * Stratégie IA en fonction du type Shape des cartes <br/>
  * 
  * Parcours le plateau en recherche d'occurences avec la victoryCard de l'IA
  * 
@@ -16,8 +16,7 @@ import java.util.TreeMap;
  * @see IA#placer()
  * @see IA#deplacer()
  */
-
-public class ColorStrategy implements Strategy {
+public class ShapeStrategy implements Strategy {
 	
 	/**
 	 * Recherche d'occurences avec la victoryCard de l'IA dans les cartes présentes sur le plateau <br/>
@@ -42,7 +41,7 @@ public class ColorStrategy implements Strategy {
 				key = key.intern();
 				if((plateau.getPositions().containsKey(key))&&(key!=cardToIgnore)) {
 					Card card = (Card)plateau.getPositions().get(key);
-					if(card.getType3()==victoryCard.getType3()) {
+					if(card.getType1()==victoryCard.getType1()) {
 						sameCards = sameCards+1;
 						if(sameCards<j) {
 							String key2 =((char)(65+i))+Integer.toString(j-sameCards);
@@ -72,7 +71,7 @@ public class ColorStrategy implements Strategy {
 				key = key.intern();
 				if((plateau.getPositions().containsKey(key))&&(key!=cardToIgnore)) {
 					Card card = (Card)plateau.getPositions().get(key);
-					if(card.getType3()==victoryCard.getType3()) {
+					if(card.getType1()==victoryCard.getType1()) {
 						sameCards = sameCards+1;
 						if(sameCards<i) {
 							String key2 =((char)(65+i-sameCards))+Integer.toString(j);
@@ -116,7 +115,6 @@ public class ColorStrategy implements Strategy {
 		else return "0";
 	}
 	
-	
 	/**
 	 * Recherche d'occurences avec la victoryCard de l'IA dans les cartes présentes sur le plateau <br/>
 	 * Parcours le plateau en longueur et largeur en gardant en mémoire le nombre d'occurences sur les cartes vues précédemment avant d'arriver à une case vide ou à la fin de la ligne, permettant d'ajouter à chaque position occupée formant une ligne de cartes partageant un même attribut, un potentiel égal au nombre de cartes impliquées dans la ligne.
@@ -141,7 +139,7 @@ public class ColorStrategy implements Strategy {
 				key2 =((char)(65+i))+Integer.toString(j-1);
 				if(plateau.getPositions().containsKey(key)) {
 					Card card = (Card)plateau.getPositions().get(key);
-					if(card.getType3()==victoryCard.getType3()) {
+					if(card.getType1()==victoryCard.getType1()) {
 						sameCards++;
 					}
 					else if(sameCards>=1) {
@@ -205,7 +203,7 @@ public class ColorStrategy implements Strategy {
 				key2 =((char)(65+i-1))+Integer.toString(j);
 				if(plateau.getPositions().containsKey(key)) {
 					Card card = (Card)plateau.getPositions().get(key);
-					if(card.getType3()==victoryCard.getType3()) {
+					if(card.getType1()==victoryCard.getType1()) {
 						sameCards++;
 					}
 					else if(sameCards>=1) {

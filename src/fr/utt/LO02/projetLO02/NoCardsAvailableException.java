@@ -1,4 +1,4 @@
-package projetLO02;
+package fr.utt.LO02.projetLO02;
 
 /**
  * Exception levée si plus aucune carte n'est disponible dans le {@link Deck}

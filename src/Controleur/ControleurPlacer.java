@@ -12,9 +12,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JToggleButton;
 
-import projetLO02.InvalidChosenCardException;
-import projetLO02.InvalidPlayerActionException;
-import projetLO02.Jeu;
+import fr.utt.LO02.projetLO02.InvalidChosenCardException;
+import fr.utt.LO02.projetLO02.InvalidPlayerActionException;
+import fr.utt.LO02.projetLO02.Jeu;
 /**
  * La classe ControleurPlacer récupère les données utilisateurs lors du choix du placement de la carte.
  * La classe ControleurPlacer gère l'interaction entre la Vue et le modèle.

@@ -1,4 +1,4 @@
-package projetLO02;
+package fr.utt.LO02.projetLO02;
 
 /**
  * Définition des caractéristiques d'une carte (carte non modfiable après sa création)

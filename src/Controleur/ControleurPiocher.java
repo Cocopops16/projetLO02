@@ -10,9 +10,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import projetLO02.InvalidPlayerActionException;
-import projetLO02.Jeu;
-import projetLO02.NoCardsAvailableException;
+import fr.utt.LO02.projetLO02.InvalidPlayerActionException;
+import fr.utt.LO02.projetLO02.Jeu;
+import fr.utt.LO02.projetLO02.NoCardsAvailableException;
 /**
  * 
  * La classe ControleurPiocher récupère l'action réalisée pour piocher une carte.

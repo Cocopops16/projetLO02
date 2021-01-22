@@ -9,16 +9,16 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import projetLO02.InvalidChosenCardException;
-import projetLO02.InvalidEndOfTurnException;
-import projetLO02.InvalidModeException;
-import projetLO02.InvalidNbrOfPlayersException;
-import projetLO02.InvalidPlayerActionException;
-import projetLO02.Jeu;
-import projetLO02.Joueur;
-import projetLO02.Mode;
-import projetLO02.NoCardsAvailableException;
-import projetLO02.Plateau;
+import fr.utt.LO02.projetLO02.InvalidChosenCardException;
+import fr.utt.LO02.projetLO02.InvalidEndOfTurnException;
+import fr.utt.LO02.projetLO02.InvalidModeException;
+import fr.utt.LO02.projetLO02.InvalidNbrOfPlayersException;
+import fr.utt.LO02.projetLO02.InvalidPlayerActionException;
+import fr.utt.LO02.projetLO02.Jeu;
+import fr.utt.LO02.projetLO02.Joueur;
+import fr.utt.LO02.projetLO02.Mode;
+import fr.utt.LO02.projetLO02.NoCardsAvailableException;
+import fr.utt.LO02.projetLO02.Plateau;
 
 /**
  * La classe VueTexte est une interface concurrente à l'interface graphique permettant une interaction clavier, durant le déroulement d'une partie.

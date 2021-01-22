@@ -10,9 +10,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextPane;
 
-import projetLO02.InvalidModeException;
-import projetLO02.InvalidNbrOfPlayersException;
-import projetLO02.Jeu;
+import fr.utt.LO02.projetLO02.InvalidModeException;
+import fr.utt.LO02.projetLO02.InvalidNbrOfPlayersException;
+import fr.utt.LO02.projetLO02.Jeu;
 
 /**
  * La classe ControleurMenu récupère les actions réalisées sur l'interface Menu.

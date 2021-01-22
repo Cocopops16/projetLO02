@@ -1,4 +1,4 @@
-package projetLO02;
+package fr.utt.LO02.projetLO02;
 
 /**
  * Stratégie IA dont le but est de simplement placer une carte pour remplir la condition de passage de tour <br/>

@@ -1,4 +1,4 @@
-package projetLO02;
+package fr.utt.LO02.projetLO02;
 
 /**
  * Exception levée si le nombre de joueurs est insuffisant au lancement de la partie (nbr joueurs<2)

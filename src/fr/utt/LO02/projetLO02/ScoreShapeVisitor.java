@@ -1,18 +1,18 @@
-package projetLO02;
+package fr.utt.LO02.projetLO02;
 
 import java.util.Map;
 
 /**
  * ConcreteVisitor du patron de conception Visitor <br/>
- * Utilisé pour compter les points liés à la couleur des cartes
+ * Utilisé pour compter les points liés à la forme des cartes
  * 
  * @author Corentin Réault
  * @version 1.0
  */
-public class ScoreColorVisitor implements Visitor {
+public class ScoreShapeVisitor implements Visitor {
 	
 	public int visit(Map<String, Object> positions, Card card) {
-		return ScoreColor(positions, card);
+		return ScoreShape(positions, card);
 	}
 	
 	public Map<String, Object> visit(Map<String, Object> positions) {
@@ -20,15 +20,15 @@ public class ScoreColorVisitor implements Visitor {
 	}
 	
 	/**
-	 * Compte les points liés à la couleur des cartes en fonction de la victoryCard donnée
+	 * Compte les points liés à la forme des cartes en fonction de la victoryCard donnée
 	 * @param positions		Collection de cartes (de type Map), liées aux positions du plateau
 	 * @param victoryCard	victoryCard d'un {@link Joueur}
-	 * @return le score du joueur concernant la couleur des cartes
+	 * @return le score du joueur concernant la forme des cartes
 	 * 
 	 * @see Jeu#comptagePoints()
 	 * @see IA#chooseVictory()
 	 */
-	private int ScoreColor(Map<String, Object> positions, Card victoryCard) {
+	private int ScoreShape(Map<String, Object> positions, Card victoryCard) {
 		int score = 0;
 		int scorePartiel = 0;
 		
@@ -37,14 +37,17 @@ public class ScoreColorVisitor implements Visitor {
 				String key = ((char)(65+i))+Integer.toString(j);
 				if(positions.containsKey(key)) {
 					Card card = (Card)positions.get(key);
-					if(card.getType3()==victoryCard.getType3()) {
+					if(card.getType1()==victoryCard.getType1()) {
 						scorePartiel++;
 					}
 					else{
-						if(scorePartiel>2) {
-							score = score+scorePartiel+1;
+						if(scorePartiel>1) {
+							score = score+scorePartiel-1;
 							scorePartiel = 0;
 							j=4;
+						}
+						else if(j<2) {
+							scorePartiel = 0;
 						}
 						else {
 							scorePartiel = 0;
@@ -53,8 +56,8 @@ public class ScoreColorVisitor implements Visitor {
 					}
 				}
 			}
-			if(scorePartiel>2) {
-				score = score+scorePartiel+1;
+			if(scorePartiel>1) {
+				score = score+scorePartiel-1;
 			}
 			scorePartiel = 0;
 		}
@@ -64,16 +67,18 @@ public class ScoreColorVisitor implements Visitor {
 				String key = ((char)(65+i))+Integer.toString(j);
 				if(positions.containsKey(key)) {
 					Card card = (Card)positions.get(key);
-					if(card.getType3()==victoryCard.getType3()) {
+					if(card.getType1()==victoryCard.getType1()) {
 						scorePartiel++;
 					}
 					else{
-						if(scorePartiel>2) {
-							score = score+scorePartiel+1;
+						if(scorePartiel>1) {
+							score = score+scorePartiel-1;
 							scorePartiel = 0;
-							i=5;
+							if(i>2) {
+								i=5;
+							}
 						}
-						else if(i<2){
+						else if(i<3){
 							scorePartiel = 0;
 						}
 						else {
@@ -83,8 +88,8 @@ public class ScoreColorVisitor implements Visitor {
 					}
 				}
 			}
-			if(scorePartiel>2) {
-				score = score+scorePartiel+1;
+			if(scorePartiel>1) {
+				score = score+scorePartiel-1;
 			}
 			scorePartiel = 0;
 		}
@@ -92,4 +97,3 @@ public class ScoreColorVisitor implements Visitor {
 		return score;
 	}
 }
-

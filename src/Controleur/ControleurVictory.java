@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 
-import projetLO02.Jeu;
+import fr.utt.LO02.projetLO02.Jeu;
 /**
  * La classe ControleurVictory récupère les données utilisateurs quant au choix de la victoryCard pour le mode personnalisé.
  * La classe ControleurVictory gère l'interaction entre le modèle et la vue

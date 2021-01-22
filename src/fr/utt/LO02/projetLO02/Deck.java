@@ -1,4 +1,4 @@
-package projetLO02;
+package fr.utt.LO02.projetLO02;
 
 import java.util.List;
 import java.util.LinkedList;

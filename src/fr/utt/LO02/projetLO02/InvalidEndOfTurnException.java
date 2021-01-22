@@ -1,4 +1,4 @@
-package projetLO02;
+package fr.utt.LO02.projetLO02;
 
 /**
  * Exception levée si la fin du tour est demandée par l'utilisateur alors que toutes les actions obligatoires (pioche et placement) ne sont pas remplies

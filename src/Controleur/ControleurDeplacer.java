@@ -12,8 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JToggleButton;
 
-import projetLO02.InvalidPlayerActionException;
-import projetLO02.Jeu;
+import fr.utt.LO02.projetLO02.InvalidPlayerActionException;
+import fr.utt.LO02.projetLO02.Jeu;
 
 /**
  * La classe ControleurDeplacer récupère les données utilisateurs lors du choix du déplacement de la carte.
