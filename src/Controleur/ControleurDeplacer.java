@@ -22,6 +22,7 @@ import projetLO02.Jeu;
  * @version 1.0
  *
  */
+
 public class ControleurDeplacer {
 	
 	/**

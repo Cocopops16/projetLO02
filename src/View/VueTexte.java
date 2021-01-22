@@ -356,7 +356,7 @@ public class VueTexte implements Observer, Runnable {
 	}
 	
 	/**
-	 * 
+	 *
 	 * @param msg
 	 */
 	public void afficher(String msg) {

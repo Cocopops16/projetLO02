@@ -13,6 +13,7 @@ import javax.swing.JFrame;
  * @version 1.0
  *
  */
+
 public class ControleurFinPartie {
 	
 	/**

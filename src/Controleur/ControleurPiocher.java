@@ -34,6 +34,7 @@ public class ControleurPiocher {
 	 * @param jeu pour le jeu en cours.
 	 * @param bouton pour le bouton piocher.
 	 */
+	
 	public ControleurPiocher(Jeu jeu, JButton bouton){
 		
 		this.btnPiocher = bouton;

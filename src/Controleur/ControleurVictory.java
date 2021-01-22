@@ -32,6 +32,7 @@ public class ControleurVictory implements Runnable {
 	 * @param btnChangeVictory bouton pour changer la carte Victory affichée.
 	 * @param btnSetVictory bouton pour séléctionner la carte Victory affichée.
 	 */
+	
 	public ControleurVictory(Jeu jeu, JButton btnChangeVictory, JButton btnSetVictory) {
 
 		this.btnChangeVictory = btnChangeVictory;

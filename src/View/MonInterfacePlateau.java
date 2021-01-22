@@ -601,8 +601,7 @@ public class MonInterfacePlateau implements Observer{
 		  	lblPlaceVictoryCard.setIcon(newImage);
 		}
 	}
-     
-	/**
+     /**
 	 * Permet de mettre à jour l'interface lors d'un changement sur le jeu, le joueur ou le plateau. 
 	 * Elle permet d'afficher l'image de la carte sur le bouton séléctionné, d'ouvrir l'interface Victory si le mode de jeu sélectionné est personnalisé ou l'interface Plateau le cas échéant.
 	 */
