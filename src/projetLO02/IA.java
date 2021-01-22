@@ -3,6 +3,17 @@ package projetLO02;
 import View.MonInterfacePlateau;
 import View.VueTexte;
 
+/**
+ * {@link IA} héritant de la classe {@link Joueur}, permettant d'automatiser le tour de jeu (spécialisation) en conservant les méthodes {@link Joueur#placer(Card, char, int)} et {@link Joueur#deplacer(char, int, char, int)}
+ * 
+ * @see Joueur
+ * @see Hand
+ * @see Jeu
+ * 
+ * @author Corentin Réault
+ * @version 1.0
+ */
+
 public class IA extends Joueur{
 	private boolean isIA;
 	private String keyOuPlacer, keyOuDeplacer1, keyOuDeplacer2, Strategy;
@@ -16,6 +27,10 @@ public class IA extends Joueur{
 		this.Strategy = new String();
 	}
 	
+	/**
+	 * Choix de la carte à jouer (en mode avancé)
+	 * Compare les cartes de la main à la victoryCard pour définir 
+	 */
 	public Card chooseCardToPlay() {
 		int numCard = 0;
 		int nbrTypeCommunsBest = -1;
